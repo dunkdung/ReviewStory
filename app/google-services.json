@@ -1,41 +1,63 @@
 {
   "project_info": {
-    "project_number": "277222202001",
-    "project_id": "review-2adb2",
-    "storage_bucket": "review-2adb2.appspot.com"
+    "project_number": "912005818572",
+    "firebase_url": "https://reviewer-story-default-rtdb.firebaseio.com",
+    "project_id": "reviewer-story",
+    "storage_bucket": "reviewer-story.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:277222202001:android:a655041e93f494644fbd30",
+        "mobilesdk_app_id": "1:912005818572:android:cb4a4bd94791b6f5f37a69",
         "android_client_info": {
-          "package_name": "com.example.reviewstory"
+          "package_name": "com.example.course"
         }
       },
       "oauth_client": [
         {
-          "client_id": "277222202001-9ejkv73090d37v3fui08gu8ejsil78r3.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.reviewstory",
-            "certificate_hash": "db7d18ff48d43bca46d5da68c6fe8e25de29f884"
-          }
-        },
-        {
-          "client_id": "277222202001-n55vbmd3allgui9bdogo0o37pp6253h3.apps.googleusercontent.com",
+          "client_id": "912005818572-trrlcoifpkeg21u1aopn1phbbc3gk21d.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAK1eAv0mWboUvIBXumX6D0voLPcC7Bz8M"
+          "current_key": "AIzaSyAfdFBkgRQO5AZWe5VSq2aF26oSl6ZjSpw"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "277222202001-n55vbmd3allgui9bdogo0o37pp6253h3.apps.googleusercontent.com",
+              "client_id": "912005818572-trrlcoifpkeg21u1aopn1phbbc3gk21d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:912005818572:android:6073d27c5729e51df37a69",
+        "android_client_info": {
+          "package_name": "com.example.reviewstory"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "912005818572-trrlcoifpkeg21u1aopn1phbbc3gk21d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfdFBkgRQO5AZWe5VSq2aF26oSl6ZjSpw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "912005818572-trrlcoifpkeg21u1aopn1phbbc3gk21d.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
