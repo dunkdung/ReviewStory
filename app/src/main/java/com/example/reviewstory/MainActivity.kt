@@ -12,13 +12,40 @@ import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
 import com.example.reviewstory.main.MainFragmentStatePagerAdapter
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    var fbFirestore : FirebaseFirestore? = null
+    var fbAuth : FirebaseAuth? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         configureBottomNavigation()
+
+        fbFirestore = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
+        if(true)
+        {
+            var userInfo = USER()
+            var stampinfo = STAMP()
+            var timelineinfo = TIMELINE()
+            var followinfo = FOLLOWLIST()
+
+            userInfo.user_num = fbAuth?.uid
+            userInfo.user_id = fbAuth?.currentUser?.email
+
+            fbFirestore?.collection("user")?.document(userInfo.user_id.toString())?.set(userInfo)
+            fbFirestore?.collection("stamp")?.document(stampinfo.s_num.toString())?.set(stampinfo)
+            fbFirestore?.collection("timeline")?.document(timelineinfo.tl_num.toString())?.set(timelineinfo)
+            fbFirestore?.collection("followlist")?.document(followinfo.fol_num.toString())?.set(followinfo)
+
+
+
+        }
     }
 
     private fun configureBottomNavigation() {
