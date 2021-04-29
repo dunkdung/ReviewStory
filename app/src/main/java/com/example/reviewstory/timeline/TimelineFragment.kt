@@ -3,12 +3,14 @@ package com.example.reviewstory.timeline
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.reviewstory.R
@@ -20,6 +22,9 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceLikelihood
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+import kotlinx.android.synthetic.main.fragment_timeline.*
+import kotlinx.android.synthetic.main.fragment_timeline.view.*
+import java.time.LocalDateTime
 
 class TimelineFragment : Fragment() {
 
@@ -30,10 +35,12 @@ class TimelineFragment : Fragment() {
     private var mLastKnownLocation: Location? = null
     private var mCameraPosition: CameraPosition? = null
     // Use fields to define the data types to return.
-    val placeFields: List<Place.Field> = listOf(Place.Field.NAME)
+    val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.LAT_LNG)
 
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
+
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -56,12 +63,17 @@ class TimelineFragment : Fragment() {
             placeResponse.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val response = task.result
-                    for (placeLikelihood: PlaceLikelihood in response?.placeLikelihoods ?: emptyList()) {
-                        Log.d(
-                            "place",
-                            "Place '${placeLikelihood.place.name}' has likelihood: ${placeLikelihood.likelihood}"
-                        )
-                    }
+                    Log.d(
+                          "place",
+                          "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
+                    )
+                    text_timeline.text = "${response.placeLikelihoods[0].place.name}\n${response.placeLikelihoods[0].place.address}\n${response.placeLikelihoods[0].place.latLng}\n${LocalDateTime.now()}"
+//                    for (placeLikelihood: PlaceLikelihood in response?.placeLikelihoods ?: emptyList()) {
+//                        Log.d(
+//                            "place",
+//                            "Place '${placeLikelihood.place.name}''${placeLikelihood.place}' has likelihood: ${placeLikelihood.likelihood}"
+//                        )
+//                    }
                 } else {
                     val exception = task.exception
                     if (exception is ApiException) {
@@ -76,8 +88,9 @@ class TimelineFragment : Fragment() {
             ActivityCompat.requestPermissions(
                 requireActivity(),
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
-
         }
+
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
