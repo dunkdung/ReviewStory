@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.reviewstory"
-        minSdkVersion 16
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -55,5 +55,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.fxn769:ariana:1.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
 
 }
