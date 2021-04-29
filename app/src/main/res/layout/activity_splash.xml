@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context=".splash.SplashActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="15dp"
+        android:text="가장 \n 간단하고 확실한 \n당신의 \n 선택을 \n위한 \n 리뷰 앱"
+        android:textSize="31dp"
+        android:textColor="@color/colorWhite"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
