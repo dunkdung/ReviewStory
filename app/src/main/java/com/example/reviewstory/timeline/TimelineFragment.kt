@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.reviewstory.R
+import com.example.reviewstory.STAMP
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,11 +23,16 @@ import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.PlaceLikelihood
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.fragment_timeline.view.*
 import java.time.LocalDateTime
 
 class TimelineFragment : Fragment() {
+
+    var fbFirestore : FirebaseFirestore? = null
+    var fbAuth : FirebaseAuth? = null
 
     private lateinit var FusedLocationProviderClient: FusedLocationProviderClient
 
@@ -45,6 +51,11 @@ class TimelineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        fbFirestore = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
+
+
+
         activity?.let { Places.initialize(it.applicationContext, "AIzaSyDTRY1lQAAW-WTWfbA_4KNcc30TFWWudDc") }
 
         // FusedLocationProviderClient 구성
@@ -63,6 +74,23 @@ class TimelineFragment : Fragment() {
             placeResponse.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val response = task.result
+                    if (true) {
+                        var stampinfo = STAMP()
+
+                        stampinfo.address = response.placeLikelihoods[0].place.address
+                        stampinfo.s_date = LocalDateTime.now().toString()
+                        stampinfo.user_num = fbAuth?.currentUser?.uid
+                        stampinfo.s_name = response.placeLikelihoods[0].place.name
+
+                        fbFirestore?.collection("stamp")?.document(stampinfo.s_num.toString())
+                            ?.set(stampinfo)
+                        fbFirestore?.collection("stamp")?.get()
+                            ?.addOnSuccessListener { result ->
+                                for (document in result) {
+                                    Log.d("place", "${document.id} => ${document.data}")
+                                }
+                            }
+                    }else Log.d("place","저장 실패")
                     Log.d(
                           "place",
                           "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
