@@ -45,4 +45,9 @@
             android:id="@+id/action_Second2Fragment_to_First2Fragment"
             app:destination="@id/First2Fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/itemFragment"
+        android:name="com.example.reviewstory.timeline.ItemFragment"
+        android:label="fragment_item_list"
+        tools:layout="@layout/fragment_item_list" />
 </navigation>

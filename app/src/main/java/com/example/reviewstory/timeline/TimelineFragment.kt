@@ -28,85 +28,85 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.fragment_timeline.view.*
 import java.time.LocalDateTime
+import java.util.*
+
 
 class TimelineFragment : Fragment() {
 
     var fbFirestore : FirebaseFirestore? = null
     var fbAuth : FirebaseAuth? = null
 
-    private lateinit var FusedLocationProviderClient: FusedLocationProviderClient
-
-    //장치가 현재 위치한 지리적 위치입니다. 즉, 마지막으로 알려진
-    //Fused Location Provider에서 검색한 위치입니다.
-    private var mLastKnownLocation: Location? = null
-    private var mCameraPosition: CameraPosition? = null
     // Use fields to define the data types to return.
     val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.LAT_LNG)
 
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
 
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        // 위치정보 저장
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
-
-
         activity?.let { Places.initialize(it.applicationContext, "AIzaSyDTRY1lQAAW-WTWfbA_4KNcc30TFWWudDc") }
 
-        // FusedLocationProviderClient 구성
-        FusedLocationProviderClient = activity?.let {
-            LocationServices.getFusedLocationProviderClient(
-                it
-            )
-        }!!
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
-        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_FINE_LOCATION) ==
-            PackageManager.PERMISSION_GRANTED) {
+        //updatePlace()
+
+        // 장소 데이터 받아오기(시간 조건으로)
+        var startDate: String? = null
+        var endDate: String? = null
+        startDate = "2021-04-30T09:14:12.668"
+        endDate = "2021-05-05T19:20:07.610"
+
+        fbFirestore?.collection("stamp")
+                ?.whereGreaterThanOrEqualTo("s_date", startDate)
+                ?.whereLessThan("s_date", endDate)
+                ?.get()
+                ?.addOnSuccessListener { result ->
+                    for (document in result) {
+                        Log.d("place", "${document.id} => ${document.data}")
+                    }
+                }
+
+
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_timeline, container, false)
+    }
+
+
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun updatePlace(){
+        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
+                PackageManager.PERMISSION_GRANTED) {
             Log.d("place", "Plac")
             val placesClient = Places.createClient(requireActivity().applicationContext)
             val placeResponse = placesClient.findCurrentPlace(request)
             placeResponse.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val response = task.result
-                    if (true) {
-                        var stampinfo = STAMP()
+                    var stampinfo = STAMP()
 
-                        stampinfo.address = response.placeLikelihoods[0].place.address
-                        stampinfo.s_date = LocalDateTime.now().toString()
-                        stampinfo.user_num = fbAuth?.currentUser?.uid
-                        stampinfo.s_name = response.placeLikelihoods[0].place.name
+                    stampinfo.address = response.placeLikelihoods[0].place.address
+                    stampinfo.s_date = LocalDateTime.now().toString()
+                    stampinfo.user_num = fbAuth?.currentUser?.uid
+                    stampinfo.s_name = response.placeLikelihoods[0].place.name
 
-                        fbFirestore?.collection("stamp")?.document(stampinfo.s_num.toString())
-                            ?.set(stampinfo)
-                        fbFirestore?.collection("stamp")?.get()
-                            ?.addOnSuccessListener { result ->
-                                for (document in result) {
-                                    Log.d("place", "${document.id} => ${document.data}")
-                                }
-                            }
-                    }else Log.d("place","저장 실패")
+                    fbFirestore?.collection("stamp")?.add(stampinfo)
+
                     Log.d(
-                          "place",
-                          "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
+                            "place",
+                            "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
                     )
-                    text_timeline.text = "${response.placeLikelihoods[0].place.name}\n${response.placeLikelihoods[0].place.address}\n${response.placeLikelihoods[0].place.latLng}\n${LocalDateTime.now()}"
-//                    for (placeLikelihood: PlaceLikelihood in response?.placeLikelihoods ?: emptyList()) {
-//                        Log.d(
-//                            "place",
-//                            "Place '${placeLikelihood.place.name}''${placeLikelihood.place}' has likelihood: ${placeLikelihood.likelihood}"
-//                        )
-//                    }
-                } else {
-                    val exception = task.exception
-                    if (exception is ApiException) {
-                        Log.d("place", "Place not found: ${exception.statusCode}")
-                    }
+                    text_timeline.text = "${response.placeLikelihoods[0].place.name}\n${response.placeLikelihoods[0].place.address}\n${response.placeLikelihoods[0].place.latLng}"
                 }
             }
         } else {
@@ -114,12 +114,8 @@ class TimelineFragment : Fragment() {
             // See https://developer.android.com/training/permissions/requesting
             Log.d("place", "Place not found")
             ActivityCompat.requestPermissions(
-                requireActivity(),
-                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1);
+                    requireActivity(),
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1);
         }
-
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
 }
