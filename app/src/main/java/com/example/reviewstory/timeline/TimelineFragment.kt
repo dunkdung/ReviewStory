@@ -10,9 +10,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
 import com.google.android.gms.common.api.ApiException
@@ -58,23 +61,25 @@ class TimelineFragment : Fragment() {
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         //updatePlace()
+        var startDate = "2021-04-30T09:14:12.668"
+        var endDate = "2021-05-05T19:20:07.610"
 
-        // 장소 데이터 받아오기(시간 조건으로)
-        var startDate: String? = null
-        var endDate: String? = null
-        startDate = "2021-04-30T09:14:12.668"
-        endDate = "2021-05-05T19:20:07.610"
-
-        fbFirestore?.collection("stamp")
-                ?.whereGreaterThanOrEqualTo("s_date", startDate)
-                ?.whereLessThan("s_date", endDate)
-                ?.get()
-                ?.addOnSuccessListener { result ->
-                    for (document in result) {
-                        Log.d("place", "${document.id} => ${document.data}")
-                    }
-                }
-
+        view?.btn_search?.setOnClickListener {
+            if (startDate == null || endDate == null) {
+                /* 선택이 안된 경우 에러메세지를 띄웁니다.*/
+                Toast.makeText(requireContext(), "분류와 날짜를 입력해주세요.", Toast.LENGTH_LONG).show()
+            } else {
+                /* 정상적으로 선택했다면 데이터를 Bundle 담아 ResultFragemtn 넘깁니다.*/
+                Log.i("START_DATE", startDate)
+                Log.i("END_DATE", endDate)
+                findNavController().navigate(
+                    R.id.action_timelineFragment_to_stampsFragment,
+                    Bundle().apply {
+                        putString("START_DATE", startDate)
+                        putString("END_DATE", endDate)
+                    })
+            }
+        }
 
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_timeline, container, false)

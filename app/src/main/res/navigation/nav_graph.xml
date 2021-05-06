@@ -3,51 +3,50 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/FirstFragment">
+    app:startDestination="@id/splashActivity2">
 
+    <activity
+        android:id="@+id/splashActivity2"
+        android:name="com.example.reviewstory.splash.SplashActivity"
+        android:label="activity_splash"
+        tools:layout="@layout/activity_splash" />
+    <activity
+        android:id="@+id/loginActivity"
+        android:name="com.example.reviewstory.auth.LoginActivity"
+        android:label="activity_login"
+        tools:layout="@layout/activity_login" />
+    <activity
+        android:id="@+id/joinActivity"
+        android:name="com.example.reviewstory.auth.JoinActivity"
+        android:label="activity_join"
+        tools:layout="@layout/activity_join" />
     <fragment
-        android:id="@+id/FirstFragment"
-        android:name="com.example.reviewstory.splash.FirstFragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first">
-
+        android:id="@+id/mypageFragment2"
+        android:name="com.example.reviewstory.mypage.MypageFragment"
+        android:label="fragment_mypage"
+        tools:layout="@layout/fragment_mypage" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.reviewstory.settings.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/timelineFragment"
+        android:name="com.example.reviewstory.timeline.TimelineFragment"
+        android:label="fragment_timeline"
+        tools:layout="@layout/fragment_timeline" >
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
-            app:destination="@id/SecondFragment" />
+            android:id="@+id/action_timelineFragment_to_stampsFragment"
+            app:destination="@id/stampsFragment" />
     </fragment>
     <fragment
-        android:id="@+id/SecondFragment"
-        android:name="com.example.reviewstory.splash.SecondFragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/FirstFragment" />
-    </fragment>
+        android:id="@+id/searchFragment"
+        android:name="com.example.reviewstory.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
     <fragment
-        android:id="@+id/First2Fragment"
-        android:name="com.example.reviewstory.splash.First2Fragment"
-        android:label="@string/first_fragment_label"
-        tools:layout="@layout/fragment_first2">
-
-        <action
-            android:id="@+id/action_First2Fragment_to_Second2Fragment"
-            app:destination="@id/Second2Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/Second2Fragment"
-        android:name="com.example.reviewstory.splash.Second2Fragment"
-        android:label="@string/second_fragment_label"
-        tools:layout="@layout/fragment_second2">
-
-        <action
-            android:id="@+id/action_Second2Fragment_to_First2Fragment"
-            app:destination="@id/First2Fragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/itemFragment"
-        android:name="com.example.reviewstory.timeline.ItemFragment"
-        android:label="fragment_item_list"
-        tools:layout="@layout/fragment_item_list" />
+        android:id="@+id/stampsFragment"
+        android:name="com.example.reviewstory.StampsFragment"
+        android:label="fragment_stamps"
+        tools:layout="@layout/fragment_stamps" />
 </navigation>
