@@ -14,8 +14,7 @@ class MainFragmentStatePagerAdapter(fm : FragmentManager, val fragmentCount : In
         when(position){
             0 -> return MypageFragment()
             1 -> return SearchFragment()
-//            2 -> return TimelineFragment()
-            2 -> return StampsFragment()
+            2 -> return TimelineFragment()
             3 -> return SettingsFragment()
             else -> return TimelineFragment()
         }

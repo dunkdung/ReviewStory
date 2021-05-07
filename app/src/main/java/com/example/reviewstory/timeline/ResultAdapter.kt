@@ -32,9 +32,7 @@ class ResultAdapter(val items: ArrayList<STAMP>) : RecyclerView.Adapter<ItemView
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    // 검색한 경락가격정보를 아이템뷰(list_item_fresh)에 바인딩하는 함수
     fun bindItems(stamp: STAMP?) {
-        Log.d("place", "바인딩")
         stamp?.let {
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =

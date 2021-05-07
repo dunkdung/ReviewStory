@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.add
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
@@ -51,6 +53,13 @@ class TimelineFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_timeline, container, false)
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
 
         // 위치정보 저장
         fbFirestore = FirebaseFirestore.getInstance()
@@ -60,31 +69,23 @@ class TimelineFragment : Fragment() {
 
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
-        //updatePlace()
+        updatePlace()
         var startDate = "2021-04-30T09:14:12.668"
         var endDate = "2021-05-05T19:20:07.610"
-
-        view?.btn_search?.setOnClickListener {
-            if (startDate == null || endDate == null) {
+        btn_search?.setOnClickListener {
+            Log.d("place", "바튼 클릭")
+            //if (startDate == null || endDate == null) {
+            if (false) {
                 /* 선택이 안된 경우 에러메세지를 띄웁니다.*/
                 Toast.makeText(requireContext(), "분류와 날짜를 입력해주세요.", Toast.LENGTH_LONG).show()
             } else {
                 /* 정상적으로 선택했다면 데이터를 Bundle 담아 ResultFragemtn 넘깁니다.*/
                 Log.i("START_DATE", startDate)
                 Log.i("END_DATE", endDate)
-                findNavController().navigate(
-                    R.id.action_timelineFragment_to_stampsFragment,
-                    Bundle().apply {
-                        putString("START_DATE", startDate)
-                        putString("END_DATE", endDate)
-                    })
+               childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
             }
         }
-
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
-
 
 
 
@@ -105,7 +106,7 @@ class TimelineFragment : Fragment() {
                     stampinfo.user_num = fbAuth?.currentUser?.uid
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
 
-                    fbFirestore?.collection("stamp")?.add(stampinfo)
+                    fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
 
                     Log.d(
                             "place",

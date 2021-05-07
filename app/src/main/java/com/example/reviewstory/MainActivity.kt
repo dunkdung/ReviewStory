@@ -11,10 +11,13 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.RelativeLayout
 import androidx.core.content.ContextCompat
+import androidx.navigation.findNavController
 import com.example.reviewstory.main.MainFragmentStatePagerAdapter
+import com.example.reviewstory.timeline.StampsFragment
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_timeline.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,5 +45,6 @@ class MainActivity : AppCompatActivity() {
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_add_tab) as RelativeLayout
         tl_ac_main_bottom_menu.getTabAt(3)!!.customView =
             bottomNaviLayout.findViewById(R.id.btn_bottom_navi_like_tab) as RelativeLayout
+
     }
 }

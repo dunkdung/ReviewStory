@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashActivity2">
+    app:startDestination="@id/timelineFragment">
 
     <activity
         android:id="@+id/splashActivity2"
@@ -46,7 +46,7 @@
         tools:layout="@layout/fragment_search" />
     <fragment
         android:id="@+id/stampsFragment"
-        android:name="com.example.reviewstory.StampsFragment"
+        android:name="com.example.reviewstory.timeline.StampsFragment"
         android:label="fragment_stamps"
         tools:layout="@layout/fragment_stamps" />
 </navigation>
