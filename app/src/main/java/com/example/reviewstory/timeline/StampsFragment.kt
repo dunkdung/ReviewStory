@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
+import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -39,6 +41,11 @@ class StampsFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setFragmentResultListener("key"){ key, bundle ->
+            val result = bundle.getString("bundleKey")
+            Log.d("place", "데이터 전달 $result")
+        }
+
         var stampList = ArrayList<STAMP>()
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
@@ -57,6 +64,7 @@ class StampsFragment : Fragment() {
                 ?.addOnSuccessListener { result ->
                         for (document in result) {
                             var stamp = STAMP()
+                            stamp.s_num = document.id
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
                             stamp.s_date = document.data["s_date"] as String?
@@ -75,7 +83,7 @@ class StampsFragment : Fragment() {
                         )
                     )
                     /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                    view.recycle_result.adapter = ResultAdapter(stampList)
+                    view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }
         }//end of if

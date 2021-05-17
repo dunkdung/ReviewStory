@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.add
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
@@ -82,7 +84,13 @@ class TimelineFragment : Fragment() {
                 /* 정상적으로 선택했다면 데이터를 Bundle 담아 ResultFragemtn 넘깁니다.*/
                 Log.i("START_DATE", startDate)
                 Log.i("END_DATE", endDate)
-               childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
+               //childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
+                childFragmentManager.setFragmentResult("key", bundleOf("bundleKey" to startDate))
+                childFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.child_fragment, StampsFragment())
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                        .commit()
             }
         }
     }

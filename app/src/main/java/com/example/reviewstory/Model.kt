@@ -15,9 +15,9 @@ data class USER(
 }
 
 data class STAMP(
-    var s_num : Int? = null,
+    var s_num : String? = null,
     var user_num : String? = null,
-    var tl_num : Int? = null,
+    var tl_num : String? = null,
     var address : String? = null,
     var s_name : String? = null,
     var s_date : String? = null,
