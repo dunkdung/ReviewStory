@@ -136,8 +136,6 @@ class TimelineFragment : Fragment() {
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         updatePlace()
-        var startDate = "2021-04-30T09:14:12.668"
-        var endDate = "2021-05-05T19:20:07.610"
         btn_search?.setOnClickListener {
             Log.d("place", "바튼 클릭")
             //if (startDate == null || endDate == null) {
@@ -146,10 +144,10 @@ class TimelineFragment : Fragment() {
                 Toast.makeText(requireContext(), "분류와 날짜를 입력해주세요.", Toast.LENGTH_LONG).show()
             } else {
                 /* 정상적으로 선택했다면 데이터를 Bundle 담아 ResultFragemtn 넘깁니다.*/
-                Log.i("START_DATE", startDate)
-                Log.i("END_DATE", endDate)
+                start_date?.let { it1 -> Log.i("START_DATE", it1) }
+                last_date?.let { it1 -> Log.i("END_DATE", it1) }
                //childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
-                childFragmentManager.setFragmentResult("key", bundleOf("bundleKey" to startDate))
+                childFragmentManager.setFragmentResult("key", bundleOf("bundleKey" to start_date, "endDate" to last_date))
                 childFragmentManager
                         .beginTransaction()
                         .replace(R.id.child_fragment, StampsFragment())

@@ -41,25 +41,28 @@ class StampsFragment : Fragment() {
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var endDate: String? = null
+        var startDate: String? = null
+
         setFragmentResultListener("key"){ key, bundle ->
-            val result = bundle.getString("bundleKey")
-            Log.d("place", "데이터 전달 $result")
-        }
+            startDate = bundle.getString("bundleKey")
+
+            endDate = bundle.getString("endDate")
+
+
 
         var stampList = ArrayList<STAMP>()
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
         Log.d("place", "search")
-//        var endDate = arguments?.getString("End_DATE")
-//        var startDate = arguments?.getString("START_DATE")
-        val startDate = "2021-04-30T09:14:12.668"
-        val endDate = "2021-05-05T19:20:07.610"
+        Log.d("place", "데이터 전달1 $startDate")
+        Log.d("place", "데이터 전달2 $endDate")
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
             fbFirestore?.collection("stamp")
-                ?.whereGreaterThanOrEqualTo("s_date", startDate)
-                ?.whereLessThan("s_date", endDate)
+                ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
+                ?.whereLessThan("s_date", endDate!!)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                         for (document in result) {
@@ -87,5 +90,6 @@ class StampsFragment : Fragment() {
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }
         }//end of if
+        }
     }//end of onViewCreated
 }
