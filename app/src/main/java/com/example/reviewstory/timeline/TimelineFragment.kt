@@ -77,12 +77,7 @@ class TimelineFragment : Fragment() {
         fbAuth = FirebaseAuth.getInstance()
 
         activity?.let { Places.initialize(it.applicationContext, "AIzaSyDTRY1lQAAW-WTWfbA_4KNcc30TFWWudDc") }
-/*
-        calendarView?.setOnDateChangeListener { view, year, month, dayOfMonth ->
-            start = String.format("%d-%d-%d", year, month+1, dayOfMonth)
-            txt.text = start
-        }
-*/
+
         start_btn.setOnClickListener {
             /*현재날짜를 가져옵니다.*/
             val currentCaldenar =
@@ -172,8 +167,8 @@ class TimelineFragment : Fragment() {
 
         view.btn_search?.setOnClickListener {
 
-
-                findNavController().navigate(R.id.action_timelineFragment_to_stampsFragment)
+            val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
+            findNavController().navigate(direction)
 
         }
     }
@@ -196,15 +191,15 @@ class TimelineFragment : Fragment() {
                     stampinfo.s_date = LocalDateTime.now().toString()
                     stampinfo.user_num = fbAuth?.currentUser?.uid
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
+                    stampinfo.places = response.placeLikelihoods
 
                     fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
-                    fbFirestore?.collection("stamp")?.document()?.set(stampinfo)
+                    fbFirestore?.collection("stamp")?.add(stampinfo)
 
                     Log.d(
                             "place",
                             "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
                     )
-                    text_timeline.text = "${response.placeLikelihoods[0].place.name}\n${response.placeLikelihoods[0].place.address}\n${response.placeLikelihoods[0].place.latLng}"
                 }
             }
         } else {
