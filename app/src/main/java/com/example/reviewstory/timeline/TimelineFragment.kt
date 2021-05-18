@@ -49,7 +49,7 @@ class TimelineFragment : Fragment() {
     var last_date: String? = null
 
     // Use fields to define the data types to return.
-    val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.LAT_LNG)
+    val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS)
 
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
@@ -116,7 +116,7 @@ class TimelineFragment : Fragment() {
                     currentCaldenar.apply {
                         set(Calendar.YEAR, year)
                         set(Calendar.MONTH, month)
-                        set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                        set(Calendar.DAY_OF_MONTH, dayOfMonth+1)
                     }.run {
                         /* 선택한 데이터를 2020-01-01와 같은 형식으로 가져옵니다.*/
                         last_date = SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
