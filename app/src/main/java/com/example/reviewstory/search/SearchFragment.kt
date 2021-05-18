@@ -14,7 +14,7 @@ import com.example.reviewstory.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_search.*
-import kotlinx.android.synthetic.main.search_item.view.*
+//import kotlinx.android.synthetic.main.search_item.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class SearchFragment : Fragment() {
+    /*
     var firestore : FirebaseFirestore? = null
     var fbAuth : FirebaseAuth? = null
 
@@ -149,5 +150,5 @@ class SearchFragment : Fragment() {
                 }
             }
     }
-
+*/
 }
