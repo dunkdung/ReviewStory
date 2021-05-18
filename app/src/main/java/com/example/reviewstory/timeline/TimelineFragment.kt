@@ -140,35 +140,7 @@ class TimelineFragment : Fragment() {
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         updatePlace()
-        /*
-        btn_search?.setOnClickListener {
-            Log.d("place", "바튼 클릭")
-            //if (startDate == null || endDate == null) {
-            if (false) {
-                /* 선택이 안된 경우 에러메세지를 띄웁니다.*/
-                Toast.makeText(requireContext(), "분류와 날짜를 입력해주세요.", Toast.LENGTH_LONG).show()
-            } else {
-                /* 정상적으로 선택했다면 데이터를 Bundle 담아 ResultFragemtn 넘깁니다.*/
-                start_date?.let { it1 -> Log.i("START_DATE", it1) }
-                last_date?.let { it1 -> Log.i("END_DATE", it1) }
-               //childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
 
-
-                childFragmentManager.setFragmentResult("key", bundleOf("bundleKey" to start_date, "endDate" to last_date))
-                childFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.stampsFragment, StampsFragment())
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .commit()
-
-
-                //parentFragmentManager.beginTransaction().replace(R.id.stampsFragment, StampsFragment()).commit()
-
-            }
-
-
-
-        }*/
 
         view.btn_search?.setOnClickListener {
 
@@ -182,7 +154,7 @@ class TimelineFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updatePlace(){
-        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
+        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             Log.d("place", "Plac")
             val placesClient = Places.createClient(requireActivity().applicationContext)
@@ -213,7 +185,7 @@ class TimelineFragment : Fragment() {
             Log.d("place", "Place not found")
             ActivityCompat.requestPermissions(
                     requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1);
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1);
         }
     }
 

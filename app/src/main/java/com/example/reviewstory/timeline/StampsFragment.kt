@@ -68,56 +68,11 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
-            fbFirestore?.collection("stamp")
-                ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
-                ?.whereLessThan("s_date", endDate!!)
-                ?.get()
-                ?.addOnSuccessListener { result ->
-                    for (document in result) {
-                        var stamp = STAMP()
-                        stamp.s_num = document.id
-                        stamp.address = document.data["address"] as String?
-                        stamp.s_name = document.data["s_name"] as String?
-                        stamp.s_date = document.data["s_date"] as String?
-                        stamp.user_num = document.data["user_num"] as String?
-                        stampList.add(stamp)
-                        Log.d("place", "${document.id} => ${document.data["address"]}")
-                        Log.d("place", "${stamp.address} => ${stamp.s_name}")
-                    }
-
-                    Log.d("place", "stamps 생성 ${stampList.size}")
-                    /*  리사이클러뷰에 구분선 설정 */
-                    view.recycle_result.addItemDecoration(
-                        DividerItemDecoration(
-                            requireContext(),
-                            DividerItemDecoration.VERTICAL
-                        )
-                    )
-                    /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                    view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
-                    view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
-                    /*
-        setFragmentResultListener("key"){ key, bundle ->
-            startDate = bundle.getString("bundleKey")
-
-            endDate = bundle.getString("endDate")
-
-
-
-        var stampList = ArrayList<STAMP>()
-        fbFirestore = FirebaseFirestore.getInstance()
-        fbAuth = FirebaseAuth.getInstance()
-        Log.d("place", "search")
-        Log.d("place", "데이터 전달1 $startDate")
-        Log.d("place", "데이터 전달2 $endDate")
-        if (endDate != null && startDate != null) {
-            Log.d("place", "search2")
-
-            fbFirestore?.collection("stamp")
-                ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
-                ?.whereLessThan("s_date", endDate!!)
-                ?.get()
-                ?.addOnSuccessListener { result ->
+                fbFirestore?.collection("stamp")?.whereEqualTo(fbAuth!!.uid.toString(), true)
+                    ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
+                    ?.whereLessThan("s_date", endDate!!)
+                    ?.get()
+                    ?.addOnSuccessListener { result ->
                         for (document in result) {
                             var stamp = STAMP()
                             stamp.s_num = document.id
@@ -130,23 +85,24 @@ class StampsFragment : Fragment() {
                             Log.d("place", "${stamp.address} => ${stamp.s_name}")
                         }
 
-                    Log.d("place", "stamps 생성 ${stampList.size}")
-                    /*  리사이클러뷰에 구분선 설정 */
-                    view.recycle_result.addItemDecoration(
-                        DividerItemDecoration(
-                            requireContext(),
-                            DividerItemDecoration.VERTICAL
+                        Log.d("place", "stamps 생성 ${stampList.size}")
+                        /*  리사이클러뷰에 구분선 설정 */
+                        view.recycle_result.addItemDecoration(
+                            DividerItemDecoration(
+                                requireContext(),
+                                DividerItemDecoration.VERTICAL
+                            )
                         )
-                    )
-                    /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                    view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
-                    view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
-                }
-        }//end of if*/
-                }
+                        /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
+                        view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
+                        view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
+
+
+                    }
+            }
         }
     }
-}
+
 
 
 

@@ -55,14 +55,14 @@ class MainActivity : AppCompatActivity() {
 
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getLocationPermission(){
-        if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
+        if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
             Log.d("place", " get Permission")
             locationPermissionGranted = true
         } else {
             Log.d("place", "Permission not found")
             ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1);
+                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1);
         }
     }
 }
