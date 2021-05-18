@@ -1,5 +1,7 @@
 package com.example.reviewstory
 
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.PlaceLikelihood
 import java.sql.Date
 
 
@@ -23,7 +25,8 @@ data class STAMP(
     var s_date : String? = null,
     var rv_txt : String? = null,
     var r_pic : String? = null,
-    var score : String? = null
+    var score : String? = null,
+    var places: List<PlaceLikelihood>? =null
 
 ){
 
