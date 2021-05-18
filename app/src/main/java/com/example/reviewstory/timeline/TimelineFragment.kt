@@ -172,8 +172,8 @@ class TimelineFragment : Fragment() {
 
         view.btn_search?.setOnClickListener {
 
-
-                findNavController().navigate(R.id.action_timelineFragment_to_stampsFragment)
+                val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
+                findNavController().navigate(direction)
 
         }
     }
@@ -204,7 +204,7 @@ class TimelineFragment : Fragment() {
                             "place",
                             "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
                     )
-                    text_timeline.text = "${response.placeLikelihoods[0].place.name}\n${response.placeLikelihoods[0].place.address}\n${response.placeLikelihoods[0].place.latLng}"
+
                 }
             }
         } else {

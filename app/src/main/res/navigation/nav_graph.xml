@@ -48,5 +48,12 @@
         android:id="@+id/stampsFragment"
         android:name="com.example.reviewstory.timeline.StampsFragment"
         android:label="fragment_stamps"
-        tools:layout="@layout/fragment_stamps" />
+        tools:layout="@layout/fragment_stamps" >
+        <argument
+            android:name="sdate"
+            app:argType="string" />
+        <argument
+            android:name="ldate"
+            app:argType="string" />
+    </fragment>
 </navigation>
