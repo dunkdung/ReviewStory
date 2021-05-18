@@ -4,9 +4,11 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import androidx.fragment.app.FragmentTransaction
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
 import com.example.reviewstory.auth.LoginActivity
+import com.example.reviewstory.timeline.StampsFragment
 
 class SplashActivity : AppCompatActivity()  {
 
@@ -29,4 +31,6 @@ class SplashActivity : AppCompatActivity()  {
     override fun onBackPressed() {
         super.onBackPressed()
     }
+
+
 }

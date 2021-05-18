@@ -17,6 +17,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import com.example.reviewstory.main.MainFragmentStatePagerAdapter
 import com.example.reviewstory.timeline.StampsFragment
 import com.google.android.libraries.places.api.Places
@@ -34,27 +36,23 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        configureBottomNavigation()
+        val controller = findNavController(R.id.navigation_host)
+        /*Navigation을 세팅합니다. */
+        NavigationUI.setupActionBarWithNavController(
+            this,
+            controller,
+            /* Login 화면과 검색 화면에서 뒤로가기를 없앱니다.*/
+            AppBarConfiguration.Builder(R.id.mypageFragment2, R.id.settingsFragment, R.id.searchFragment, R.id.timelineFragment).build()
+        )
+
+        NavigationUI.setupWithNavController(
+            bottom_navigation, controller
+        )
+
         getLocationPermission()
     }
 
-    private fun configureBottomNavigation() {
-        vp_ac_main_frag_pager.adapter = MainFragmentStatePagerAdapter(supportFragmentManager, 4)
 
-        tl_ac_main_bottom_menu.setupWithViewPager(vp_ac_main_frag_pager)
-        val bottomNaviLayout: View =
-            this.layoutInflater.inflate(R.layout.bottom_navigation_tab, null, false)
-
-        tl_ac_main_bottom_menu.getTabAt(0)!!.customView =
-            bottomNaviLayout.findViewById(R.id.btn_bottom_navi_home_tab) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(1)!!.customView =
-            bottomNaviLayout.findViewById(R.id.btn_bottom_navi_search_tab) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(2)!!.customView =
-            bottomNaviLayout.findViewById(R.id.btn_bottom_navi_add_tab) as RelativeLayout
-        tl_ac_main_bottom_menu.getTabAt(3)!!.customView =
-            bottomNaviLayout.findViewById(R.id.btn_bottom_navi_like_tab) as RelativeLayout
-
-    }
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==

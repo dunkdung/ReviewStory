@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.bundleOf
+import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.setFragmentResultListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -39,11 +40,14 @@ class StampsFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_stamps, container, false)
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var endDate: String? = null
         var startDate: String? = null
 
+
+        /*
         setFragmentResultListener("key"){ key, bundle ->
             startDate = bundle.getString("bundleKey")
 
@@ -89,7 +93,10 @@ class StampsFragment : Fragment() {
                     view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }
-        }//end of if
+        }//end of if*/
         }
     }//end of onViewCreated
-}
+
+
+
+

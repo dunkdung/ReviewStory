@@ -7,7 +7,6 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,12 +16,14 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.add
+import androidx.fragment.app.*
+import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
+import com.example.reviewstory.splash.SplashActivity
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -52,6 +53,9 @@ class TimelineFragment : Fragment() {
 
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
+
+
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -136,6 +140,7 @@ class TimelineFragment : Fragment() {
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         updatePlace()
+        /*
         btn_search?.setOnClickListener {
             Log.d("place", "바튼 클릭")
             //if (startDate == null || endDate == null) {
@@ -147,13 +152,29 @@ class TimelineFragment : Fragment() {
                 start_date?.let { it1 -> Log.i("START_DATE", it1) }
                 last_date?.let { it1 -> Log.i("END_DATE", it1) }
                //childFragmentManager.beginTransaction().add(R.id.child_fragment, StampsFragment()).commit()
+
+
                 childFragmentManager.setFragmentResult("key", bundleOf("bundleKey" to start_date, "endDate" to last_date))
                 childFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.child_fragment, StampsFragment())
-                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                        .commit()
+                    .beginTransaction()
+                    .replace(R.id.stampsFragment, StampsFragment())
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .commit()
+
+
+                //parentFragmentManager.beginTransaction().replace(R.id.stampsFragment, StampsFragment()).commit()
+
             }
+
+
+
+        }*/
+
+        view.btn_search?.setOnClickListener {
+
+
+                findNavController().navigate(R.id.action_timelineFragment_to_stampsFragment)
+
         }
     }
 
@@ -197,6 +218,10 @@ class TimelineFragment : Fragment() {
     }
 
 
+
+
 }
+
+
 
 
