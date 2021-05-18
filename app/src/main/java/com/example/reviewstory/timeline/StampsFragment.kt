@@ -68,7 +68,7 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
-                fbFirestore?.collection("stamp")?.whereEqualTo(fbAuth!!.uid.toString(), true)
+                fbFirestore?.collection("stamp")
                     ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
                     ?.whereLessThan("s_date", endDate!!)
                     ?.get()
