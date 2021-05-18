@@ -49,7 +49,7 @@ class TimelineFragment : Fragment() {
     var last_date: String? = null
 
     // Use fields to define the data types to return.
-    val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS,Place.Field.LAT_LNG)
+    val placeFields: List<Place.Field> = listOf(Place.Field.NAME,Place.Field.ADDRESS)
 
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)

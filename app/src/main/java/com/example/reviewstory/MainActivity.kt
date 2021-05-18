@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.work.WorkManager
 import com.example.reviewstory.main.MainFragmentStatePagerAdapter
 import com.example.reviewstory.timeline.StampsFragment
 import com.google.android.libraries.places.api.Places
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private var locationPermissionGranted = false
     var fbFirestore : FirebaseFirestore? = null
     var fbAuth : FirebaseAuth? = null
+    private val workManager = WorkManager.getInstance(application)
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
