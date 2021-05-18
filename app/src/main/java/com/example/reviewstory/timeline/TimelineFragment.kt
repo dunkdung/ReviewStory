@@ -167,8 +167,8 @@ class TimelineFragment : Fragment() {
 
         view.btn_search?.setOnClickListener {
 
-            val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
-            findNavController().navigate(direction)
+                val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
+                findNavController().navigate(direction)
 
         }
     }
