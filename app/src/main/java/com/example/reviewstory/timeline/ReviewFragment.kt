@@ -16,7 +16,6 @@ import com.example.reviewstory.STAMP
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_review.*
 import kotlinx.android.synthetic.main.fragment_timeline.*
-import kotlinx.android.synthetic.main.fragment_timeline.txt
 
 
 @Suppress("DEPRECATION")
