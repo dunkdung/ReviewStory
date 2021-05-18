@@ -62,6 +62,8 @@ class TimelineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        var start: String? = null
+        var last: String? = null
 
         // 위치정보 저장
         fbFirestore = FirebaseFirestore.getInstance()
@@ -69,6 +71,10 @@ class TimelineFragment : Fragment() {
 
         activity?.let { Places.initialize(it.applicationContext, "AIzaSyDTRY1lQAAW-WTWfbA_4KNcc30TFWWudDc") }
 
+        calendarView?.setOnDateChangeListener { view, year, month, dayOfMonth ->
+            start = String.format("%d-%d-%d", year, month+1, dayOfMonth)
+            txt.text = start
+        }
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         updatePlace()
@@ -115,6 +121,7 @@ class TimelineFragment : Fragment() {
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
 
                     fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
+                    fbFirestore?.collection("stamp")?.document()?.set(stampinfo)
 
                     Log.d(
                             "place",
@@ -133,3 +140,5 @@ class TimelineFragment : Fragment() {
         }
     }
 }
+
+
