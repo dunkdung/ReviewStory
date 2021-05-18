@@ -68,13 +68,8 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
-            val placerequst = fbFirestore?.collection("stamp")
-            placerequst?.whereEqualTo("user_num", fbAuth!!.uid)
-            placerequst?.whereGreaterThanOrEqualTo("s_date", startDate!!)
-            placerequst?.whereLessThan("s_date", endDate!!)
-            placerequst?.get()
-                    ?.addOnSuccessListener { result ->
-                        for (document in result) {
+           fbFirestore?.collection("stamp")?.whereGreaterThan("s_date", startDate!!)?.whereEqualTo("user_num", fbAuth!!.uid)?.whereLessThan("s_date", endDate!!)?.orderBy("s_date")?.get()?.addOnSuccessListener { result ->
+                    for (document in result) {
                             var stamp = STAMP()
                             stamp.s_num = document.id
                             stamp.address = document.data["address"] as String?
@@ -82,8 +77,6 @@ class StampsFragment : Fragment() {
                             stamp.s_date = document.data["s_date"] as String?
                             stamp.user_num = document.data["user_num"] as String?
                             stampList.add(stamp)
-                            Log.d("place", "${document.id} => ${document.data["address"]}")
-                            Log.d("place", "${stamp.address} => ${stamp.s_name}")
                         }
 
                         Log.d("place", "stamps 생성 ${stampList.size}")

@@ -134,7 +134,7 @@ class TimelineFragment : Fragment() {
 
 
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
-        updatePlace()
+        //updatePlace()
 
 
         view.btn_search?.setOnClickListener {

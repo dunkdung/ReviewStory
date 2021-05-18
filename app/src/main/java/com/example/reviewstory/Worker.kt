@@ -40,7 +40,7 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
     private fun updatePlace(){
         if (ContextCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
-            Log.d("place", "Plac")
+            Log.d("place", "백그라운드 실행")
             val placesClient = Places.createClient(applicationContext.applicationContext)
             val placeResponse = placesClient.findCurrentPlace(request)
             placeResponse.addOnCompleteListener { task ->
