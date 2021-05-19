@@ -65,7 +65,7 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
             var tline = TIMELINE()
-            tline.tl_num = fbAuth!!.uid + LocalDateTime.now().toString()
+            tline.tl_num = fbAuth!!.uid + startDate + endDate
             tline.end_date = endDate
             tline.start_date = startDate
             tline.user_num = fbAuth!!.uid
@@ -94,7 +94,7 @@ class StampsFragment : Fragment() {
                             )
                         )
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                        view.recycle_result.adapter = ResultAdapter(stampList, tline.tl_num)
+                        view.recycle_result.adapter = ResultAdapter(stampList, tline)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                     }
             }

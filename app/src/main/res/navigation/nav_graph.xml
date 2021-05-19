@@ -70,5 +70,13 @@
         <argument
             android:name="tlnum"
             app:argType="string" />
+        <action
+            android:id="@+id/action_reviewFragment_to_stampsFragment"
+            app:destination="@id/stampsFragment" />
+        <argument
+            android:name="startdate"
+            app:argType="string" />
+        <argument android:name="enddate"
+            app:argType="string" />
     </fragment>
 </navigation>

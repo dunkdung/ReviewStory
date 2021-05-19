@@ -14,7 +14,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
-class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: String?) : RecyclerView.Adapter<ItemViewHolder>() {
+class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: TIMELINE) : RecyclerView.Adapter<ItemViewHolder>() {
 
     /* 뷰홀더를 생성하여 반환 */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -35,7 +35,7 @@ class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: String?) : RecyclerV
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItems(stamp: STAMP?, tlnum: String?) {
+    fun bindItems(stamp: STAMP?, tlnum: TIMELINE?) {
         val tlnum = tlnum
         stamp?.let {
 
@@ -49,7 +49,11 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.setOnClickListener{
                 //fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
 
-                val direction: NavDirections = StampsFragmentDirections.actionStampsFragmentToReviewFragment(stamp.s_num.toString(), tlnum.toString())
+                val direction: NavDirections = StampsFragmentDirections.actionStampsFragmentToReviewFragment(
+                    stamp.s_num.toString(),
+                    tlnum?.tl_num.toString(),
+                    tlnum?.start_date.toString(),
+                    tlnum?.end_date.toString())
                 Log.d("place",stamp.s_num.toString())
                 findNavController(itemView).navigate(direction)
             }
