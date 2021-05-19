@@ -10,6 +10,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
+import com.example.reviewstory.TIMELINE
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
@@ -53,6 +54,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
                 val direction: NavDirections = StampsFragmentDirections.actionStampsFragmentToReviewFragment(stamp.s_num.toString())
                 findNavController(itemView).navigate(direction)
+                Log.d("s_num", stamp.s_num.toString())
             }
         }
     }
