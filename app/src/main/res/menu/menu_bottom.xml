@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@id/mypageFragment2"
-
+        android:icon="@drawable/ic_mypage"
         android:title="마이페이지" />
     <item
         android:id="@id/searchFragment"
-
-        android:title="경락검색" />
+        android:icon="@drawable/ic_search"
+        android:title="리뷰 검색" />
     <item
         android:id="@id/timelineFragment"
-
-        android:title="타임라인 생성" />
+        android:icon="@drawable/ic_timelines"
+        android:title="타임라인" />
     <item
         android:id="@id/settingsFragment"
-
+        android:icon="@drawable/ic_settings"
         android:title="설정" />
 
 </menu>
