@@ -1,7 +1,9 @@
 package com.example.reviewstory.timeline
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
@@ -12,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -36,7 +40,6 @@ import java.util.*
 class ReviewFragment : Fragment() {
 
     var fbFirestore: FirebaseFirestore? = null
-    val OPNE_GALLERY = 1
 
     var fbAuth: FirebaseAuth? = null
     var fbStorage: FirebaseStorage? = null
@@ -44,7 +47,7 @@ class ReviewFragment : Fragment() {
 
     var pickImageFromAlbum = 0
     var uriPhoto: Uri? = null
-
+    var imageuri: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -65,114 +68,68 @@ class ReviewFragment : Fragment() {
         fbAuth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
 
-        var userInfo = REVIEW()
-        var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imgFileName = "IMAGE_" + timeStamp + "_.png"
-        var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
-
         img_btn.setOnClickListener {
             var photoPicerIntent = Intent(Intent.ACTION_PICK)
             photoPicerIntent.type = "image/*"
             startActivityForResult(photoPicerIntent, pickImageFromAlbum)
-
-            storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-
-
-                    userInfo.rv_img = uri.toString()
-
-                    //fbFirestore?.collection("review")?.document()?.update("rv_img", userInfo.rv_img.toString())
-                }
-            }
         }
 
-
-
-
         val safeArgs by navArgs<ReviewFragmentArgs>()
-
         val snum = safeArgs.snum
         val tlnum = safeArgs.tlnum
         val std = safeArgs.startdate
         val edd = safeArgs.enddate
-
-
-        Log.d("place", snum)
         txt_btn.setOnClickListener {
             var review = REVIEW()
             review.rv_txt = rv_edit.text.toString()
+            var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            var imgFileName = "IMAGE_" + timeStamp + "_.png"
+            var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
+            storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { uri ->
+                    imageuri = uri.toString()
+                    fbFirestore?.collection("stamp")
+                        ?.whereEqualTo("s_num", snum)
+                        ?.get()
+                        ?.addOnSuccessListener { result ->
+                            for (document in result) {
+                                var stamp = STAMP()
+                                stamp.s_num = snum
+                                stamp.address = document.data["address"] as String?
+                                stamp.s_name = document.data["s_name"] as String?
+                                stamp.s_date = document.data["s_date"] as String?
+                                stamp.user_num = document.data["user_num"] as String?
 
-            fbFirestore?.collection("stamp")
-                ?.whereEqualTo("s_num", snum)
-                ?.get()
-                ?.addOnSuccessListener { result ->
-                    for (document in result) {
-                        var stamp = STAMP()
-                        stamp.s_num = snum
-                        stamp.address = document.data["address"] as String?
-                        stamp.s_name = document.data["s_name"] as String?
-                        stamp.s_date = document.data["s_date"] as String?
-                        stamp.user_num = document.data["user_num"] as String?
-
-                        review.address = stamp.address
-                        review.s_num = stamp.s_num
-                        review.s_name = stamp.s_name
-                        review.s_date = stamp.s_date
-                        review.user_num = stamp.user_num
-                        review.rv_img = userInfo.rv_img
-
-                        fbFirestore?.collection("timeline")
-                            ?.document(tlnum)
-                            ?.collection("review")
-                            ?.add(review)
-                    }
-                    Log.d("place", "리뷰추가")
+                                review.address = stamp.address
+                                review.s_num = stamp.s_num
+                                review.s_name = stamp.s_name
+                                review.s_date = stamp.s_date
+                                review.user_num = stamp.user_num
+                                review.rv_img = imageuri
+                                fbFirestore?.collection("timeline")
+                                    ?.document(tlnum)
+                                    ?.collection("review")
+                                    ?.add(review)
+                            }
+                            Log.d("place", "리뷰추가")
+                        }
                 }
+            }
             val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std,edd)
             findNavController().navigate(direction)
         }
-/*
-        img_btn.setOnClickListener {
-            openGallery()
-        }
-*/
     }
 
-/*
-    private fun openGallery() {
-        val intent: Intent = Intent(Intent.ACTION_GET_CONTENT)
-        intent.setType("image/*")
-        startActivityForResult(Intent.createChooser(intent,"load"),OPNE_GALLERY)
-    }
-
-    @RequiresApi(Build.VERSION_CODES.P)
-    @Override
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK) {
-            if (resultCode == OPNE_GALLERY) {
-                var dataUri = data?.data
-                val source =
-                    ImageDecoder.createSource(this.requireActivity().contentResolver, dataUri!!)
-                Log.d("imgopen", dataUri.toString())
-
-                try{
-                    //val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, dataUri)
-                    val bitmap = ImageDecoder.decodeBitmap(source)
-                    imageView.setImageBitmap(bitmap)
-                    Log.d("image", dataUri.toString())
-                }catch (e:Exception){
-
-                }
+            uriPhoto = data?.data
+            imageView.setImageURI(uriPhoto)
+            if (context?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE) } ==
+                PackageManager.PERMISSION_GRANTED) {
+            }else{
+                ActivityCompat.requestPermissions(
+                    Activity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1);
             }
-        }
-    }*/
-}
-
-}
-
- */
-
-
+    }
 }
