@@ -20,6 +20,7 @@ import androidx.fragment.app.*
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
@@ -69,7 +70,6 @@ class TimelineFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
 
 
         // 위치정보 저장
@@ -143,6 +143,10 @@ class TimelineFragment : Fragment() {
                 findNavController().navigate(direction)
 
         }
+
+
+
+
     }
 
 

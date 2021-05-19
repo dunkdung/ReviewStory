@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
 import com.example.reviewstory.TIMELINE
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
@@ -36,7 +34,7 @@ class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: TIMELINE) : Recycler
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItems(stamp: STAMP?, tlnum: TIMELINE?) {
+    fun bindItems(stamp: STAMP, tlnum: TIMELINE?) {
         val tlnum = tlnum
         stamp?.let {
 
