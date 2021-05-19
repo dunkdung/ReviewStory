@@ -3,41 +3,31 @@ package com.example.reviewstory.timeline
 import android.Manifest
 import android.app.DatePickerDialog
 import android.content.pm.PackageManager
-import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RadioButton
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.navigation.NavDirections
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
-import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
-import com.example.reviewstory.STAMP
-import com.example.reviewstory.splash.SplashActivity
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.CameraPosition
+import com.example.reviewstory.REVIEW
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
-import com.google.android.libraries.places.api.model.PlaceLikelihood
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.fragment_timeline.view.*
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 
@@ -122,7 +112,9 @@ class TimelineFragment : Fragment() {
                         last_date = SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
                         /* 날짜 선택 여부를 체크하여 처리하기 위한 함수 호출
                            - 선택한 날짜를 선택창에 표시 */
-                        last_date?.let { last_txt.text = it }
+                        last_txt.text = (LocalDate.parse(last_date, DateTimeFormatter.ISO_DATE).minusDays(1)).toString()
+
+                        last_date
                     }
                 },
                 /* DatePickerDialog의 Date를 오늘 날짜로 초기화)*/
@@ -131,12 +123,8 @@ class TimelineFragment : Fragment() {
                 currentCaldenar.get(Calendar.DAY_OF_MONTH)
             ).show()
         }
-
-
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         //updatePlace()
-
-
         view.btn_search?.setOnClickListener {
 
                 val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
@@ -144,8 +132,6 @@ class TimelineFragment : Fragment() {
 
         }
     }
-
-
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun updatePlace(){
@@ -157,14 +143,13 @@ class TimelineFragment : Fragment() {
             placeResponse.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val response = task.result
-                    var stampinfo = STAMP()
+                    var stampinfo = REVIEW()
 
                     stampinfo.address = response.placeLikelihoods[0].place.address
                     stampinfo.s_date = LocalDateTime.now().toString()
                     stampinfo.user_num = fbAuth?.currentUser?.uid
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
                     stampinfo.places = response.placeLikelihoods
-
 
                     fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
                     fbFirestore?.collection("stamp")?.add(stampinfo)

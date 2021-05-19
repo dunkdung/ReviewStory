@@ -6,18 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
-import com.example.reviewstory.STAMP
+import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
-class SearchAdapter(val items: ArrayList<STAMP>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
+class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
 
     /* 뷰홀더를 생성하여 반환 */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         //list_item_fresh 뷰 inflate
         val rootView =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_stamp, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_review, parent, false)
         return ItemViewHolder(rootView)
     }
 
@@ -32,7 +32,7 @@ class SearchAdapter(val items: ArrayList<STAMP>, val fbFirestore: FirebaseFirest
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItems(stamp: STAMP?, fbFirestore: FirebaseFirestore) {
+    fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
         stamp?.let {
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =
@@ -42,7 +42,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "방문날짜: " + "${stamp.s_date}"
             itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
-                fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
+                //fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
                 Log.d("place", "stamp ${stamp.s_name} is deledte")
             }
         }
