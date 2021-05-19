@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
     tools:context=".timeline.TimelineFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -14,85 +17,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/start_btn"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true"
+            >
+
+            <TextView
+                android:id="@+id/start_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:text="시작 날짜 선택" />
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/last_btn"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:layout_margin="16dp"
+            android:layout_gravity="right"
+            app:cardCornerRadius="20dp"
+            app:cardElevation="8dp"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:focusable="true"
+            android:clickable="true"
+            >
+            <TextView
+                android:id="@+id/last_txt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="20sp"
+                android:text="최종 날짜 선택"
+                />
+        </androidx.cardview.widget.CardView>
+
     </FrameLayout>
 
-    <TextView
-        android:id="@+id/text_timeline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="17dp"
-        android:layout_marginEnd="340dp"
-        android:layout_marginBottom="44dp"
-        android:text="timeline"
-        android:textColor="#fff"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_search" />
 
-    <Button
+    <androidx.cardview.widget.CardView
         android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="318dp"
-        android:layout_marginBottom="17dp"
-        android:text="Button"
-        app:layout_constraintBottom_toTopOf="@+id/text_timeline"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="150dp"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:focusable="true"
+        android:clickable="true">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_search"
+            android:layout_gravity="center_horizontal"
+            />
+    </androidx.cardview.widget.CardView>
 
 
-    <Button
-        android:id="@+id/start_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="32dp"
-        android:text="시작날짜"
-        app:layout_constraintEnd_toStartOf="@+id/last_btn"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_timeline" />
 
-    <Button
-        android:id="@+id/last_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="87dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginEnd="64dp"
-        android:text="마지막 날짜"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/start_btn"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/start_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="19dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginEnd="126dp"
-        android:layout_marginBottom="490dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/last_txt"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/start_btn"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/last_txt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="54dp"
-        android:layout_marginBottom="490dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/start_txt"
-        app:layout_constraintTop_toBottomOf="@+id/last_btn"
-        app:layout_constraintVertical_bias="0.0" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
