@@ -11,8 +11,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.fragment.navArgs
 import com.example.reviewstory.R
+import com.example.reviewstory.REVIEW
 import com.example.reviewstory.STAMP
+import com.example.reviewstory.TIMELINE
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_review.*
 import kotlinx.android.synthetic.main.fragment_timeline.*
@@ -41,14 +45,48 @@ class ReviewFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         fbFirestore = FirebaseFirestore.getInstance()
 
-        btn.setOnClickListener {
-            var review = STAMP()
+        val safeArgs by navArgs<ReviewFragmentArgs>()
 
-            review.rv_txt = txt.text.toString()
+        val snum = safeArgs.snum
 
-            fbFirestore?.collection("stamp")?.document(review.s_num.toString())
-                ?.set(review)
+        txt_btn.setOnClickListener {
+            var review = REVIEW()
 
+            review.rv_txt = rv_edit.text.toString()
+
+            fbFirestore?.collection("stamp")
+                ?.whereEqualTo("user_num", snum!!)
+                ?.get()
+                ?.addOnSuccessListener { result ->
+                    for (document in result) {
+                        var stamp = STAMP()
+                        stamp.s_num = document.id
+                        stamp.address = document.data["address"] as String?
+                        stamp.s_name = document.data["s_name"] as String?
+                        stamp.s_date = document.data["s_date"] as String?
+                        stamp.user_num = document.data["user_num"] as String?
+
+                        review.address = stamp.address
+                        review.s_num = stamp.s_num
+                        review.s_name = stamp.s_name
+                        review.s_date = stamp.s_date
+                        review.user_num = stamp.user_num
+
+                        fbFirestore?.collection("timeline")
+                            ?.document()
+                            ?.collection("review")
+                            ?.add(review)
+
+
+                    }
+
+
+
+
+                }
+        }
+
+        img_btn.setOnClickListener {
             openGallery()
         }
 
@@ -85,3 +123,5 @@ class ReviewFragment : Fragment() {
         }
     }
 }
+
+
