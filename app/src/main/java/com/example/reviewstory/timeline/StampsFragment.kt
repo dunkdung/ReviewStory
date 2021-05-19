@@ -1,5 +1,6 @@
 package com.example.reviewstory.timeline
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -68,25 +69,12 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
-
-
-
-
-
-/*
-            val placerequst = fbFirestore?.collection("stamp")
-            placerequst?.whereEqualTo("user_num", fbAuth!!.uid)
-            placerequst?.whereGreaterThanOrEqualTo("s_date", startDate!!)
-            placerequst?.whereLessThan("s_date", endDate!!)
-            */
-            fbFirestore?.collection("stamp")
-                ?.whereGreaterThanOrEqualTo("s_date", startDate!!)
-                ?.whereEqualTo("user_num", fbAuth!!.uid)
-                ?.whereLessThan("s_date", endDate!!)
-                ?.orderBy("s_date")
-                ?.get()
-                ?.addOnSuccessListener { result ->
-                        for (document in result) {
+           fbFirestore?.collection("stamp")
+               ?.whereGreaterThan("s_date", startDate!!)
+               ?.whereEqualTo("user_num", fbAuth!!.uid)
+               ?.whereLessThan("s_date", endDate!!)
+               ?.get()?.addOnSuccessListener { result ->
+                    for (document in result) {
                             var stamp = STAMP()
                             stamp.s_num = document.id
                             stamp.address = document.data["address"] as String?
@@ -94,9 +82,6 @@ class StampsFragment : Fragment() {
                             stamp.s_date = document.data["s_date"] as String?
                             stamp.user_num = document.data["user_num"] as String?
                             stampList.add(stamp)
-                            Log.d("place", "${document.id} => ${document.data["address"]}")
-                            Log.d("place", "${stamp.address} => ${stamp.s_name}")
-
                         }
 
                         Log.d("place", "stamps 생성 ${stampList.size}")
@@ -110,8 +95,6 @@ class StampsFragment : Fragment() {
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
                         view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
-
-
                     }
             }
         }
