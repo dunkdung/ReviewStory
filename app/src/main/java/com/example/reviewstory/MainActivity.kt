@@ -34,11 +34,15 @@ import java.util.concurrent.TimeUnit
 class MainActivity : AppCompatActivity() {
 
     private var locationPermissionGranted = false
+    var fbFirestore : FirebaseFirestore? = null
+    var fbAuth : FirebaseAuth? = null
     private val workManager = WorkManager.getInstance(application)
     @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        fbFirestore = FirebaseFirestore.getInstance()
+        fbAuth = FirebaseAuth.getInstance()
         val controller = findNavController(R.id.navigation_host)
         /*Navigation을 세팅합니다. */
         NavigationUI.setupActionBarWithNavController(
@@ -58,6 +62,15 @@ class MainActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueue(saveRequest)
 
         getLocationPermission()
+        if(true)
+        {
+            var userInfo = USER()
+
+            userInfo.user_num = fbAuth?.uid
+            userInfo.user_id = fbAuth?.currentUser?.email
+
+            fbFirestore?.collection("user")?.document(userInfo.user_id.toString())?.set(userInfo)
+        }
     }
 
 
