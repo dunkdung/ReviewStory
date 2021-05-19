@@ -83,22 +83,28 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
             Log.d("place", "백그라운드 실행")
+            val sharedPref = applicationContext.getSharedPreferences("test", MODE_PRIVATE)
+            val editor =sharedPref.edit()
             val placesClient = Places.createClient(applicationContext.applicationContext)
             val placeResponse = placesClient.findCurrentPlace(request)
             placeResponse.addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     val response = task.result
+                    var num = sharedPref.getInt("s_num",0)
                     var stampinfo = STAMP()
                     stampinfo.address = response.placeLikelihoods[0].place.address
                     stampinfo.s_date = LocalDateTime.now().toString()
                     stampinfo.user_num = fbAuth?.currentUser?.uid
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
                     stampinfo.places = response.placeLikelihoods
+                    stampinfo.s_num = fbAuth?.currentUser?.uid + "$num"
+                    editor.putInt("s_num", num + 1)
+                    editor.apply()
                     fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
                     fbFirestore?.collection("stamp")?.add(stampinfo)
                     Log.d(
                         "place",
-                        "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
+                        "Place '${response.placeLikelihoods[0].place.name}''${num}''${response.placeLikelihoods[0].place.latLng}'"
                     )
                 }
             }

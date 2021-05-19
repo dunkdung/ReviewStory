@@ -1,5 +1,6 @@
 package com.example.reviewstory.timeline
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -68,7 +69,11 @@ class StampsFragment : Fragment() {
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
 
-           fbFirestore?.collection("stamp")?.whereGreaterThan("s_date", startDate!!)?.whereEqualTo("user_num", fbAuth!!.uid)?.whereLessThan("s_date", endDate!!)?.orderBy("s_date")?.get()?.addOnSuccessListener { result ->
+           fbFirestore?.collection("stamp")
+               ?.whereGreaterThan("s_date", startDate!!)
+               ?.whereEqualTo("user_num", fbAuth!!.uid)
+               ?.whereLessThan("s_date", endDate!!)
+               ?.get()?.addOnSuccessListener { result ->
                     for (document in result) {
                             var stamp = STAMP()
                             stamp.s_num = document.id
@@ -90,8 +95,6 @@ class StampsFragment : Fragment() {
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
                         view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
-
-
                     }
             }
         }
