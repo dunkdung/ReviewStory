@@ -1,5 +1,6 @@
 package com.example.reviewstory.timeline
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
                 fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
+                Log.d("place", "stamp ${stamp.s_name} is deledte")
             }
         }
     }
