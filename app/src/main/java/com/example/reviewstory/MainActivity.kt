@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
+import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.example.reviewstory.main.MainFragmentStatePagerAdapter
 import com.example.reviewstory.timeline.StampsFragment
@@ -28,6 +29,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.time.LocalDateTime
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity() {
 
@@ -53,6 +55,11 @@ class MainActivity : AppCompatActivity() {
         NavigationUI.setupWithNavController(
             bottom_navigation, controller
         )
+        val saveRequest =
+            PeriodicWorkRequestBuilder<LocationWorker>(15, TimeUnit.MINUTES)
+                // Additional configuration
+                .build()
+        WorkManager.getInstance(this).enqueue(saveRequest)
 
         getLocationPermission()
         if(true)
