@@ -48,7 +48,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 //fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
                 //Log.d("delete","삭제완료")
 
-                val direction: NavDirections = StampsFragmentDirections.actionStampsFragmentToReviewFragment()
+                val direction: NavDirections = StampsFragmentDirections.actionStampsFragmentToReviewFragment(stamp.s_num.toString())
                 findNavController(itemView).navigate(direction)
             }
         }
