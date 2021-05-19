@@ -1,5 +1,6 @@
 package com.example.reviewstory.timeline
 
+import android.graphics.Color
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,12 @@ import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
-import com.example.reviewstory.STAMP
+import com.example.reviewstory.REVIEW
 import com.example.reviewstory.TIMELINE
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
-class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: TIMELINE) : RecyclerView.Adapter<ItemViewHolder>() {
+class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE) : RecyclerView.Adapter<ItemViewHolder>() {
 
     /* 뷰홀더를 생성하여 반환 */
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -34,10 +35,10 @@ class ResultAdapter(val items: ArrayList<STAMP>, val tlnum: TIMELINE) : Recycler
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItems(stamp: STAMP, tlnum: TIMELINE?) {
+    fun bindItems(stamp: REVIEW?, tlnum: TIMELINE?) {
         val tlnum = tlnum
         stamp?.let {
-
+                if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =
                 "${stamp.s_name}"

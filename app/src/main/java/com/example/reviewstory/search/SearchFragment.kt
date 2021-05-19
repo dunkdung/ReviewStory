@@ -1,20 +1,15 @@
 package com.example.reviewstory.search
 
 import android.os.Bundle
-import android.provider.VoicemailContract
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.fragment.app.setFragmentResultListener
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
-import com.example.reviewstory.STAMP
-import com.example.reviewstory.timeline.ResultAdapter
+import com.example.reviewstory.REVIEW
 import com.google.android.gms.common.api.Status
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
@@ -22,10 +17,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_search.*
 import kotlinx.android.synthetic.main.fragment_search.view.*
-import kotlinx.android.synthetic.main.fragment_stamps.view.*
-
 
 class SearchFragment : Fragment() {
 
@@ -42,7 +34,7 @@ class SearchFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var stampList = ArrayList<STAMP>()
+        var stampList = ArrayList<REVIEW>()
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
         context?.let { Places.initialize(it, "AIzaSyDTRY1lQAAW-WTWfbA_4KNcc30TFWWudDc") }
@@ -61,10 +53,12 @@ class SearchFragment : Fragment() {
             override fun onPlaceSelected(place: Place) {
                 stampList.clear()
                 Log.d("place", "${place.name}, ${place.id}")
-                fbFirestore?.collection("stamp")?.whereEqualTo("s_name",place.name)?.get()
+                fbFirestore?.collectionGroup("review")
+                    ?.whereEqualTo("s_name",place.name)
+                    ?.get()
                     ?.addOnSuccessListener { result ->
                         for (document in result) {
-                            var stamp = STAMP()
+                            var stamp = REVIEW()
                             stamp.s_num = document.id
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
@@ -83,6 +77,7 @@ class SearchFragment : Fragment() {
                         view.recycle_search.adapter = SearchAdapter(stampList, fbFirestore!!)
                         view.recycle_search.layoutManager = LinearLayoutManager(requireContext())
                     }
+                Log.d("place", "검색 실패")
             }
 
             override fun onError(p0: Status) {

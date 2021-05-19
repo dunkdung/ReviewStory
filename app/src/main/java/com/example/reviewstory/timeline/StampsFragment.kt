@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
-import com.example.reviewstory.STAMP
 import com.example.reviewstory.TIMELINE
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
@@ -56,31 +55,24 @@ class StampsFragment : Fragment() {
         startDate = safeArgs.sdate
         endDate = safeArgs.ldate
 
-        Log.d("start", startDate)
-        Log.d("last", endDate)
-
-        var stampList = ArrayList<STAMP>()
-        var reviewList = ArrayList<REVIEW>()
-        var tline = TIMELINE()
+        var stampList = ArrayList<REVIEW>()
+        var snumList = ArrayList<String>()
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
-        Log.d("place", "search")
-        Log.d("place", "데이터 전달1 $startDate")
-        Log.d("place", "데이터 전달2 $endDate")
         if (endDate != null && startDate != null) {
-            Log.d("place", "search2")
+            var tline = TIMELINE()
             tline.tl_num = fbAuth!!.uid + startDate + endDate
             tline.end_date = endDate
             tline.start_date = startDate
             tline.user_num = fbAuth!!.uid
             fbFirestore?.collection("timeline")?.document(tline.tl_num.toString())?.set(tline)
             fbFirestore?.collection("stamp")
-                    ?.whereGreaterThan("s_date", startDate!!)
-                    ?.whereEqualTo("user_num", fbAuth!!.uid)
-                    ?.whereLessThan("s_date", endDate!!)
-                    ?.get()?.addOnSuccessListener { result ->
-                        for (document in result) {
-                            var stamp = STAMP()
+               ?.whereGreaterThan("s_date", startDate)
+               ?.whereEqualTo("user_num", fbAuth!!.uid)
+               ?.whereLessThan("s_date", endDate)
+               ?.get()?.addOnSuccessListener { result ->
+                    for (document in result) {
+                            var stamp = REVIEW()
                             stamp.s_num = document.data["s_num"] as String?
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
@@ -88,8 +80,6 @@ class StampsFragment : Fragment() {
                             stamp.user_num = document.data["user_num"] as String?
                             stampList.add(stamp)
                         }
-
-                        Log.d("place", "stamps 생성 ${stampList.size}")
                         /*  리사이클러뷰에 구분선 설정 */
                         view.recycle_result.addItemDecoration(
                                 DividerItemDecoration(

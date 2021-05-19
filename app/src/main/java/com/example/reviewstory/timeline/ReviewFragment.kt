@@ -4,34 +4,23 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
-import com.example.reviewstory.STAMP
-import com.example.reviewstory.TIMELINE
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseAuthActionCodeException
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_review.*
-import kotlinx.android.synthetic.main.fragment_review.view.*
-import kotlinx.android.synthetic.main.fragment_timeline.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -93,13 +82,12 @@ class ReviewFragment : Fragment() {
                         ?.get()
                         ?.addOnSuccessListener { result ->
                             for (document in result) {
-                                var stamp = STAMP()
+                                var stamp = REVIEW()
                                 stamp.s_num = snum
                                 stamp.address = document.data["address"] as String?
                                 stamp.s_name = document.data["s_name"] as String?
                                 stamp.s_date = document.data["s_date"] as String?
                                 stamp.user_num = document.data["user_num"] as String?
-
                                 review.address = stamp.address
                                 review.s_num = stamp.s_num
                                 review.s_name = stamp.s_name

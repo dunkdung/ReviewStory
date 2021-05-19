@@ -91,7 +91,7 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
                 if (task.isSuccessful) {
                     val response = task.result
                     var num = sharedPref.getInt("s_num",0)
-                    var stampinfo = STAMP()
+                    var stampinfo = REVIEW()
                     stampinfo.address = response.placeLikelihoods[0].place.address
                     stampinfo.s_date = LocalDateTime.now().toString()
                     stampinfo.user_num = fbAuth?.currentUser?.uid

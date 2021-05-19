@@ -16,19 +16,6 @@ data class USER(
 
 }
 
-data class STAMP(
-    var s_num : String? = null,
-    var user_num : String? = null,
-    var tl_num : String? = null,
-    var address : String? = null,
-    var s_name : String? = null,
-    var s_date : String? = null,
-    var score : String? = null,
-    var places: List<PlaceLikelihood>? =null
-
-){
-
-}
 
 data class FOLLOWLIST(
     var fol_num : Int? = null,
@@ -45,13 +32,13 @@ data class TIMELINE(
     var tl_date : String? = null,
     var start_date : String? =null,
     var end_date : String? = null
-
 ){
 
 }
 
 data class REVIEW(
     var s_num : String? = null,
+    var write : Boolean = false,
     var user_num : String? = null,
     var tl_num : String? = null,
     var address : String? = null,
