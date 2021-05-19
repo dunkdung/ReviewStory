@@ -12,6 +12,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
@@ -89,19 +92,23 @@ class ReviewFragment : Fragment() {
         val safeArgs by navArgs<ReviewFragmentArgs>()
 
         val snum = safeArgs.snum
+        val tlnum = safeArgs.tlnum
+        val std = safeArgs.startdate
+        val edd = safeArgs.enddate
 
+
+        Log.d("place", snum)
         txt_btn.setOnClickListener {
             var review = REVIEW()
-
             review.rv_txt = rv_edit.text.toString()
 
             fbFirestore?.collection("stamp")
-                ?.whereEqualTo("s_num", snum!!)
+                ?.whereEqualTo("s_num", snum)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
                         var stamp = STAMP()
-                        stamp.s_num = document.data["s_num"] as String?
+                        stamp.s_num = snum
                         stamp.address = document.data["address"] as String?
                         stamp.s_name = document.data["s_name"] as String?
                         stamp.s_date = document.data["s_date"] as String?
@@ -115,13 +122,14 @@ class ReviewFragment : Fragment() {
                         review.rv_img = userInfo.rv_img
 
                         fbFirestore?.collection("timeline")
-                            ?.document()
+                            ?.document(tlnum)
                             ?.collection("review")
                             ?.add(review)
-
                     }
-
+                    Log.d("place", "리뷰추가")
                 }
+            val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std,edd)
+            findNavController().navigate(direction)
         }
 /*
         img_btn.setOnClickListener {

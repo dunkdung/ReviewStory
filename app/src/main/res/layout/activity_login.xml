@@ -7,66 +7,89 @@
     android:layout_height="match_parent"
     tools:context=".auth.LoginActivity">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
-        android:src="@drawable/background"
-        android:scaleType="fitXY" />
+        android:layout_height="312dp"
+        android:layout_above="@+id/signin_layout"
+        android:layout_marginTop="0dp"
+        android:src="@drawable/main_logo1" />
 
     <LinearLayout android:id="@+id/signin_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            >
             <EditText android:id="@+id/email_edittext"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="45dp"
                 android:textColor="@color/colorWhite"
-                android:hint="@string/email"/>
+                android:hint="@string/email"
+
+                />
         </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout android:layout_width="match_parent"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            app:boxCornerRadiusBottomEnd="20dp"
+            app:boxCornerRadiusBottomStart="20dp"
+            app:boxCornerRadiusTopEnd="20dp"
+            app:boxCornerRadiusTopStart="20dp"
+            android:layout_marginTop="10dp"
+            >
             <EditText android:inputType="textPassword"
                 android:id="@+id/password_edittext"
                 android:textColor="@color/colorWhite"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/password"/>
+                android:layout_height="45dp"
+                android:hint="@string/password"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:textColor="@color/colorWhite"
             android:id="@+id/email_login_button"
-            android:text="@string/signin_email"
-            android:layout_width="match_parent"
+            android:fontFamily="@font/font1"
+            android:layout_width="300dp"
             android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="35dp"/>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/facebook_login_button"
-            android:text="@string/signin_facebook"
-            android:textColor="#FFFFFF"
-            android:background="@drawable/btn_signin_facebook"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="35dp"
+            android:background="@drawable/button_round"
+            android:text="로그인" />
+
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/google_sign_in_button"
-            android:text="@string/signin_google"
-            android:textColor="@color/colorWhite"
+            android:text="구글 로그인"
+            android:fontFamily="@font/font1"
+            android:textColor="#FFFFFF"
             android:background="@drawable/btn_signin_google"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            />
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/facebook_login_button"
+            android:text="회원 가입"
+            android:textColor="@color/colorWhite"
+            android:fontFamily="@font/font1"
+            android:background="@drawable/btn_signin_reviewstory"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
@@ -74,16 +97,6 @@
             android:layout_marginBottom="80dp"/>
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="379dp"
-        android:layout_height="238dp"
-        android:layout_above="@+id/signin_layout"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginStart="47dp"
-        android:layout_marginEnd="47dp"
-        android:layout_marginBottom="118dp"
-        app:srcCompat="@drawable/ic_logo_name" />
+
 
 </RelativeLayout>

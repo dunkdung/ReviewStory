@@ -1,34 +1,29 @@
 package com.example.reviewstory.timeline
 
-import android.content.ContentValues.TAG
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentTransaction
-import androidx.fragment.app.setFragmentResultListener
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import androidx.annotation.RequiresApi
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
+import com.example.reviewstory.TIMELINE
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stamps.view.*
-import kotlinx.android.synthetic.main.fragment_timeline.*
-import org.json.JSONObject
+import java.time.LocalDateTime
+import kotlin.collections.ArrayList
 
 
 class StampsFragment : Fragment() {
-
     var fbFirestore: FirebaseFirestore? = null
     var fbAuth: FirebaseAuth? = null
 
@@ -47,6 +42,7 @@ class StampsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_stamps, container, false)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var endDate: String? = null
@@ -68,8 +64,13 @@ class StampsFragment : Fragment() {
         Log.d("place", "데이터 전달2 $endDate")
         if (endDate != null && startDate != null) {
             Log.d("place", "search2")
-
-           fbFirestore?.collection("stamp")
+            var tline = TIMELINE()
+            tline.tl_num = fbAuth!!.uid + startDate + endDate
+            tline.end_date = endDate
+            tline.start_date = startDate
+            tline.user_num = fbAuth!!.uid
+            fbFirestore?.collection("timeline")?.document(tline.tl_num.toString())?.set(tline)
+            fbFirestore?.collection("stamp")
                ?.whereGreaterThan("s_date", startDate!!)
                ?.whereEqualTo("user_num", fbAuth!!.uid)
                ?.whereLessThan("s_date", endDate!!)
@@ -93,7 +94,7 @@ class StampsFragment : Fragment() {
                             )
                         )
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                        view.recycle_result.adapter = ResultAdapter(stampList, fbFirestore!!)
+                        view.recycle_result.adapter = ResultAdapter(stampList, tline)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                     }
             }
