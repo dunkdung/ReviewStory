@@ -59,6 +59,7 @@ class SearchFragment : Fragment() {
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
+                stampList.clear()
                 Log.d("place", "${place.name}, ${place.id}")
                 fbFirestore?.collection("stamp")?.whereEqualTo("s_name",place.name)?.get()
                     ?.addOnSuccessListener { result ->
