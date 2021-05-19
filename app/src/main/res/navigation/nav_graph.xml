@@ -67,5 +67,8 @@
         <argument
             android:name="snum"
             app:argType="string" />
+        <argument
+            android:name="tlnum"
+            app:argType="string" />
     </fragment>
 </navigation>

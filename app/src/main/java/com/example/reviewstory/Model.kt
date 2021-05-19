@@ -40,9 +40,11 @@ data class FOLLOWLIST(
 }
 
 data class TIMELINE(
-    var tl_num : Int? = null,
+    var tl_num : String? = null,
     var user_num : String? = null,
-    var tl_date : Date? = null
+    var tl_date : String? = null,
+    var start_date : String? =null,
+    var end_date : String? = null
 
 ){
 

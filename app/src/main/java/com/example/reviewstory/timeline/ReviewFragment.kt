@@ -48,19 +48,19 @@ class ReviewFragment : Fragment() {
         val safeArgs by navArgs<ReviewFragmentArgs>()
 
         val snum = safeArgs.snum
-
+        val tlnum = safeArgs.tlnum
+        Log.d("place", snum)
         txt_btn.setOnClickListener {
             var review = REVIEW()
-
             review.rv_txt = rv_edit.text.toString()
 
             fbFirestore?.collection("stamp")
-                ?.whereEqualTo("user_num", snum!!)
+                ?.whereEqualTo("s_num", snum)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
                         var stamp = STAMP()
-                        stamp.s_num = document.id
+                        stamp.s_num = snum
                         stamp.address = document.data["address"] as String?
                         stamp.s_name = document.data["s_name"] as String?
                         stamp.s_date = document.data["s_date"] as String?
@@ -73,16 +73,11 @@ class ReviewFragment : Fragment() {
                         review.user_num = stamp.user_num
 
                         fbFirestore?.collection("timeline")
-                            ?.document()
+                            ?.document(tlnum)
                             ?.collection("review")
                             ?.add(review)
-
-
                     }
-
-
-
-
+                    Log.d("place", "리뷰추가")
                 }
         }
 
