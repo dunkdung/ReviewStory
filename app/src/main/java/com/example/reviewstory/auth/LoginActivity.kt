@@ -32,6 +32,9 @@ class LoginActivity : AppCompatActivity() {
             //First step
             googleLogin()
         }
+        sign_in_button.setOnClickListener{
+            moveJoinPage()
+        }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -85,6 +88,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+    }
+    fun moveJoinPage(){
+        startActivity(Intent(this, JoinActivity::class.java))
+
     }
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent

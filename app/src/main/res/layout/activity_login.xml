@@ -84,17 +84,18 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="5dp"
             />
+
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/facebook_login_button"
-            android:text="회원 가입"
-            android:textColor="@color/colorWhite"
-            android:fontFamily="@font/font1"
-            android:background="@drawable/btn_signin_reviewstory"
+            android:id="@+id/sign_in_button"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:layout_marginBottom="80dp"/>
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/btn_signin_reviewstory"
+            android:fontFamily="@font/font1"
+            android:text="회원 가입"
+            android:textColor="@color/colorWhite" />
     </LinearLayout>
 
 
