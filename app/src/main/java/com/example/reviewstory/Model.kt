@@ -23,8 +23,6 @@ data class STAMP(
     var address : String? = null,
     var s_name : String? = null,
     var s_date : String? = null,
-    var rv_txt : String? = null,
-    var r_pic : String? = null,
     var score : String? = null,
     var places: List<PlaceLikelihood>? =null
 
@@ -45,6 +43,22 @@ data class TIMELINE(
     var tl_num : Int? = null,
     var user_num : String? = null,
     var tl_date : Date? = null
+
+){
+
+}
+
+data class REVIEW(
+    var s_num : String? = null,
+    var user_num : String? = null,
+    var tl_num : String? = null,
+    var address : String? = null,
+    var s_name : String? = null,
+    var s_date : String? = null,
+    var score : String? = null,
+    var places: List<PlaceLikelihood>? =null,
+    var rv_txt : String? = null,
+    var rv_img : String? = null
 ){
 
 }

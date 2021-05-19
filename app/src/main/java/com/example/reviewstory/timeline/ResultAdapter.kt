@@ -10,6 +10,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.STAMP
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_stamp.view.*
 
@@ -36,7 +37,9 @@ class ResultAdapter(val items: ArrayList<STAMP>, val fbFirestore: FirebaseFirest
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: STAMP?, fbFirestore: FirebaseFirestore) {
+
         stamp?.let {
+
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =
                 "${stamp.s_name}"

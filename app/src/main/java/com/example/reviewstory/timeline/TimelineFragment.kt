@@ -165,6 +165,7 @@ class TimelineFragment : Fragment() {
                     stampinfo.s_name = response.placeLikelihoods[0].place.name
                     stampinfo.places = response.placeLikelihoods
 
+
                     fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
                     fbFirestore?.collection("stamp")?.add(stampinfo)
 
