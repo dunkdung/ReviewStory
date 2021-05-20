@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.list_item_review.view.*
 
 
 class DetailFragment : Fragment() {
@@ -45,6 +46,7 @@ class DetailFragment : Fragment() {
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
+        stampList.clear()
         var storageRef = fbStorage?.reference?.child("images")
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
@@ -58,7 +60,6 @@ class DetailFragment : Fragment() {
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
-                        Log.d("place", document.id)
                         stamp.s_num = document.data["s_num"] as String?
                         stamp.address = document.data["address"] as String?
                         stamp.s_name = document.data["s_name"] as String?
@@ -69,25 +70,38 @@ class DetailFragment : Fragment() {
                         stamp.tl_num = document.data["tl_num"] as String?
                         stamp.d_id = document.data["d_id"] as String?
                         stampList.add(stamp)
-                        Log.d("place", document.id)
+                        Log.d("place", stamp.rv_txt.toString())
                         Log.d("place", d_id.toString())
                         if (d_id == document.data["d_id"]) {
                             review = stamp
                             index = i
                             Log.d("place", review.rv_txt.toString())
+
+                            txt_user.text = stamp.user_num
+                            textView10.text = stamp.address.toString()
+                            textView9.text = stamp.s_name.toString()
+                            stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
+                            D_review.text = stamp.rv_txt.toString()
+
+
+                            Glide.with(this)
+                                .load(stamp.rv_img)
+                                .override(600, 200)
+                                .into(imageView3)
+                            view.txt_user.text = review.rv_txt
+                            Log.d("place", "이미지 주소    " + review.rv_img.toString())
+                            context?.let {
+                                Glide.with(it.applicationContext)
+                                    .load(review.rv_img)
+                                    .override(600, 200)
+                                    .into(imageView3)
+                            }
                         }
                         i += 1
                     }
-                    view.txt_user.text = review.rv_txt
-                    Log.d("place","이미지 주소    "+review.rv_img.toString())
-                    context?.let {
-                        Glide.with(it.applicationContext)
-                                .load(review.rv_img)
-                                .override(600,200)
-                                .into(imageView3)
-                    }
+                    view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
+                    view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
                 }
-        view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
-        view.recycler_detail.layoutManager = LinearLayoutManager(requireContext())
+
     }
 }

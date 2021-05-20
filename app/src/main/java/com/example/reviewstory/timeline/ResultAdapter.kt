@@ -87,14 +87,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 findNavController(itemView).navigate(direction)
 
             }
-
-
-
-
-
         }
-
-
         }
     }
 //end of ItemViewHolder
