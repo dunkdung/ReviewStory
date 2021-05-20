@@ -15,9 +15,6 @@ import com.example.reviewstory.search.SearchFragmentDirections
 import com.example.reviewstory.search.SearchFragmentDirections.actionSearchFragmentToDetailFragment2
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_review.view.*
-import kotlinx.android.synthetic.main.list_item_timeline.view.*
-import kotlinx.android.synthetic.main.list_item_timeline.view.txt_gongpan_info
-import kotlinx.android.synthetic.main.list_item_timeline.view.txt_unit
 
 class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
 
