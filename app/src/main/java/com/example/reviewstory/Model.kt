@@ -38,6 +38,7 @@ data class TIMELINE(
 
 data class REVIEW(
     var s_num : String? = null,
+    var d_id  : String? = null,
     var write : Boolean = false,
     var user_num : String? = null,
     var tl_num : String? = null,

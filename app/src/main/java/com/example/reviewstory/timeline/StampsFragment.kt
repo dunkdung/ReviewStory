@@ -60,6 +60,7 @@ class StampsFragment : Fragment() {
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
         if (endDate != null && startDate != null) {
+            stampList.clear()
             var tline = TIMELINE()
             tline.tl_num = fbAuth!!.uid + startDate + endDate
             tline.end_date = endDate
@@ -73,6 +74,7 @@ class StampsFragment : Fragment() {
                 ?.get()?.addOnSuccessListener { result ->
                     for (document in result) {
                             var stamp = REVIEW()
+                            stamp.d_id = document.id
                             stamp.s_num = document.data["s_num"] as String?
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
@@ -88,8 +90,9 @@ class StampsFragment : Fragment() {
                                 )
                         )
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
-                        view.recycle_result.adapter = ResultAdapter(stampList, tline)
+                        view.recycle_result.adapter = ResultAdapter(stampList, tline, fbFirestore!!)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
+
                     }
         }
 
