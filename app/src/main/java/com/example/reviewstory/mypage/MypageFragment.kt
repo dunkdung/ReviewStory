@@ -51,15 +51,15 @@ class MypageFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.M)
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
+            PackageManager.PERMISSION_GRANTED) {
             Log.d("place", " get Permission")
             locationPermissionGranted = true
         } else {
             Log.d("place", "Permission not found")
             activity?.let {
                 ActivityCompat.requestPermissions(
-                        it,
-                        arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1
+                    it,
+                    arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), 1
                 )
             };
         }

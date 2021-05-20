@@ -13,6 +13,7 @@ import com.example.reviewstory.timeline.ReviewFragmentArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
 import kotlin.String as String
@@ -22,6 +23,7 @@ class DetailFragment : Fragment() {
 
     var fbFirestore: FirebaseFirestore? = null
     var fbAuth: FirebaseAuth? = null
+    var fbStorage: FirebaseStorage? = null
     var review = REVIEW()
     var index = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,18 +46,19 @@ class DetailFragment : Fragment() {
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
+       // fbFirestore = FirebaseFirestore.getInstance(gs://reviewer-story.appspot.com/)
 
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
         var tl_num: String? = safeArgs.tlNum
-        Log.d("place", tl_num.toString())
+        Log.d("place", "d-id"+d_id.toString())
+        Log.d("place", "tlnum"+tl_num.toString())
         var  i  = 0
         fbFirestore?.collection("timeline")
                 ?.document(tl_num.toString())
                 ?.collection("review")
                 ?.get()
                 ?.addOnSuccessListener { result ->
-                    Log.d("place", "조회성공")
                     for (document in result) {
                         Log.d("place", document.id)
                         stamp.s_num = document.data["s_num"] as String?
@@ -77,9 +80,8 @@ class DetailFragment : Fragment() {
                         }
                         i += 1
                     }
+                    view.txt_review.text = review.rv_txt
                 }
-        view.txt_review.text = review.rv_txt
-        Log.d("place", review.rv_txt.toString())
     }
 
 }
