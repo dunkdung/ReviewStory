@@ -70,6 +70,7 @@ class SearchFragment : Fragment() {
                             stamp.rv_txt = document.data["rv_txt"] as String?
                             stamp.tl_num = document.data["tl_num"] as String?
                             stamp.d_id = document.data["d_id"] as String?
+                            stamp.score = document.data["score"] as String?
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
