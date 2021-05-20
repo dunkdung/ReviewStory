@@ -19,6 +19,7 @@ import kotlinx.android.synthetic.main.list_item_stamp.view.*
 class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
     var mPosition = 0
 
+
     fun getPosition(): Int{
         return mPosition
     }
@@ -27,10 +28,14 @@ class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFir
         mPosition = position
     }
 
-    fun removeItem(position: Int){
+    fun removeItem(position: Int, fbFirestore: FirebaseFirestore){
         if(position >= 0){
             items.removeAt(position)
             notifyDataSetChanged()
+            if (items[position] != null) {
+                fbFirestore.collection("stamp").document(items[position].d_id.toString()).delete()
+                Log.d("delete", "삭제")
+            }
         }
     }
     /* 뷰홀더를 생성하여 반환 */
@@ -44,11 +49,10 @@ class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFir
     //뷰홀더에 데이터 바인딩(bindItems() 함수를 호출)
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bindItems(items[position],tlnum, fbFirestore)
+
         holder.itemView.btn_del.setOnClickListener { view ->
             setPosition(position)
-            removeItem(position)
-
-
+            removeItem(position, fbFirestore)
         }
 
 
@@ -87,15 +91,12 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             }
 
 
-            itemView.btn_del.setOnClickListener {
-                if (stamp != null) {
-                    fbFirestore.collection("stamp").document(stamp.d_id.toString()).delete()
-                    Log.d("delete", "삭제")
-                }
+
+
 
         }
 
 
         }
     }
-}//end of ItemViewHolder
+//end of ItemViewHolder

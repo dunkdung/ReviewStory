@@ -101,7 +101,9 @@ class StampsFragment : Fragment() {
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
 
 
+
                     }
+
         }
 
         save_btn.setOnClickListener {
