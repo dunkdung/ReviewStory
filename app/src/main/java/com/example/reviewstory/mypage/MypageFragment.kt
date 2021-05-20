@@ -31,6 +31,7 @@ class MypageFragment : Fragment() {
 
     private var locationPermissionGranted = false
     var date: String? = null
+    private lateinit var auth: FirebaseAuth
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -59,6 +60,7 @@ class MypageFragment : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var date = Calendar.getInstance()
@@ -104,6 +106,15 @@ class MypageFragment : Fragment() {
 
         }
 
+        this.auth = FirebaseAuth.getInstance()
+        logout_button.setOnClickListener{
+            auth.signOut()
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            findNavController().navigate(direction)
+        }
 
     }
 
