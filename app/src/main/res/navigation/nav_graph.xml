@@ -43,7 +43,11 @@
         android:id="@+id/searchFragment"
         android:name="com.example.reviewstory.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/stampsFragment"
         android:name="com.example.reviewstory.timeline.StampsFragment"
@@ -77,6 +81,15 @@
             android:name="startdate"
             app:argType="string" />
         <argument android:name="enddate"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.example.reviewstory.search.ReviewDetailFragment"
+        android:label="fragment_review_detail"
+        tools:layout="@layout/fragment_review_detail" >
+        <argument
+            android:name="s_num"
             app:argType="string" />
     </fragment>
 </navigation>
