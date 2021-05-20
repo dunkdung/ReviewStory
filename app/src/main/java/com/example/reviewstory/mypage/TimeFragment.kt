@@ -72,7 +72,7 @@ class TimeFragment : Fragment() {
             fbFirestore?.collectionGroup("review")
                 ?.whereEqualTo("user_num", fbAuth?.currentUser?.uid)
                 ?.whereGreaterThan("s_date", date)
-                ?.whereLessThan("s_date", date+1)
+                ?.whereLessThan("s_date", date2)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
