@@ -28,6 +28,9 @@
         <action
             android:id="@+id/action_mypageFragment2_to_timeFragment"
             app:destination="@id/timeFragment" />
+        <action
+            android:id="@+id/action_mypageFragment2_to_loginActivity"
+            app:destination="@id/loginActivity" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"

@@ -39,6 +39,19 @@ class MypageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_mypage, container, false)
     }
     @RequiresApi(Build.VERSION_CODES.M)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        logout_button.setOnClickListener{
+            auth.signOut()
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            findNavController().navigate(direction)
+        }
+    }
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
