@@ -2,21 +2,19 @@ package com.example.reviewstory.search
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
-import com.example.reviewstory.timeline.ReviewFragmentArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
-import kotlin.String as String
 
 
 class DetailFragment : Fragment() {
@@ -32,8 +30,8 @@ class DetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -46,14 +44,13 @@ class DetailFragment : Fragment() {
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
-       // fbFirestore = FirebaseFirestore.getInstance(gs://reviewer-story.appspot.com/)
-
+        var storageRef = fbStorage?.reference?.child("images")
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
         var tl_num: String? = safeArgs.tlNum
-        Log.d("place", "d-id"+d_id.toString())
-        Log.d("place", "tlnum"+tl_num.toString())
-        var  i  = 0
+        Log.d("place", "d-id" + d_id.toString())
+        Log.d("place", "tlnum" + tl_num.toString())
+        var i = 0
         fbFirestore?.collection("timeline")
                 ?.document(tl_num.toString())
                 ?.collection("review")
@@ -81,7 +78,13 @@ class DetailFragment : Fragment() {
                         i += 1
                     }
                     view.txt_review.text = review.rv_txt
+                    Log.d("place","이미지 주소    "+review.rv_img.toString())
+                    context?.let {
+                        Glide.with(it.applicationContext)
+                                .load(review.rv_img)
+                                .override(600,200)
+                                .into(imageView3)
+                    }
                 }
     }
-
 }
