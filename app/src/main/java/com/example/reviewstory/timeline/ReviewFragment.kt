@@ -128,6 +128,8 @@ class ReviewFragment : Fragment() {
                                     review.s_date = stamp.s_date
                                     review.user_num = stamp.user_num
                                     review.rv_img = null
+                                    review.tl_num = tlnum
+                                    review.d_id = document.id
                                     fbFirestore?.collection("timeline")
                                             ?.document(tlnum)
                                             ?.collection("review")
