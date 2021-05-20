@@ -43,6 +43,7 @@ class StampsFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_stamps, container, false)
     }
 
@@ -51,7 +52,7 @@ class StampsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var endDate: String? = null
         var startDate: String? = null
-
+        onResume()
         val safeArgs by navArgs<StampsFragmentArgs>()
 
         startDate = safeArgs.sdate
@@ -90,16 +91,19 @@ class StampsFragment : Fragment() {
                         }
                         /*  리사이클러뷰에 구분선 설정 */
                         view.recycle_result.addItemDecoration(
-                                DividerItemDecoration(
-                                        requireContext(),
-                                        DividerItemDecoration.VERTICAL
-                                )
+                            DividerItemDecoration(
+                                requireContext(),
+                                DividerItemDecoration.VERTICAL
+                            )
                         )
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
                         view.recycle_result.adapter = ResultAdapter(stampList, tline, fbFirestore!!)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
 
+
+
                     }
+
         }
 
         save_btn.setOnClickListener {
@@ -139,6 +143,11 @@ class StampsFragment : Fragment() {
 
 
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
     }
 }
 
