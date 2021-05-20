@@ -1,5 +1,6 @@
 package com.example.reviewstory.search
 
+import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,9 +9,11 @@ import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.list_item_review.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
@@ -37,12 +40,22 @@ class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
         stamp?.let {
-            itemView.txt_gongpan_info.text = stamp.address
-            itemView.txt_unit.text =
-                "${stamp.s_name}"
+            itemView.txt_gongpan_info.text = stamp.address.toString()
+            itemView.txt_unit.text = stamp.s_name.toString()
+            itemView.rating_point.text = stamp.score.toString()
+            stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
+            itemView.text_review.text = stamp.rv_txt.toString()
+//            itemView.appCompatImageView.setImageResource(stamp.rv_img.)
+
+             Glide.with(itemView)
+                    .load(stamp.rv_img)
+                    .override(600,200)
+                    .into(itemView.appCompatImageView)
+
+
             //itemView.txt_min_price.text = "메세지 수: "
-            itemView.txt_avg_price.text =
-                "방문날짜: " + "${stamp.s_date}"
+//            itemView.txt_avg_price.text =
+//                "방문날짜: " + "${stamp.s_date}"
             //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
                 val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment2(stamp.d_id.toString(),stamp.tl_num.toString())
