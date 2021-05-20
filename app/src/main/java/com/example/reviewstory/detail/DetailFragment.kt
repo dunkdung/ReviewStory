@@ -1,4 +1,4 @@
-package com.example.reviewstory.search
+package com.example.reviewstory.detail
 
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
@@ -86,5 +87,7 @@ class DetailFragment : Fragment() {
                                 .into(imageView3)
                     }
                 }
+        view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
+        view.recycler_detail.layoutManager = LinearLayoutManager(requireContext())
     }
 }

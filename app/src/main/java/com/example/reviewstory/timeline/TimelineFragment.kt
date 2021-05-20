@@ -95,11 +95,8 @@ class TimelineFragment : Fragment() {
         }
 
         last_btn.setOnClickListener {
-            /*현재날짜를 가져옵니다.*/
             val currentCaldenar =
                 Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
-
-            /* 날짜를 선택하는 다이얼로그를 만듭니다.*/
             DatePickerDialog(
                 requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, dayOfMonth ->
                     currentCaldenar.apply {
@@ -107,12 +104,8 @@ class TimelineFragment : Fragment() {
                         set(Calendar.MONTH, month)
                         set(Calendar.DAY_OF_MONTH, dayOfMonth+1)
                     }.run {
-                        /* 선택한 데이터를 2020-01-01와 같은 형식으로 가져옵니다.*/
                         last_date = SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
-                        /* 날짜 선택 여부를 체크하여 처리하기 위한 함수 호출
-                           - 선택한 날짜를 선택창에 표시 */
                         last_txt.text = (LocalDate.parse(last_date, DateTimeFormatter.ISO_DATE).minusDays(1)).toString()
-
                         last_date
                     }
                 },
@@ -125,57 +118,10 @@ class TimelineFragment : Fragment() {
         // Call findCurrentPlace and handle the response (first check that the user has granted permission).
         //updatePlace()
         view.btn_search?.setOnClickListener {
-
                 val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
                 findNavController().navigate(direction)
-
-        }
-
-
-
-
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun updatePlace(){
-        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            Log.d("place", "Plac")
-            val placesClient = Places.createClient(requireActivity().applicationContext)
-            val placeResponse = placesClient.findCurrentPlace(request)
-            placeResponse.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val response = task.result
-                    var stampinfo = REVIEW()
-
-                    stampinfo.address = response.placeLikelihoods[0].place.address
-                    stampinfo.s_date = LocalDateTime.now().toString()
-                    stampinfo.user_num = fbAuth?.currentUser?.uid
-                    stampinfo.s_name = response.placeLikelihoods[0].place.name
-                    stampinfo.places = response.placeLikelihoods
-
-                    fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
-                    fbFirestore?.collection("stamp")?.add(stampinfo)
-
-                    Log.d(
-                            "place",
-                            "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
-                    )
-                }
-            }
-        } else {
-            // A local method to request required permissions;
-            // See https://developer.android.com/training/permissions/requesting
-            Log.d("place", "Place not found")
-            ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1);
         }
     }
-
-
-
-
 }
 
 

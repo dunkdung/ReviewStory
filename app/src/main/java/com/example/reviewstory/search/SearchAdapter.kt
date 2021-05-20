@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.list_item_stamp.view.*
+import kotlinx.android.synthetic.main.list_item_review.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
 class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
@@ -40,7 +40,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =
                 "${stamp.s_name}"
-            //itemView.txt_min_price.text = "메세지 수: "
+            itemView.txt_min_price.text = "메세지 수: "
             itemView.txt_avg_price.text =
                 "방문날짜: " + "${stamp.s_date}"
             //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
