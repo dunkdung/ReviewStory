@@ -27,7 +27,7 @@ class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFir
     }
 
     fun removeItem(position: Int){
-        if(position >0){
+        if(position >= 0){
             items.removeAt(position)
             notifyDataSetChanged()
         }
@@ -44,7 +44,9 @@ class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFir
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.bindItems(items[position],tlnum, fbFirestore)
         holder.itemView.btn_del.setOnClickListener { view ->
+            setPosition(position)
             removeItem(position)
+
         }
 
 
@@ -83,13 +85,15 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 Log.d("s_num", stamp.s_num.toString())
             }
 
+            /*
             itemView.btn_del.setOnClickListener {
                 if (stamp != null) {
                     fbFirestore.collection("stamp").document(stamp.d_id.toString()).delete()
                     Log.d("delete", "삭제")
                 }
 
-        }
+        }*/
+
 
         }
     }
