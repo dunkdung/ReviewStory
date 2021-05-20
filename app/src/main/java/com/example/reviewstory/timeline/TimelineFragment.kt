@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -126,9 +127,17 @@ class TimelineFragment : Fragment() {
         //updatePlace()
         view.btn_search?.setOnClickListener {
 
-                val direction: NavDirections = TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(start_date.toString(), last_date.toString())
+            if(start_date != null || last_date != null) {
+                val direction: NavDirections =
+                    TimelineFragmentDirections.actionTimelineFragmentToStampsFragment(
+                        start_date.toString(),
+                        last_date.toString()
+                    )
                 findNavController().navigate(direction)
-
+            }
+            else{
+                Toast.makeText(context, "날짜를 선택해 주세요", Toast.LENGTH_LONG).show()
+            }
         }
 
 

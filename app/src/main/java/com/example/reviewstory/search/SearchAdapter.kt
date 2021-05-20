@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.list_item_stamp.view.*
+import kotlinx.android.synthetic.main.list_item_review.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
 class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
