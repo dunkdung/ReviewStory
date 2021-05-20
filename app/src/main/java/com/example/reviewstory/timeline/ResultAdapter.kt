@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -47,6 +48,7 @@ class ResultAdapter(val items: ArrayList<REVIEW>, val tlnum: TIMELINE, val fbFir
             setPosition(position)
             removeItem(position)
 
+
         }
 
 
@@ -81,16 +83,17 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     tlnum?.start_date.toString(),
                     tlnum?.end_date.toString())
                 findNavController(itemView).navigate(direction)
+
             }
 
-            /*
+
             itemView.btn_del.setOnClickListener {
                 if (stamp != null) {
                     fbFirestore.collection("stamp").document(stamp.d_id.toString()).delete()
                     Log.d("delete", "삭제")
                 }
 
-        }*/
+        }
 
 
         }

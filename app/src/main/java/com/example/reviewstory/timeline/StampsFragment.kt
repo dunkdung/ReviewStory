@@ -41,6 +41,7 @@ class StampsFragment : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+
         return inflater.inflate(R.layout.fragment_stamps, container, false)
     }
 
@@ -49,7 +50,7 @@ class StampsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         var endDate: String? = null
         var startDate: String? = null
-
+        onResume()
         val safeArgs by navArgs<StampsFragmentArgs>()
 
         startDate = safeArgs.sdate
@@ -67,12 +68,14 @@ class StampsFragment : Fragment() {
             tline.start_date = startDate
             tline.user_num = fbAuth!!.uid
             fbFirestore?.collection("timeline")?.document(tline.tl_num.toString())?.set(tline)
-            fbFirestore?.collection("stamp")
-                ?.whereGreaterThan("s_date", startDate)
-                ?.whereEqualTo("user_num", fbAuth!!.uid)
-                ?.whereLessThan("s_date", endDate)
-                ?.get()?.addOnSuccessListener { result ->
-                    for (document in result) {
+
+
+                fbFirestore?.collection("stamp")
+                    ?.whereGreaterThan("s_date", startDate)
+                    ?.whereEqualTo("user_num", fbAuth!!.uid)
+                    ?.whereLessThan("s_date", endDate)
+                    ?.get()?.addOnSuccessListener { result ->
+                        for (document in result) {
                             var stamp = REVIEW()
                             stamp.d_id = document.id
                             stamp.s_num = document.data["s_num"] as String?
@@ -84,14 +87,15 @@ class StampsFragment : Fragment() {
                         }
                         /*  리사이클러뷰에 구분선 설정 */
                         view.recycle_result.addItemDecoration(
-                                DividerItemDecoration(
-                                        requireContext(),
-                                        DividerItemDecoration.VERTICAL
-                                )
+                            DividerItemDecoration(
+                                requireContext(),
+                                DividerItemDecoration.VERTICAL
+                            )
                         )
                         /* 리사이클러뷰에 어댑터 및 레이아웃메니저 설정 */
                         view.recycle_result.adapter = ResultAdapter(stampList, tline, fbFirestore!!)
                         view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
+
 
                     }
         }
@@ -133,6 +137,11 @@ class StampsFragment : Fragment() {
 
 
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
     }
 }
 
