@@ -13,7 +13,7 @@
 
 
         <EditText
-            android:id="@+id/et_id"
+            android:id="@+id/email_edit"
             android:layout_width="295dp"
             android:layout_height="42dp"
             android:layout_marginStart="8dp"
@@ -29,16 +29,16 @@
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <EditText
-            android:id="@+id/et_pass"
+            android:id="@+id/pass_edit"
             android:layout_width="379dp"
             android:layout_height="42dp"
             android:layout_marginTop="16dp"
             android:ems="10"
             android:hint="패스워드"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/et_id"
+            app:layout_constraintEnd_toEndOf="@+id/email_edit"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/et_id"
+            app:layout_constraintStart_toStartOf="@+id/email_edit"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
         <EditText
@@ -49,9 +49,9 @@
             android:ems="10"
             android:hint="패스워드 확인"
             android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="@+id/et_pass"
+            app:layout_constraintEnd_toEndOf="@+id/pass_edit"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/et_pass"
+            app:layout_constraintStart_toStartOf="@+id/pass_edit"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
         <EditText
@@ -123,7 +123,7 @@
             android:textColor="@color/colorWhite"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.65"
-            app:layout_constraintStart_toEndOf="@+id/et_id"
+            app:layout_constraintStart_toEndOf="@+id/email_edit"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -163,7 +163,7 @@
             android:textSize="17dp"
             android:text="패스워드"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_id" />
+            app:layout_constraintTop_toBottomOf="@+id/email_edit" />
 
         <TextView
             android:id="@+id/textView4"
@@ -175,7 +175,7 @@
             android:textSize="17dp"
             android:text="패스워드 확인"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_pass" />
+            app:layout_constraintTop_toBottomOf="@+id/pass_edit" />
 
         <TextView
             android:id="@+id/textView5"
@@ -229,7 +229,7 @@
             android:fontFamily="@font/font1"
             android:text="회원가입"
             android:textSize="20dp"
-            app:layout_constraintBottom_toTopOf="@+id/et_id"
+            app:layout_constraintBottom_toTopOf="@+id/email_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.151"
             app:layout_constraintStart_toEndOf="@+id/imageView2"

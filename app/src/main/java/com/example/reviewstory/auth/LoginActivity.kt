@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
         email_login_button.setOnClickListener {
-            signinAndSignup()
+            signinEmail()
         }
         google_sign_in_button.setOnClickListener {
             //First step

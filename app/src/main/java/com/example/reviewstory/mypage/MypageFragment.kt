@@ -12,8 +12,12 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import com.google.firebase.auth.FirebaseAuth
+import kotlinx.android.synthetic.main.fragment_mypage.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,6 +30,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MypageFragment : Fragment() {
+    private lateinit var auth: FirebaseAuth
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -49,6 +54,19 @@ class MypageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_mypage, container, false)
     }
     @RequiresApi(Build.VERSION_CODES.M)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        logout_button.setOnClickListener{
+            auth.signOut()
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            findNavController().navigate(direction)
+        }
+    }
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
