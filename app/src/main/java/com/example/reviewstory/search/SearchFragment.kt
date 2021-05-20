@@ -66,6 +66,10 @@ class SearchFragment : Fragment() {
                             stamp.s_name = document.data["s_name"] as String?
                             stamp.s_date = document.data["s_date"] as String?
                             stamp.user_num = document.data["user_num"] as String?
+                            stamp.rv_img = document.data["rv_img"] as String?
+                            stamp.rv_txt = document.data["rv_txt"] as String?
+                            stamp.tl_num = document.data["tl_num"] as String?
+                            stamp.d_id = document.data["d_id"] as String?
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
@@ -79,9 +83,7 @@ class SearchFragment : Fragment() {
                         view.recycle_search.adapter = SearchAdapter(stampList, fbFirestore!!)
                         view.recycle_search.layoutManager = LinearLayoutManager(requireContext())
                     }
-                Log.d("place", "검색 실패")
             }
-
             override fun onError(p0: Status) {
             }
         })

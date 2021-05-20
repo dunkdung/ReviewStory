@@ -45,7 +45,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "방문날짜: " + "${stamp.s_date}"
             itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
-                val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment(stamp.s_num.toString())
+                val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment(stamp.d_id.toString(),stamp.tl_num.toString())
                 findNavController(itemView).navigate(direction)
             }
         }

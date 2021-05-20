@@ -54,9 +54,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     tlnum?.tl_num.toString(),
                     tlnum?.start_date.toString(),
                     tlnum?.end_date.toString())
-                Log.d("place",stamp.s_num.toString())
                 findNavController(itemView).navigate(direction)
-                Log.d("s_num", stamp.s_num.toString())
             }
         }
     }

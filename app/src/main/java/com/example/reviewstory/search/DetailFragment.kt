@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.navArgs
 import com.example.reviewstory.R
+import com.example.reviewstory.REVIEW
 import com.example.reviewstory.timeline.ReviewFragmentArgs
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -21,7 +22,8 @@ class DetailFragment : Fragment() {
 
     var fbFirestore: FirebaseFirestore? = null
     var fbAuth: FirebaseAuth? = null
-
+    var review = REVIEW()
+    var index = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -35,34 +37,47 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        var stampList = ArrayList<REVIEW>()
+        var stamp = REVIEW()
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
         val safeArgs by navArgs<DetailFragmentArgs>()
-        var snum: String? = safeArgs.snum
-
-
-        Log.d("snum1", snum.toString())
-
-        fbFirestore?.collectionGroup("review")
-            ?.whereEqualTo("s_num", snum)
-            ?.get()
-            ?.addOnSuccessListener { result ->
-                for(document in result){
-                    txt_review.text = document.data["rv_txt"] as String?
-                    txt_user.text = document.data["user_num"] as String?
-
-                    Log.d("snum2", txt_review.text.toString())
-
-
-
+        var d_id: String? = safeArgs.dId
+        var tl_num: String? = safeArgs.tlNum
+        Log.d("place", tl_num.toString())
+        var  i  = 0
+        fbFirestore?.collection("timeline")
+                ?.document(tl_num.toString())
+                ?.collection("review")
+                ?.get()
+                ?.addOnSuccessListener { result ->
+                    Log.d("place", "조회성공")
+                    for (document in result) {
+                        Log.d("place", document.id)
+                        stamp.s_num = document.data["s_num"] as String?
+                        stamp.address = document.data["address"] as String?
+                        stamp.s_name = document.data["s_name"] as String?
+                        stamp.s_date = document.data["s_date"] as String?
+                        stamp.user_num = document.data["user_num"] as String?
+                        stamp.rv_img = document.data["rv_img"] as String?
+                        stamp.rv_txt = document.data["rv_txt"] as String?
+                        stamp.tl_num = document.data["tl_num"] as String?
+                        stamp.d_id = document.data["d_id"] as String?
+                        stampList.add(stamp)
+                        Log.d("place", document.id)
+                        Log.d("place", d_id.toString())
+                        if (d_id == document.data["d_id"]) {
+                            review = stamp
+                            index = i
+                            Log.d("place", review.rv_txt.toString())
+                        }
+                        i += 1
+                    }
                 }
-
-
-            }
-
-
+        view.txt_review.text = review.rv_txt
+        Log.d("place", review.rv_txt.toString())
     }
 
 }
