@@ -22,6 +22,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stamps.*
 import kotlinx.android.synthetic.main.fragment_stamps.view.*
+import java.time.LocalDate
+import java.time.LocalDateTime
 import kotlin.collections.ArrayList
 
 
@@ -66,6 +68,7 @@ class StampsFragment : Fragment() {
             tline.end_date = endDate
             tline.start_date = startDate
             tline.user_num = fbAuth!!.uid
+            tline.tl_date = LocalDateTime.now().toString()
             fbFirestore?.collection("timeline")?.document(tline.tl_num.toString())?.set(tline)
             fbFirestore?.collection("stamp")
                 ?.whereGreaterThan("s_date", startDate)
@@ -73,14 +76,17 @@ class StampsFragment : Fragment() {
                 ?.whereLessThan("s_date", endDate)
                 ?.get()?.addOnSuccessListener { result ->
                     for (document in result) {
-                            var stamp = REVIEW()
-                            stamp.d_id = document.id
-                            stamp.s_num = document.data["s_num"] as String?
-                            stamp.address = document.data["address"] as String?
-                            stamp.s_name = document.data["s_name"] as String?
-                            stamp.s_date = document.data["s_date"] as String?
-                            stamp.user_num = document.data["user_num"] as String?
-                            stampList.add(stamp)
+                        var stamp = REVIEW()
+                        stamp.s_num = document.data["s_num"] as String?
+                        stamp.address = document.data["address"] as String?
+                        stamp.s_name = document.data["s_name"] as String?
+                        stamp.s_date = document.data["s_date"] as String?
+                        stamp.user_num = document.data["user_num"] as String?
+                        stamp.rv_img = document.data["rv_img"] as String?
+                        stamp.rv_txt = document.data["rv_txt"] as String?
+                        stamp.tl_num = document.data["tl_num"] as String?
+                        stamp.d_id = document.id
+                        stampList.add(stamp)
                         }
                         /*  리사이클러뷰에 구분선 설정 */
                         view.recycle_result.addItemDecoration(
