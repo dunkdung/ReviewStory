@@ -48,8 +48,8 @@
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" >
         <action
-            android:id="@+id/action_searchFragment_to_detailFragment"
-            app:destination="@id/detailFragment" />
+            android:id="@+id/action_searchFragment_to_reviewDetailFragment"
+            app:destination="@id/reviewDetailFragment" />
     </fragment>
     <fragment
         android:id="@+id/stampsFragment"
@@ -90,12 +90,12 @@
             app:argType="string" />
     </fragment>
     <fragment
-        android:id="@+id/detailFragment"
-        android:name="com.example.reviewstory.search.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        android:id="@+id/reviewDetailFragment"
+        android:name="com.example.reviewstory.search.ReviewDetailFragment"
+        android:label="fragment_review_detail"
+        tools:layout="@layout/fragment_review_detail" >
         <argument
-            android:name="snum"
+            android:name="s_num"
             app:argType="string" />
     </fragment>
 </navigation>
