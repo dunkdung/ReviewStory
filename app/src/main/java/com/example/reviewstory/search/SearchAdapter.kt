@@ -40,10 +40,10 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             itemView.txt_gongpan_info.text = stamp.address
             itemView.txt_unit.text =
                 "${stamp.s_name}"
-            itemView.txt_min_price.text = "메세지 수: "
+            //itemView.txt_min_price.text = "메세지 수: "
             itemView.txt_avg_price.text =
                 "방문날짜: " + "${stamp.s_date}"
-            itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
+            //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
                 val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment2(stamp.d_id.toString(),stamp.tl_num.toString())
                 findNavController(itemView).navigate(direction)

@@ -71,13 +71,11 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         stamp?.let {
                 if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
-            itemView.txt_gongpan_info.text = stamp.address
-            itemView.txt_unit.text =
-                "${stamp.s_name}"
-            itemView.txt_min_price.text = "메세지 수: "
-            itemView.txt_avg_price.text =
-                "방문날짜: " + "${stamp.s_date}"
-            itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
+            itemView.txt_gongpan_info.text = stamp.address.toString()
+            itemView.txt_unit.text = stamp.s_name.toString()
+            //itemView.txt_min_price.text = "메세지 수: "
+            itemView.txt_avg_price.text = stamp.s_date.toString()
+            //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
 
             itemView.setOnClickListener{
                 //fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
