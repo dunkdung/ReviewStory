@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
@@ -27,13 +28,11 @@ import java.util.*
 
 @Suppress("DEPRECATION")
 class ReviewFragment : Fragment() {
-
     var fbFirestore: FirebaseFirestore? = null
-
     var fbAuth: FirebaseAuth? = null
     var fbStorage: FirebaseStorage? = null
 
-
+    var rating_num: String? = null
     var pickImageFromAlbum = 0
     var uriPhoto: Uri? = null
     var imageuri: String? = null
@@ -53,14 +52,17 @@ class ReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
         fbStorage = FirebaseStorage.getInstance()
-
         img_btn.setOnClickListener {
             var photoPicerIntent = Intent(Intent.ACTION_PICK)
             photoPicerIntent.type = "image/*"
             startActivityForResult(photoPicerIntent, pickImageFromAlbum)
+        }
+        rating_area.setOnRatingBarChangeListener{ratingBar, fl, b ->
+            rating_num = fl.toString()
         }
 
         val safeArgs by navArgs<ReviewFragmentArgs>()
@@ -97,6 +99,7 @@ class ReviewFragment : Fragment() {
                                         review.rv_img = imageuri
                                         review.tl_num = tlnum
                                         review.d_id = document.id
+                                        review.score = rating_num
                                         fbFirestore?.collection("timeline")
                                                 ?.document(tlnum)
                                                 ?.collection("review")
@@ -130,6 +133,7 @@ class ReviewFragment : Fragment() {
                                     review.rv_img = null
                                     review.tl_num = tlnum
                                     review.d_id = document.id
+                                    review.score = rating_num
                                     fbFirestore?.collection("timeline")
                                             ?.document(tlnum)
                                             ?.collection("review")
@@ -139,6 +143,7 @@ class ReviewFragment : Fragment() {
                             }
                 }
                 val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std, edd)
+                Toast.makeText(context,"리뷰 작성 성공", Toast.LENGTH_LONG).show()
                 findNavController().navigate(direction)
         }
     }
