@@ -61,7 +61,6 @@ class TimelineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-
         // 위치정보 저장
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
@@ -131,6 +130,10 @@ class TimelineFragment : Fragment() {
                 findNavController().navigate(direction)
 
         }
+
+
+
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

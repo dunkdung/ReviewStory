@@ -74,50 +74,76 @@ class ReviewFragment : Fragment() {
             var timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
             var imgFileName = "IMAGE_" + timeStamp + "_.png"
             var storageRef = fbStorage?.reference?.child("images")?.child(imgFileName)
-            storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
-                storageRef.downloadUrl.addOnSuccessListener { uri ->
-                    imageuri = uri.toString()
-                    fbFirestore?.collection("stamp")
-                        ?.whereEqualTo("s_num", snum)
-                        ?.get()
-                        ?.addOnSuccessListener { result ->
-                            for (document in result) {
-                                var stamp = REVIEW()
-                                stamp.s_num = snum
-                                stamp.address = document.data["address"] as String?
-                                stamp.s_name = document.data["s_name"] as String?
-                                stamp.s_date = document.data["s_date"] as String?
-                                stamp.user_num = document.data["user_num"] as String?
-                                review.address = stamp.address
-                                review.s_num = stamp.s_num
-                                review.s_name = stamp.s_name
-                                review.s_date = stamp.s_date
-                                review.user_num = stamp.user_num
-                                review.rv_img = imageuri
-                                fbFirestore?.collection("timeline")
-                                    ?.document(tlnum)
-                                    ?.collection("review")
-                                    ?.add(review)
-                            }
-                            Log.d("place", "리뷰추가")
-                        }
+            if (uriPhoto != null) {
+                storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        imageuri = uri.toString()
+                        fbFirestore?.collection("stamp")
+                                ?.whereEqualTo("s_num", snum)
+                                ?.get()
+                                ?.addOnSuccessListener { result ->
+                                    for (document in result) {
+                                        var stamp = REVIEW()
+                                        stamp.s_num = snum
+                                        stamp.address = document.data["address"] as String?
+                                        stamp.s_name = document.data["s_name"] as String?
+                                        stamp.s_date = document.data["s_date"] as String?
+                                        stamp.user_num = document.data["user_num"] as String?
+                                        review.address = stamp.address
+                                        review.s_num = stamp.s_num
+                                        review.s_name = stamp.s_name
+                                        review.s_date = stamp.s_date
+                                        review.user_num = stamp.user_num
+                                        review.rv_img = imageuri
+                                        review.tl_num = tlnum
+                                        fbFirestore?.collection("timeline")
+                                                ?.document(tlnum)
+                                                ?.collection("review")
+                                                ?.document(document.id)
+                                                ?.set(review)
+                                    }
+                                    Log.d("place", "리뷰추가 ")
+
+                                }
+                    }
                 }
             }
-            val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std,edd)
-            findNavController().navigate(direction)
+            else{
+
+                    fbFirestore?.collection("stamp")
+                            ?.whereEqualTo("s_num", snum)
+                            ?.get()
+                            ?.addOnSuccessListener { result ->
+                                for (document in result) {
+                                    var stamp = REVIEW()
+                                    stamp.s_num = snum
+                                    stamp.address = document.data["address"] as String?
+                                    stamp.s_name = document.data["s_name"] as String?
+                                    stamp.s_date = document.data["s_date"] as String?
+                                    stamp.user_num = document.data["user_num"] as String?
+                                    review.address = stamp.address
+                                    review.s_num = stamp.s_num
+                                    review.s_name = stamp.s_name
+                                    review.s_date = stamp.s_date
+                                    review.user_num = stamp.user_num
+                                    review.rv_img = null
+                                    fbFirestore?.collection("timeline")
+                                            ?.document(tlnum)
+                                            ?.collection("review")
+                                            ?.document(document.id)
+                                            ?.set(review)
+                                }
+                            }
+                }
+                val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std, edd)
+                findNavController().navigate(direction)
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+
+        override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
             uriPhoto = data?.data
             imageView.setImageURI(uriPhoto)
-            if (context?.let { ActivityCompat.checkSelfPermission(it, Manifest.permission.READ_EXTERNAL_STORAGE) } ==
-                PackageManager.PERMISSION_GRANTED) {
-            }else{
-                ActivityCompat.requestPermissions(
-                    Activity(),
-                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 1);
-            }
+        }
     }
-}

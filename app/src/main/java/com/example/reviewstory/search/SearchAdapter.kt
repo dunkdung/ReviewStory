@@ -4,6 +4,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
@@ -42,8 +45,8 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                 "방문날짜: " + "${stamp.s_date}"
             itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
             itemView.setOnClickListener{
-                //fbFirestore.collection("stamp").document("${stamp.s_num}").delete()
-                Log.d("place", "stamp ${stamp.s_name} is deledte")
+                val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment(stamp.d_id.toString(),stamp.tl_num.toString())
+                findNavController(itemView).navigate(direction)
             }
         }
     }

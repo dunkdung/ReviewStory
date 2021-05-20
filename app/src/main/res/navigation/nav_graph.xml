@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/timelineFragment">
+    app:startDestination="@id/mypageFragment2">
 
     <activity
         android:id="@+id/splashActivity2"
@@ -38,12 +38,19 @@
         <action
             android:id="@+id/action_timelineFragment_to_stampsFragment"
             app:destination="@id/stampsFragment" />
+        <argument
+            android:name="msg"
+            app:argType="string" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.example.reviewstory.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_detailFragment2"
+            app:destination="@id/detailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/stampsFragment"
         android:name="com.example.reviewstory.timeline.StampsFragment"
@@ -58,6 +65,9 @@
         <action
             android:id="@+id/action_stampsFragment_to_reviewFragment"
             app:destination="@id/reviewFragment" />
+        <action
+            android:id="@+id/action_stampsFragment_to_timelineFragment"
+            app:destination="@id/timelineFragment" />
     </fragment>
     <fragment
         android:id="@+id/reviewFragment"
@@ -78,5 +88,19 @@
             app:argType="string" />
         <argument android:name="enddate"
             app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailFragment"
+        android:name="com.example.reviewstory.search.DetailFragment"
+        android:label="fragment_detail"
+        tools:layout="@layout/fragment_detail" >
+        <argument
+            android:name="d_id"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="tl_num"
+            app:argType="string"
+            app:nullable="true" />
     </fragment>
 </navigation>

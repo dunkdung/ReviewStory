@@ -61,6 +61,11 @@
                 />
         </androidx.cardview.widget.CardView>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="416dp"
+            android:layout_gravity="bottom" />
+
     </FrameLayout>
 
 

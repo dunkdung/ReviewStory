@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reviewstory.R
@@ -28,6 +29,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_search, container, false)
     }
@@ -59,11 +61,15 @@ class SearchFragment : Fragment() {
                     ?.addOnSuccessListener { result ->
                         for (document in result) {
                             var stamp = REVIEW()
-                            stamp.s_num = document.id
+                            stamp.s_num = document.data["s_num"] as String?
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
                             stamp.s_date = document.data["s_date"] as String?
                             stamp.user_num = document.data["user_num"] as String?
+                            stamp.rv_img = document.data["rv_img"] as String?
+                            stamp.rv_txt = document.data["rv_txt"] as String?
+                            stamp.tl_num = document.data["tl_num"] as String?
+                            stamp.d_id = document.data["d_id"] as String?
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
@@ -77,9 +83,7 @@ class SearchFragment : Fragment() {
                         view.recycle_search.adapter = SearchAdapter(stampList, fbFirestore!!)
                         view.recycle_search.layoutManager = LinearLayoutManager(requireContext())
                     }
-                Log.d("place", "검색 실패")
             }
-
             override fun onError(p0: Status) {
             }
         })
