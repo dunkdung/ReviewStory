@@ -26,6 +26,9 @@
         android:label="fragment_mypage"
         tools:layout="@layout/fragment_mypage" >
         <action
+            android:id="@+id/action_mypageFragment2_to_timeFragment"
+            app:destination="@id/timeFragment" />
+        <action
             android:id="@+id/action_mypageFragment2_to_loginActivity"
             app:destination="@id/loginActivity" />
     </fragment>
@@ -106,5 +109,14 @@
             android:name="tl_num"
             app:argType="string"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/timeFragment"
+        android:name="com.example.reviewstory.mypage.TimeFragment"
+        android:label="fragment_time"
+        tools:layout="@layout/fragment_time" >
+        <argument
+            android:name="date"
+            app:argType="string" />
     </fragment>
 </navigation>
