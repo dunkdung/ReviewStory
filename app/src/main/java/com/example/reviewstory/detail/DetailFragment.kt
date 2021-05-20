@@ -49,8 +49,8 @@ class DetailFragment : Fragment() {
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
         var tl_num: String? = safeArgs.tlNum
-        Log.d("place", "d-id" + d_id.toString())
-        Log.d("place", "tlnum" + tl_num.toString())
+        Log.d("place", "d-id         " + d_id.toString())
+        Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
         fbFirestore?.collection("timeline")
                 ?.document(tl_num.toString())
@@ -78,7 +78,7 @@ class DetailFragment : Fragment() {
                         }
                         i += 1
                     }
-                    view.txt_review.text = review.rv_txt
+                    view.txt_user.text = review.rv_txt
                     Log.d("place","이미지 주소    "+review.rv_img.toString())
                     context?.let {
                         Glide.with(it.applicationContext)
