@@ -12,32 +12,22 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import kotlinx.android.synthetic.main.fragment_mypage.*
+import kotlinx.android.synthetic.main.fragment_mypage.btn_search
+import kotlinx.android.synthetic.main.fragment_timeline.*
+import java.sql.Time
+import java.text.SimpleDateFormat
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MypageFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MypageFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    private var locationPermissionGranted = false
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private var locationPermissionGranted = false
+    var date: String? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -49,6 +39,19 @@ class MypageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_mypage, container, false)
     }
     @RequiresApi(Build.VERSION_CODES.M)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        auth = FirebaseAuth.getInstance()
+        logout_button.setOnClickListener{
+            auth.signOut()
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            findNavController().navigate(direction)
+        }
+    }
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
@@ -65,23 +68,40 @@ class MypageFragment : Fragment() {
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MypageFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MypageFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        //var date = Calendar.getInstance()
+
+        var currentCaldenar =
+            Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
+        calendarView.setOnDateChangeListener{ view, year, month, dayOfMonth ->
+            //date= SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
+            //date = String.format("%d %d %d", year, month+1, dayOfMonth)
+            currentCaldenar.apply {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, month)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }.run {
+                /* 선택한 데이터를 2020-01-01와 같은 형식으로 가져옵니다.*/
+                date = SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
+                /* 날짜 선택 여부를 체크하여 처리하기 위한 함수 호출
+                   - 선택한 날짜를 선택창에 표시 */
+
             }
+            Log.d("date",date.toString())
+        }
+
+
+        btn_search.setOnClickListener {
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
+            findNavController().navigate(direction)
+            Log.d("date2",date.toString())
+        }
+
+
     }
+
+
 }
+
+

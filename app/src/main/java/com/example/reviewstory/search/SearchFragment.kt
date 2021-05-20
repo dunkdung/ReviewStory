@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reviewstory.R
@@ -70,6 +69,7 @@ class SearchFragment : Fragment() {
                             stamp.rv_txt = document.data["rv_txt"] as String?
                             stamp.tl_num = document.data["tl_num"] as String?
                             stamp.d_id = document.data["d_id"] as String?
+                            stamp.score = document.data["score"] as String?
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
