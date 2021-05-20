@@ -78,14 +78,14 @@ class DetailFragment : Fragment() {
                         }
                         i += 1
                     }
-                    view.txt_review.text = review.rv_txt
-                    Log.d("place","이미지 주소    "+review.rv_img.toString())
-                    context?.let {
-                        Glide.with(it.applicationContext)
-                                .load(review.rv_img)
-                                .override(600,200)
-                                .into(imageView3)
-                    }
+//                    view.txt_review.text = review.rv_txt
+//                    Log.d("place","이미지 주소    "+review.rv_img.toString())
+//                    context?.let {
+//                        Glide.with(it.applicationContext)
+//                                .load(review.rv_img)
+//                                .override(600,200)
+//                                .into(imageView3)
+//                    }
                 }
         view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
         view.recycler_detail.layoutManager = LinearLayoutManager(requireContext())
