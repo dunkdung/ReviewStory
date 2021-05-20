@@ -13,6 +13,7 @@ import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_detail.*
+import kotlinx.android.synthetic.main.fragment_review.view.*
 import kotlinx.android.synthetic.main.list_item_review.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */

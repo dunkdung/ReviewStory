@@ -63,6 +63,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/appCompatRatingBar"
                 style="?android:attr/ratingBarStyleSmall"
@@ -78,7 +79,7 @@
                 app:layout_constraintStart_toEndOf="@+id/txt_unit"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <TextView
                 android:id="@+id/rating_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

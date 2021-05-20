@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -16,6 +17,7 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import com.example.reviewstory.timeline.TimelineFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.fragment_mypage.*
 import kotlinx.android.synthetic.main.fragment_mypage.btn_search
@@ -42,7 +44,6 @@ class MypageFragment : Fragment() {
     }
 
 
-
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
@@ -63,6 +64,15 @@ class MypageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //var date = Calendar.getInstance()
+        val auth = FirebaseAuth.getInstance()
+        logout_button.setOnClickListener{
+            auth.signOut()
+//            val intent = Intent(context, MainActivity::class.java)
+//            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+//            startActivity(intent)
+            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            findNavController().navigate(direction)
+        }
 
         var currentCaldenar =
             Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
@@ -85,9 +95,15 @@ class MypageFragment : Fragment() {
 
 
         btn_search.setOnClickListener {
-            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
-            findNavController().navigate(direction)
-            Log.d("date2",date.toString())
+            if(date != null) {
+                val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
+                findNavController().navigate(direction)
+                Log.d("date2",date.toString())
+            }
+            else{
+                Toast.makeText(context, "날짜를 선택해 주세요", Toast.LENGTH_LONG).show()
+            }
+
         }
 
         auth = FirebaseAuth.getInstance()
