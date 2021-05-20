@@ -67,10 +67,10 @@ class StampsFragment : Fragment() {
             tline.user_num = fbAuth!!.uid
             fbFirestore?.collection("timeline")?.document(tline.tl_num.toString())?.set(tline)
             fbFirestore?.collection("stamp")
-               ?.whereGreaterThan("s_date", startDate)
-               ?.whereEqualTo("user_num", fbAuth!!.uid)
-               ?.whereLessThan("s_date", endDate)
-               ?.get()?.addOnSuccessListener { result ->
+                ?.whereGreaterThan("s_date", startDate)
+                ?.whereEqualTo("user_num", fbAuth!!.uid)
+                ?.whereLessThan("s_date", endDate)
+                ?.get()?.addOnSuccessListener { result ->
                     for (document in result) {
                             var stamp = REVIEW()
                             stamp.s_num = document.data["s_num"] as String?

@@ -59,7 +59,7 @@ class SearchFragment : Fragment() {
                     ?.addOnSuccessListener { result ->
                         for (document in result) {
                             var stamp = REVIEW()
-                            stamp.s_num = document.id
+                            stamp.s_num = document.data["s_num"] as String?
                             stamp.address = document.data["address"] as String?
                             stamp.s_name = document.data["s_name"] as String?
                             stamp.s_date = document.data["s_date"] as String?
