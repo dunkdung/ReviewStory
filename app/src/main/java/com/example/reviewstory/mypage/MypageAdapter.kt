@@ -7,15 +7,14 @@ import android.view.ViewGroup
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.example.reviewstory.TIMELINE
 import com.example.reviewstory.search.SearchFragmentDirections
+import com.example.reviewstory.search.SearchFragmentDirections.actionSearchFragmentToDetailFragment2
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.list_item_stamp.view.*
-import kotlinx.android.synthetic.main.list_item_timeline.view.*
-import kotlinx.android.synthetic.main.list_item_timeline.view.txt_gongpan_info
-import kotlinx.android.synthetic.main.list_item_timeline.view.txt_unit
+import kotlinx.android.synthetic.main.list_item_review.view.*
 
 class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
 
@@ -23,7 +22,7 @@ class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         //list_item_fresh 뷰 inflate
         val rootView =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_timeline, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_review, parent, false)
         return ItemViewHolder(rootView)
     }
 
@@ -40,19 +39,21 @@ class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW, fbFirestore: FirebaseFirestore) {
         stamp?.let {
-            if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
-            //itemView.txt_min_price.text = "메세지 수: "
-            itemView.txt_avg_price.text = stamp.s_date.toString()
-            //itemView.txt_min_price.text = "메세지 수: "
-            //itemView.txt_avg_price.text =
-                //"방문날짜: " + "${stamp.s_date}"
-            //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
-            /*itemView.setOnClickListener{
-                val direction: NavDirections = SearchFragmentDirections.actionSearchFragmentToDetailFragment2(stamp.d_id.toString(),stamp.tl_num.toString())
+            itemView.rating_point.text = stamp.score.toString()
+            stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
+            itemView.text_review.text = stamp.rv_txt.toString()
+
+            Glide.with(itemView)
+                .load(stamp.rv_img)
+                .override(600,200)
+                .into(itemView.appCompatImageView)
+
+            itemView.setOnClickListener{
+                val direction: NavDirections = TimeFragmentDirections.actionTimeFragmentToDetailFragment(stamp.d_id.toString(),stamp.tl_num.toString())
                 Navigation.findNavController(itemView).navigate(direction)
-            }*/
+            }
         }
     }
 }

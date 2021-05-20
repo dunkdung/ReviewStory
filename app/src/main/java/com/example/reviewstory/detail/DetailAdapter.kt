@@ -9,6 +9,8 @@ import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.list_item_detail.view.*
+import kotlinx.android.synthetic.main.list_item_detail.view.txt_unit
+import kotlinx.android.synthetic.main.list_item_review.view.*
 
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
@@ -18,7 +20,7 @@ class DetailAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         //list_item_fresh 뷰 inflate
         val rootView =
-            LayoutInflater.from(parent.context).inflate(R.layout.list_item_detail, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_review, parent, false)
         return ItemViewHolder(rootView)
     }
 
