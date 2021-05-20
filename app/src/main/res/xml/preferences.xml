@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:iconSpaceReserved="false">
+
+    <PreferenceCategory
+        android:title="환경설정"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreference
+            android:key="push"
+            android:title="푸쉬알림"
+            android:defaultValue="false"
+            />
+
+        <SwitchPreference
+            android:key="private"
+            android:title="공개/비공개설정"
+            android:defaultValue="false"
+            />
+
+    </PreferenceCategory>
+</PreferenceScreen>
