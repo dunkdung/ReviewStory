@@ -1,5 +1,6 @@
 package com.example.reviewstory.mypage
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,10 @@ import com.example.reviewstory.REVIEW
 import com.example.reviewstory.TIMELINE
 import com.example.reviewstory.search.SearchFragmentDirections
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.list_item_stamp.view.*
 import kotlinx.android.synthetic.main.list_item_timeline.view.*
+import kotlinx.android.synthetic.main.list_item_timeline.view.txt_gongpan_info
+import kotlinx.android.synthetic.main.list_item_timeline.view.txt_unit
 
 class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
 
@@ -34,10 +38,13 @@ class MypageAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-    fun bindItems(timeline: REVIEW, fbFirestore: FirebaseFirestore) {
-        timeline?.let {
-            itemView.txt_gongpan_info.text = timeline.s_date
-            itemView.txt_unit.text = timeline.s_name
+    fun bindItems(stamp: REVIEW, fbFirestore: FirebaseFirestore) {
+        stamp?.let {
+            if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
+            itemView.txt_gongpan_info.text = stamp.address.toString()
+            itemView.txt_unit.text = stamp.s_name.toString()
+            //itemView.txt_min_price.text = "메세지 수: "
+            itemView.txt_avg_price.text = stamp.s_date.toString()
             //itemView.txt_min_price.text = "메세지 수: "
             //itemView.txt_avg_price.text =
                 //"방문날짜: " + "${stamp.s_date}"

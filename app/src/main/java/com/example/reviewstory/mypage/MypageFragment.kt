@@ -106,7 +106,7 @@ class MypageFragment : Fragment() {
 
         }
 
-        auth = FirebaseAuth.getInstance()
+        this.auth = FirebaseAuth.getInstance()
         logout_button.setOnClickListener{
             auth.signOut()
 //            val intent = Intent(context, MainActivity::class.java)
