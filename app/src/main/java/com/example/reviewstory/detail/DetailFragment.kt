@@ -42,11 +42,11 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var stampList = ArrayList<REVIEW>()
-        var stamp = REVIEW()
+
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
-        stampList.clear()
+
         var storageRef = fbStorage?.reference?.child("images")
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
@@ -54,12 +54,13 @@ class DetailFragment : Fragment() {
         Log.d("place", "d-id         " + d_id.toString())
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
-        fbFirestore?.collection("timeline")
-                ?.document(tl_num.toString())
-                ?.collection("review")
+        fbFirestore?.collectionGroup("review")
+                ?.whereEqualTo("tl_num", tl_num)
                 ?.get()
                 ?.addOnSuccessListener { result ->
+                    //stampList.clear()
                     for (document in result) {
+                        var stamp = REVIEW()
                         stamp.s_num = document.data["s_num"] as String?
                         stamp.address = document.data["address"] as String?
                         stamp.s_name = document.data["s_name"] as String?
@@ -99,7 +100,9 @@ class DetailFragment : Fragment() {
                         }
                         i += 1
                     }
-
+                    for (i in stampList){
+                        Log.d("place",i.s_name.toString())
+                    }
                     view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
                     view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
                 }
