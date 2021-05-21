@@ -99,6 +99,7 @@ class DetailFragment : Fragment() {
                         }
                         i += 1
                     }
+
                     view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
                     view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
                 }
