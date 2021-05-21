@@ -41,7 +41,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         stamp?.let {
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
-            itemView.rating_point.text = stamp.score.toString()
+            itemView.rating_point.text = stamp.score
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
             itemView.text_review.text = stamp.rv_txt.toString()
 

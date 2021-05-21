@@ -16,7 +16,8 @@
         android:layout_marginBottom="8dp"
         app:cardCornerRadius="16dp"
         app:cardPreventCornerOverlap="true"
-        app:contentPadding="8dp">
+        app:contentPadding="8dp"
+        app:cardBackgroundColor="@color/color_main">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/listBack"

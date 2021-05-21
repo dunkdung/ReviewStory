@@ -78,7 +78,7 @@ class DetailFragment : Fragment() {
                             index = i
                             Log.d("place", review.rv_txt.toString())
 
-                            txt_user.text = stamp.user_num
+                            txt_user.text = review.user_num
                             textView10.text = stamp.rv_txt.toString()
                             textView9.text = stamp.s_name.toString()
                             textView11.text = stamp.score
