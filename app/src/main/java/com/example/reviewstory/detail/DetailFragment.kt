@@ -78,10 +78,10 @@ class DetailFragment : Fragment() {
                             Log.d("place", review.rv_txt.toString())
 
                             txt_user.text = stamp.user_num
-                            textView10.text = stamp.address.toString()
+                            textView10.text = stamp.rv_txt.toString()
                             textView9.text = stamp.s_name.toString()
-                            stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
-                            D_review.text = stamp.rv_txt.toString()
+                            textView11.text = stamp.score
+                            D_review.text = stamp.address.toString()
 
 
                             Glide.with(this)
