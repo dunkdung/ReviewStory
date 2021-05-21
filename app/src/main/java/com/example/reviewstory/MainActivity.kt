@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueue(saveRequest)
 
         getLocationPermission()
-        if(true)
+        if(false)
         {
             var userInfo = USER()
 
