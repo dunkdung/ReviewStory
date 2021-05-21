@@ -43,7 +43,8 @@ class DetailAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW, fbFirestore: FirebaseFirestore) {
         Log.d("place",stamp.rv_txt.toString())
-        itemView.txt_unit.text = stamp.rv_txt
+        itemView.txt_unit.text = stamp.s_name
+        //itemView.txt.text = stamp.
         Glide.with(itemView)
             .load(stamp.rv_img)
             .override(600,200)
