@@ -28,7 +28,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     var editName: String? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
+
         addPreferencesFromResource(R.xml.preferences)
+        /*
         val sps = PreferenceManager.getDefaultSharedPreferences(context)
         editName = sps.getString("edit_text_preference_1", "")
         fbFirestore = FirebaseFirestore.getInstance()
@@ -53,7 +55,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 fbFirestore?.collection("user")?.document(fbAuth?.uid.toString())?.set(user)
                 Log.d("nick", editName.toString()) }
 
-        }
+        }*/
 
     }
 
