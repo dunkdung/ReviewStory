@@ -20,5 +20,13 @@
             android:defaultValue="false"
             />
 
+        <EditTextPreference
+            android:key="edit_text_preference_1"
+            android:selectAllOnFocus="true"
+            android:singleLine="true"
+            android:title="닉네임"
+            android:summary="닉네임을 설정하세요"/>
+
+
     </PreferenceCategory>
 </PreferenceScreen>
