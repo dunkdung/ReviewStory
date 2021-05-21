@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import com.example.reviewstory.USER
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
@@ -33,18 +34,20 @@ class JoinActivity : AppCompatActivity() {
     private fun createEmail() {
         auth?.createUserWithEmailAndPassword(email_edit.text.toString(), pass_edit.text.toString())
             ?.addOnCompleteListener(this) {
-                val data = hashMapOf(
-                    "user_email" to email_edit.text.toString(),
-                    "user_bd" to et_age.text.toString(),
-                    "nickname" to et_name.text.toString(),
-                    "user_pw" to pass_edit.text.toString(),
-                    "user_pn" to et_hak.text.toString()
-                )
+
+                val user = USER()
+                user.user_id = email_edit.text.toString()
+                user.user_bd = et_age.text.toString()
+                user.user_nick = et_name.text.toString()
+                user.user_fw = pass_edit.text.toString()
+                user.user_pn = et_hak.text.toString()
+                user.user_num = auth?.uid
 
                 if (it.isSuccessful) {
                     Toast.makeText(this, "가입 성공", Toast.LENGTH_SHORT).show()
                     fbFirestore?.collection("user")
-                        ?.add(data)
+                        ?.document(user.user_num.toString())
+                        ?.set(user)
                         ?.addOnSuccessListener { documentReference ->
                         }
                         ?.addOnFailureListener { e ->
