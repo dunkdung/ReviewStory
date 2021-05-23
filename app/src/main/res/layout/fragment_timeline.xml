@@ -10,7 +10,6 @@
     app:cardElevation="8dp"
     tools:context=".timeline.TimelineFragment">
 
-    <!-- TODO: Update blank fragment layout -->
 
     <FrameLayout
         android:id="@+id/child_fragment"
