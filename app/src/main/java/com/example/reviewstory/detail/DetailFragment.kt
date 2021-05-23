@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.reviewstory.R
@@ -16,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
+import kotlinx.android.synthetic.main.fragment_search.view.*
 import kotlinx.android.synthetic.main.list_item_review.view.*
 
 
@@ -32,8 +34,8 @@ class DetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_detail, container, false)
@@ -55,54 +57,57 @@ class DetailFragment : Fragment() {
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
         fbFirestore?.collection("timeline")
-                ?.document(tl_num.toString())
-                ?.collection("review")
-                ?.get()
-                ?.addOnSuccessListener { result ->
-                    for (document in result) {
-                        stamp.s_num = document.data["s_num"] as String?
-                        stamp.address = document.data["address"] as String?
-                        stamp.s_name = document.data["s_name"] as String?
-                        stamp.s_date = document.data["s_date"] as String?
-                        stamp.user_num = document.data["user_num"] as String?
-                        stamp.rv_img = document.data["rv_img"] as String?
-                        stamp.rv_txt = document.data["rv_txt"] as String?
-                        stamp.tl_num = document.data["tl_num"] as String?
-                        stamp.d_id = document.data["d_id"] as String?
-                        stampList.add(stamp)
-                        Log.d("place", stamp.rv_txt.toString())
-                        Log.d("place", d_id.toString())
-                        if (d_id == document.data["d_id"]) {
-                            review = stamp
-                            index = i
-                            Log.d("place", review.rv_txt.toString())
+            ?.document(tl_num.toString())
+            ?.collection("review")
+            ?.get()
+            ?.addOnSuccessListener { result ->
+                for (document in result) {
+                    stamp.s_num = document.data["s_num"] as String?
+                    stamp.address = document.data["address"] as String?
+                    stamp.s_name = document.data["s_name"] as String?
+                    stamp.s_date = document.data["s_date"] as String?
+                    stamp.user_num = document.data["user_num"] as String?
+                    stamp.rv_img = document.data["rv_img"] as String?
+                    stamp.rv_txt = document.data["rv_txt"] as String?
+                    stamp.tl_num = document.data["tl_num"] as String?
+                    stamp.d_id = document.data["d_id"] as String?
+                    stampList.add(stamp)
+                    Log.d("place", stamp.rv_txt.toString())
+                    Log.d("place", d_id.toString())
 
-                            txt_user.text = stamp.user_num
-                            textView10.text = stamp.address.toString()
-                            textView9.text = stamp.s_name.toString()
-                            stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
-                            D_review.text = stamp.rv_txt.toString()
+                    if (d_id == document.data["d_id"]) {
+                        review = stamp
+                        index = i
+                        Log.d("place", review.rv_txt.toString())
+
+                        txt_user.text = stamp.user_num
+                        textView10.text = stamp.address.toString()
+                        textView9.text = stamp.s_name.toString()
+                        stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
+                        D_review.text = stamp.rv_txt.toString()
 
 
-                            Glide.with(this)
-                                .load(stamp.rv_img)
+                        Glide.with(this)
+                            .load(stamp.rv_img)
+                            .override(600, 200)
+                            .into(imageView3)
+                        view.txt_user.text = review.rv_txt
+                        Log.d("place", "이미지 주소    " + review.rv_img.toString())
+                        context?.let {
+                            Glide.with(it.applicationContext)
+                                .load(review.rv_img)
                                 .override(600, 200)
                                 .into(imageView3)
-                            view.txt_user.text = review.rv_txt
-                            Log.d("place", "이미지 주소    " + review.rv_img.toString())
-                            context?.let {
-                                Glide.with(it.applicationContext)
-                                    .load(review.rv_img)
-                                    .override(600, 200)
-                                    .into(imageView3)
-                            }
                         }
-                        i += 1
                     }
-
-                    view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
-                    view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+                    i += 1
                 }
+
+                view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
+                view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also {
+                    it.orientation = LinearLayoutManager.HORIZONTAL
+                }
+            }
 
     }
 }

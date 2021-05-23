@@ -71,7 +71,7 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
                     updatePlace()
                 }
                 else{
-
+                    updatePlace()
                     Log.d("place", "Location is Not change ${sharedPref.getString("lat","0")}, ${sharedPref.getString("lon","0")}")
                 }
 
