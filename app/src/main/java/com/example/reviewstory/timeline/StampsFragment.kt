@@ -22,8 +22,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_stamps.*
 import kotlinx.android.synthetic.main.fragment_stamps.view.*
-import java.time.LocalDate
-import java.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
 import kotlin.collections.ArrayList
 
 
@@ -47,7 +46,6 @@ class StampsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_stamps, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var endDate: String? = null

@@ -13,6 +13,8 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main.*
@@ -24,12 +26,14 @@ class MainActivity : AppCompatActivity() {
     var fbFirestore : FirebaseFirestore? = null
     var fbAuth : FirebaseAuth? = null
     private val workManager = WorkManager.getInstance(application)
-    @RequiresApi(Build.VERSION_CODES.Q)
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         val controller = findNavController(R.id.navigation_host)
 
         NavigationUI.setupWithNavController(
@@ -41,7 +45,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
         WorkManager.getInstance(this).enqueue(saveRequest)
 
-        getLocationPermission()
+        //getLocationPermission()
         if(false)
         {
             var userInfo = USER()
@@ -55,14 +59,13 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    @RequiresApi(Build.VERSION_CODES.Q)
     private fun getLocationPermission(){
         if (ContextCompat.checkSelfPermission(this.applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
                 PackageManager.PERMISSION_GRANTED) {
-            Log.d("place", " get Permission")
+            Log.d("place", " get Permission Main")
             locationPermissionGranted = true
         } else {
-            Log.d("place", "Permission not found")
+            Log.d("place", "Permission not found Main")
             ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1);
         }

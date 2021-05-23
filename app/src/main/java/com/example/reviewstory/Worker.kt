@@ -22,7 +22,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.net.FindCurrentPlaceRequest
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDateTime
+import org.threeten.bp.LocalDateTime
 import kotlin.math.ceil
 
 class LocationWorker(appContext: Context, workerParams: WorkerParameters):
@@ -35,7 +35,7 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
             = LocationServices.getFusedLocationProviderClient(appContext)
     // Use the builder to create a FindCurrentPlaceRequest.
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
-    @RequiresApi(Build.VERSION_CODES.O)
+
     override fun doWork(): Result {
         val sharedPref = applicationContext.getSharedPreferences("test", MODE_PRIVATE)
         val editor =sharedPref.edit()
@@ -59,11 +59,11 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
                 var latitude = sharedPref.getString("lat","0")?.toDouble()
                 var longitude = sharedPref.getString("lon","0")?.toDouble()
 
-                if ((latitude != ceil(location.latitude*1000000) /1000000) or (longitude != ceil(location.longitude*1000000) /1000000)){
+                if ((latitude != ceil(location.latitude*100000) /100000) or (longitude != ceil(location.longitude*100000) /100000)){
                     Log.d("place", "Location: $latitude")
                     Log.d("place", "Location is Updated $latitude -> ${location.latitude},,, $longitude ->${location.longitude}")
-                    latitude = ceil(location.latitude*1000000) /1000000
-                    longitude = ceil(location.longitude*1000000) /1000000
+                    latitude = ceil(location.latitude*100000) /100000
+                    longitude = ceil(location.longitude*100000) /100000
                     editor.putString("lat", "$latitude")
                     editor.putString("lon", "$longitude")
                     editor.apply()
@@ -71,7 +71,6 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
                     updatePlace()
                 }
                 else{
-                    updatePlace()
                     Log.d("place", "Location is Not change ${sharedPref.getString("lat","0")}, ${sharedPref.getString("lon","0")}")
                 }
 
@@ -79,11 +78,10 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
         }
         return Result.success()
     }
-    @RequiresApi(Build.VERSION_CODES.O)
+
     private fun updatePlace(){
         if (ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
             PackageManager.PERMISSION_GRANTED) {
-            Log.d("place", "백그라운드 실행")
             val sharedPref = applicationContext.getSharedPreferences("test", MODE_PRIVATE)
             val editor =sharedPref.edit()
             val placesClient = Places.createClient(applicationContext.applicationContext)

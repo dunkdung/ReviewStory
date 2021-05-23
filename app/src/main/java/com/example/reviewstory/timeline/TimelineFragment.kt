@@ -25,10 +25,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_timeline.*
 import kotlinx.android.synthetic.main.fragment_timeline.view.*
+import org.threeten.bp.LocalDate
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 
 
@@ -49,7 +49,6 @@ class TimelineFragment : Fragment() {
 
 
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -57,7 +56,6 @@ class TimelineFragment : Fragment() {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_timeline, container, false)
     }
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -144,46 +142,6 @@ class TimelineFragment : Fragment() {
 
 
     }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun updatePlace(){
-        if (ContextCompat.checkSelfPermission(requireActivity().applicationContext, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
-            Log.d("place", "Plac")
-            val placesClient = Places.createClient(requireActivity().applicationContext)
-            val placeResponse = placesClient.findCurrentPlace(request)
-            placeResponse.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val response = task.result
-                    var stampinfo = REVIEW()
-
-                    stampinfo.address = response.placeLikelihoods[0].place.address
-                    stampinfo.s_date = LocalDateTime.now().toString()
-                    stampinfo.user_num = fbAuth?.currentUser?.uid
-                    stampinfo.s_name = response.placeLikelihoods[0].place.name
-                    stampinfo.places = response.placeLikelihoods
-
-                    fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
-                    fbFirestore?.collection("stamp")?.add(stampinfo)
-
-                    Log.d(
-                            "place",
-                            "Place '${response.placeLikelihoods[0].place.name}''${response.placeLikelihoods[0].place.address}''${response.placeLikelihoods[0].place.latLng}'"
-                    )
-                }
-            }
-        } else {
-            // A local method to request required permissions;
-            // See https://developer.android.com/training/permissions/requesting
-            Log.d("place", "Place not found")
-            ActivityCompat.requestPermissions(
-                    requireActivity(),
-                    arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), 1);
-        }
-    }
-
-
-
 
 }
 

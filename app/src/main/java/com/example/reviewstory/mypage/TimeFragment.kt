@@ -20,8 +20,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_search.view.*
 import kotlinx.android.synthetic.main.fragment_time.view.*
 import kotlinx.android.synthetic.main.fragment_timeline.*
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
+import org.threeten.bp.LocalDate
+import org.threeten.bp.format.DateTimeFormatter
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -44,7 +44,6 @@ class TimeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_time, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

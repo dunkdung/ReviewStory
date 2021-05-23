@@ -44,11 +44,11 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var stampList = ArrayList<REVIEW>()
-        var stamp = REVIEW()
+
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
-        stampList.clear()
+
         var storageRef = fbStorage?.reference?.child("images")
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
@@ -56,29 +56,35 @@ class DetailFragment : Fragment() {
         Log.d("place", "d-id         " + d_id.toString())
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
-        fbFirestore?.collection("timeline")
-            ?.document(tl_num.toString())
-            ?.collection("review")
-            ?.get()
-            ?.addOnSuccessListener { result ->
-                for (document in result) {
-                    stamp.s_num = document.data["s_num"] as String?
-                    stamp.address = document.data["address"] as String?
-                    stamp.s_name = document.data["s_name"] as String?
-                    stamp.s_date = document.data["s_date"] as String?
-                    stamp.user_num = document.data["user_num"] as String?
-                    stamp.rv_img = document.data["rv_img"] as String?
-                    stamp.rv_txt = document.data["rv_txt"] as String?
-                    stamp.tl_num = document.data["tl_num"] as String?
-                    stamp.d_id = document.data["d_id"] as String?
-                    stampList.add(stamp)
-                    Log.d("place", stamp.rv_txt.toString())
-                    Log.d("place", d_id.toString())
+        fbFirestore?.collectionGroup("review")
+                ?.whereEqualTo("tl_num", tl_num)
+                ?.get()
+                ?.addOnSuccessListener { result ->
+                    //stampList.clear()
+                    for (document in result) {
+                        var stamp = REVIEW()
+                        stamp.s_num = document.data["s_num"] as String?
+                        stamp.address = document.data["address"] as String?
+                        stamp.s_name = document.data["s_name"] as String?
+                        stamp.s_date = document.data["s_date"] as String?
+                        stamp.user_num = document.data["user_num"] as String?
+                        stamp.rv_img = document.data["rv_img"] as String?
+                        stamp.rv_txt = document.data["rv_txt"] as String?
+                        stamp.tl_num = document.data["tl_num"] as String?
+                        stamp.d_id = document.data["d_id"] as String?
+                        stampList.add(stamp)
+                        Log.d("place", stamp.rv_txt.toString())
+                        Log.d("place", d_id.toString())
+                        if (d_id == document.data["d_id"]) {
+                            review = stamp
+                            index = i
+                            Log.d("place", review.rv_txt.toString())
 
-                    if (d_id == document.data["d_id"]) {
-                        review = stamp
-                        index = i
-                        Log.d("place", review.rv_txt.toString())
+                            txt_user.text = review.user_num
+                            textView10.text = stamp.rv_txt.toString()
+                            textView9.text = stamp.s_name.toString()
+                            textView11.text = stamp.score
+                            D_review.text = stamp.address.toString()
 
                         txt_user.text = stamp.user_num
                         textView10.text = stamp.address.toString()
@@ -100,12 +106,11 @@ class DetailFragment : Fragment() {
                                 .into(imageView3)
                         }
                     }
-                    i += 1
-                }
-
-                view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
-                view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also {
-                    it.orientation = LinearLayoutManager.HORIZONTAL
+                    for (i in stampList){
+                        Log.d("place",i.s_name.toString())
+                    }
+                    view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
+                    view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
                 }
             }
 
