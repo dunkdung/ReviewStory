@@ -16,7 +16,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
-
+import org.threeten.bp.LocalDate
+import org.threeten.bp.LocalDateTime
+import org.threeten.bp.format.DateTimeFormatter
+import java.text.SimpleDateFormat
 
 
 class DetailFragment : Fragment() {
@@ -76,12 +79,17 @@ class DetailFragment : Fragment() {
                         stampList.add(stamp)
                         Log.d("place", stamp.rv_txt.toString())
                         Log.d("place", d_id.toString())
+
+                        var a = IntRange(5, 9) // 0, 1, 2, 3 포함
+                        var date1 = stamp.s_date?.slice(a)
+                        Log.d("place", date1.toString())
+
                         if (d_id == document.data["d_id"]) {
                             review = stamp
                             index = i
                             Log.d("place", review.rv_txt.toString())
                             item.isActive = true
-                            item.formattedDate = document.data["s_date"] as String
+                            item.formattedDate = date1.toString()
                             item.title = document.data["s_name"] as String
                             item.tl_num = document.data["tl_num"] as String?
                             item.d_id = document.data["d_id"] as String?
@@ -89,7 +97,7 @@ class DetailFragment : Fragment() {
                         else
                     {
                         item.isActive = false
-                        item.formattedDate = document.data["s_date"] as String
+                        item.formattedDate = date1.toString()
                         item.title = document.data["s_name"] as String
                         item.tl_num = document.data["tl_num"] as String?
                         item.d_id = document.data["d_id"] as String?
@@ -109,7 +117,7 @@ class DetailFragment : Fragment() {
                             }
                         }
                 }
-                    view.sequneceLayout.setAdapter(MyAdapter(items))
+                view.sequneceLayout.setAdapter(MyAdapter(items))
             }
 
     }

@@ -120,9 +120,6 @@ class ReviewFragment : Fragment() {
                                                 ?.collection("review")
                                                 ?.document(document.id)
                                                 ?.set(review)
-                                        //Log.d("change", stamp.rv_txt.toString())
-                                        //Log.d("change2", stamp.s_num.toString())
-                                        //fbFirestore?.collection("stamp")?.document(stamp.s_num.toString())?.set(stamp)
                                     }
                                     Log.d("place", "리뷰추가 ")
                                     Log.d("nick", review.user_nick.toString())
