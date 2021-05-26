@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.reviewstory.MyItem
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.auth.FirebaseAuth
@@ -17,8 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
-import kotlinx.android.synthetic.main.fragment_search.view.*
-import kotlinx.android.synthetic.main.list_item_review.view.*
+
 
 
 class DetailFragment : Fragment() {
@@ -26,7 +24,7 @@ class DetailFragment : Fragment() {
     var fbFirestore: FirebaseFirestore? = null
     var fbAuth: FirebaseAuth? = null
     var fbStorage: FirebaseStorage? = null
-    var review = REVIEW()
+
     var index = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,12 +42,12 @@ class DetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         var stampList = ArrayList<REVIEW>()
+        var items = ArrayList<MyItem>()
 
 
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
-        var storageRef = fbStorage?.reference?.child("images")
         val safeArgs by navArgs<DetailFragmentArgs>()
         var d_id: String? = safeArgs.dId
         var tl_num: String? = safeArgs.tlNum
@@ -57,12 +55,15 @@ class DetailFragment : Fragment() {
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
         fbFirestore?.collectionGroup("review")
-                ?.whereEqualTo("tl_num", tl_num)
-                ?.get()
-                ?.addOnSuccessListener { result ->
+            ?.whereEqualTo("tl_num", tl_num)
+            ?.orderBy("s_date")
+            ?.get()
+            ?.addOnSuccessListener { result ->
+                    var review: REVIEW? = null
                     //stampList.clear()
                     for (document in result) {
                         var stamp = REVIEW()
+                        var item =  MyItem()
                         stamp.s_num = document.data["s_num"] as String?
                         stamp.address = document.data["address"] as String?
                         stamp.s_name = document.data["s_name"] as String?
@@ -79,39 +80,36 @@ class DetailFragment : Fragment() {
                             review = stamp
                             index = i
                             Log.d("place", review.rv_txt.toString())
+                            item.isActive = true
+                            item.formattedDate = document.data["s_date"] as String
+                            item.title = document.data["s_name"] as String
+                            item.tl_num = document.data["tl_num"] as String?
+                            item.d_id = document.data["d_id"] as String?
+                    }
+                        else
+                    {
+                        item.isActive = false
+                        item.formattedDate = document.data["s_date"] as String
+                        item.title = document.data["s_name"] as String
+                        item.tl_num = document.data["tl_num"] as String?
+                        item.d_id = document.data["d_id"] as String?
+                    }
+                        items.add(item)
+                        textView10.text = stamp.user_num
+                        textView11.text = stamp.address.toString()
+                        textView12.text = stamp.s_name.toString()
+                        textView13.text = stamp.rv_txt.toString()
 
-                            txt_user.text = review.user_num
-                            textView10.text = stamp.rv_txt.toString()
-                            textView9.text = stamp.s_name.toString()
-                            textView11.text = stamp.score
-                            D_review.text = stamp.address.toString()
-
-                        txt_user.text = stamp.user_num
-                        textView10.text = stamp.address.toString()
-                        textView9.text = stamp.s_name.toString()
-                        stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
-                        D_review.text = stamp.rv_txt.toString()
-
-
-                        Glide.with(this)
-                            .load(stamp.rv_img)
-                            .override(600, 200)
-                            .into(imageView3)
-                        view.txt_user.text = review.rv_txt
-                        Log.d("place", "이미지 주소    " + review.rv_img.toString())
-                        context?.let {
-                            Glide.with(it.applicationContext)
-                                .load(review.rv_img)
-                                .override(600, 200)
-                                .into(imageView3)
+                        if (review != null) {
+                            context?.let {
+                                Glide.with(it.applicationContext)
+                                    .load(review.rv_img)
+//                                    .override(600, 200)
+                                    .into(imageView6)
+                            }
                         }
-                    }
-                    for (i in stampList){
-                        Log.d("place",i.s_name.toString())
-                    }
-                    view.recycler_detail.adapter = DetailAdapter(stampList, fbFirestore!!)
-                    view.recycler_detail.layoutManager = LinearLayoutManager(requireContext()).also { it.orientation = LinearLayoutManager.HORIZONTAL }
                 }
+                    view.sequneceLayout.setAdapter(MyAdapter(items))
             }
 
     }

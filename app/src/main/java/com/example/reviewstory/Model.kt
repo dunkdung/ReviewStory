@@ -53,3 +53,12 @@ data class REVIEW(
 ){
 
 }
+data class MyItem(
+    var isActive: Boolean = false,
+    var formattedDate: String = "값이 없습니다.",
+    var title: String = "값이 없습니다.",
+    var d_id: String? = null,
+    var tl_num: String? = null
+){
+
+}
