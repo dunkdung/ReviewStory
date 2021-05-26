@@ -87,10 +87,15 @@ class ReviewFragment : Fragment() {
                                     for (document in result) {
                                         var stamp = REVIEW()
                                         stamp.s_num = snum
+                                        stamp.s_num = document.data["s_num"] as String?
                                         stamp.address = document.data["address"] as String?
                                         stamp.s_name = document.data["s_name"] as String?
                                         stamp.s_date = document.data["s_date"] as String?
                                         stamp.user_num = document.data["user_num"] as String?
+                                        stamp.rv_img = document.data["rv_img"] as String?
+                                        stamp.rv_txt = review.rv_txt
+                                        stamp.tl_num = document.data["tl_num"] as String?
+                                        stamp.d_id = document.id
                                         review.address = stamp.address
                                         review.s_num = stamp.s_num
                                         review.s_name = stamp.s_name
@@ -105,6 +110,9 @@ class ReviewFragment : Fragment() {
                                                 ?.collection("review")
                                                 ?.document(document.id)
                                                 ?.set(review)
+                                        //Log.d("change", stamp.rv_txt.toString())
+                                        //Log.d("change2", stamp.s_num.toString())
+                                        //fbFirestore?.collection("stamp")?.document(stamp.s_num.toString())?.set(stamp)
                                     }
                                     Log.d("place", "리뷰추가 ")
 
@@ -121,11 +129,15 @@ class ReviewFragment : Fragment() {
                                 for (document in result) {
                                     var stamp = REVIEW()
                                     stamp.s_num = snum
+                                    stamp.s_num = document.data["s_num"] as String?
                                     stamp.address = document.data["address"] as String?
                                     stamp.s_name = document.data["s_name"] as String?
                                     stamp.s_date = document.data["s_date"] as String?
                                     stamp.user_num = document.data["user_num"] as String?
-                                    review.address = stamp.address
+                                    stamp.rv_img = document.data["rv_img"] as String?
+                                    stamp.rv_txt = review.rv_txt
+                                    stamp.tl_num = document.data["tl_num"] as String?
+                                    stamp.d_id = document.id
                                     review.s_num = stamp.s_num
                                     review.s_name = stamp.s_name
                                     review.s_date = stamp.s_date
@@ -134,17 +146,24 @@ class ReviewFragment : Fragment() {
                                     review.tl_num = tlnum
                                     review.d_id = document.id
                                     review.score = rating_num
+                                    review.address = stamp.address
+                                    fbFirestore?.collection("stamp")?.document(stamp.d_id.toString())?.set(stamp)
                                     fbFirestore?.collection("timeline")
                                             ?.document(tlnum)
                                             ?.collection("review")
                                             ?.document(document.id)
                                             ?.set(review)
+                                    Log.d("change1", review.rv_txt.toString())
+                                    Log.d("change2", stamp.s_num.toString())
+
                                 }
+
                             }
                 }
-                val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std, edd)
-                Toast.makeText(context,"리뷰 작성 성공", Toast.LENGTH_LONG).show()
-                findNavController().navigate(direction)
+
+            val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std, edd)
+            Toast.makeText(context,"리뷰 작성 성공", Toast.LENGTH_LONG).show()
+            findNavController().navigate(direction)
         }
     }
 

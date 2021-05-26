@@ -70,11 +70,17 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var id: String? = null
 
         stamp?.let {
-                if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
+                //if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
             //itemView.txt_min_price.text = "메세지 수: "
             itemView.txt_avg_price.text = stamp.s_date.toString()
+
+            if(stamp.rv_txt != null){
+                Log.d("change", "바뀜")
+                itemView.imageView4.setBackgroundColor(Color.GREEN)
+            }
+
             //itemView.txt_max_price.text = "발신처: " + "${stamp.user_num}"
 
             itemView.setOnClickListener{

@@ -17,8 +17,10 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import com.example.reviewstory.USER
 import com.example.reviewstory.timeline.TimelineFragmentDirections
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_mypage.*
 import kotlinx.android.synthetic.main.fragment_mypage.btn_search
 import kotlinx.android.synthetic.main.fragment_timeline.*
@@ -32,6 +34,8 @@ class MypageFragment : Fragment() {
     private var locationPermissionGranted = false
     var date: String? = null
     private lateinit var auth: FirebaseAuth
+    var fbFirestore: FirebaseFirestore? = null
+    var fbAuth: FirebaseAuth? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
@@ -49,18 +53,20 @@ class MypageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //var date = Calendar.getInstance()
         val auth = FirebaseAuth.getInstance()
-        logout_button.setOnClickListener{
+        fbFirestore = FirebaseFirestore.getInstance()
+        logout_button.setOnClickListener {
             auth.signOut()
 //            val intent = Intent(context, MainActivity::class.java)
 //            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 //            startActivity(intent)
-            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            val direction: NavDirections =
+                MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
             findNavController().navigate(direction)
         }
 
         var currentCaldenar =
             Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
-        calendarView.setOnDateChangeListener{ view, year, month, dayOfMonth ->
+        calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             //date= SimpleDateFormat("yyyy-MM-dd").format(currentCaldenar.time)
             //date = String.format("%d %d %d", year, month+1, dayOfMonth)
             currentCaldenar.apply {
@@ -74,35 +80,46 @@ class MypageFragment : Fragment() {
                    - 선택한 날짜를 선택창에 표시 */
 
             }
-            Log.d("date",date.toString())
+            Log.d("date", date.toString())
         }
 
 
         btn_search.setOnClickListener {
-            if(date != null) {
-                val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
+            if (date != null) {
+                val direction: NavDirections =
+                    MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
                 findNavController().navigate(direction)
-                Log.d("date2",date.toString())
-            }
-            else{
+                Log.d("date2", date.toString())
+            } else {
                 Toast.makeText(context, "날짜를 선택해 주세요", Toast.LENGTH_LONG).show()
             }
 
         }
 
         this.auth = FirebaseAuth.getInstance()
-        logout_button.setOnClickListener{
+        logout_button.setOnClickListener {
             auth.signOut()
 //            val intent = Intent(context, MainActivity::class.java)
 //            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 //            startActivity(intent)
-            val direction: NavDirections = MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
+            val direction: NavDirections =
+                MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
             findNavController().navigate(direction)
         }
 
+        fbFirestore?.collection("user")
+            ?.document(fbAuth?.uid.toString())
+            ?.get()
+            ?.addOnSuccessListener {
+                var user = USER()
+                user.user_nick = it.data?.get("user_nick") as String?
+
+                et_name.text = user.user_nick
+
+            }
+
+
     }
-
-
 }
 
 
