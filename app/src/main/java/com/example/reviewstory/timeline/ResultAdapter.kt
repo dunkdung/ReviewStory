@@ -68,13 +68,16 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val tlnum = tlnum
         var id: String? = null
-
         stamp?.let {
+            var a = IntRange(5, 9) // 0, 1, 2, 3 포함
+            var month = stamp.s_date?.slice(IntRange(5, 6))
+            var day = stamp.s_date?.slice(IntRange(8,9))
+            var time = stamp.s_date?.slice(IntRange(11,15))
                 //if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
             //itemView.txt_min_price.text = "메세지 수: "
-            itemView.txt_avg_price.text = stamp.s_date.toString()
+            itemView.txt_avg_price.text = "$month"+"/ "+"$day" +" "+"$time"
 
             if(stamp.rv_txt != null){
                 Log.d("change", "바뀜")
