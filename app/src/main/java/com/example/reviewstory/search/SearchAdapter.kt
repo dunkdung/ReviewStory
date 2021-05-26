@@ -40,8 +40,7 @@ class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
-        var fbAuth: FirebaseAuth? = null
-        fbAuth = FirebaseAuth.getInstance()
+
         stamp?.let {
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
@@ -49,6 +48,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
             itemView.text_review.text = stamp.rv_txt.toString()
             itemView.ed_writer.text = stamp.user_nick.toString()
+
 //            if(itemView.ed_writer.text == null){
 //                itemView.ed_writer.text = stamp.g_nick.toString()
 //            }

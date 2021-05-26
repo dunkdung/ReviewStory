@@ -108,13 +108,15 @@ class MypageFragment : Fragment() {
         }
 
         fbFirestore?.collection("user")
-            ?.document(fbAuth?.uid.toString())
+            ?.document(this.auth?.uid.toString())
             ?.get()
             ?.addOnSuccessListener {
                 var user = USER()
                 user.user_nick = it.data?.get("user_nick") as String?
 
                 et_name.text = user.user_nick.toString()
+                Log.d("닉네임", user.user_nick.toString())
+                Log.d("닉네임2", this.auth?.uid.toString())
 
             }
 

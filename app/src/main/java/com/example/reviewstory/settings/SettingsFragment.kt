@@ -27,34 +27,47 @@ class SettingsFragment : PreferenceFragmentCompat() {
     var fbAuth: FirebaseAuth? = null
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
-
-        addPreferencesFromResource(R.xml.preferences)
-
-        val sps = PreferenceManager.getDefaultSharedPreferences(context)
-        //val editName = sps.getString("edit_text_preference_1", "")
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
-        var user = USER()
+        addPreferencesFromResource(R.xml.preferences)
+
+        fbFirestore?.collection("user")
+            ?.whereEqualTo("user_num", fbAuth!!.uid)
+            ?.get()
+            ?.addOnSuccessListener { reuslt ->
+                for(document in reuslt){
+                    if(document.data["user_nick"] as String? != null){
+                        
+                        val sps = PreferenceManager.getDefaultSharedPreferences(context)
+                        val editName = sps.getString("edit_text_preference_1", "")
+
+                        var user = USER()
 
 
 
-        //Log.d("set test", editName.toString())
-//        if (editName != null) {
-//            fbFirestore?.collection("user")
-//                ?.document(fbAuth?.uid.toString())
-//                ?.get()
-//                ?.addOnSuccessListener {
-//                    user.user_id = it.data?.get("user_id") as String
-//                    user.user_bd = it.data?.get("user_bd") as String
-//                    user.user_fw = it.data?.get("user_fw") as String
-//                    user.user_pn = it.data?.get("user_pn") as String
-//                    user.user_num = it.data?.get("user_num") as String
-//                    user.user_nick = editName
-//                fbFirestore?.collection("user")?.document(fbAuth?.uid.toString())?.set(user)
-//                Log.d("nick", editName.toString()) }
-//
-//        }
+                        Log.d("set test", editName.toString())
+                        if (editName != null) {
+                            fbFirestore?.collection("user")
+                                ?.document(fbAuth?.uid.toString())
+                                ?.get()
+                                ?.addOnSuccessListener {
+                                    user.user_id = it.data?.get("user_id") as String
+                                    user.user_bd = it.data?.get("user_bd") as String
+                                    user.user_fw = it.data?.get("user_fw") as String
+                                    user.user_pn = it.data?.get("user_pn") as String
+                                    user.user_num = it.data?.get("user_num") as String
+                                    user.user_nick = editName
+                                    fbFirestore?.collection("user")?.document(fbAuth?.uid.toString())?.set(user)
+                                    Log.d("nick", editName.toString()) }
+
+                        }
+                    }
+
+
+                }
+            }
+
 
     }
 

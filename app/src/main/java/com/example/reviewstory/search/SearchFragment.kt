@@ -54,6 +54,7 @@ class SearchFragment : Fragment() {
             override fun onPlaceSelected(place: Place) {
                 stampList.clear()
                 Log.d("place", "${place.name}, ${place.id}")
+
                 fbFirestore?.collectionGroup("review")
                     ?.whereEqualTo("s_name",place.name)
                     ?.get()
@@ -70,11 +71,21 @@ class SearchFragment : Fragment() {
                             stamp.tl_num = document.data["tl_num"] as String?
                             stamp.d_id = document.data["d_id"] as String?
                             stamp.score = document.data["score"] as String?
-                            if(document.data["user_nick"] as String? == null){
-                                stamp.user_nick = document.data["g_nick"] as String?
-                            } else {
-                            stamp.user_nick = document.data["user_nick"] as String?
-                            }
+
+
+                            fbFirestore?.collection("user")
+                                ?.whereEqualTo("user_num", stamp.user_num)
+                                ?.get()
+                                ?.addOnSuccessListener { reuslt ->
+                                    for(document2 in reuslt){
+                                        if(document.data["user_nick"] as String? == null){
+                                            stamp.user_nick = document.data["g_nick"] as String?
+                                        } else {
+                                            stamp.user_nick = document2.data["user_nick"] as String?
+                                        }
+
+                                    }
+                                }
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
