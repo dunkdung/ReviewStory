@@ -32,7 +32,7 @@
             <EditText android:id="@+id/email_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/black"
                 android:hint="@string/email"
 
                 />
@@ -49,9 +49,10 @@
             app:boxCornerRadiusTopStart="20dp"
             android:layout_marginTop="10dp"
             >
-            <EditText android:inputType="textPassword"
+            <EditText
+                android:inputType="textPassword"
                 android:id="@+id/password_edittext"
-                android:textColor="@color/colorWhite"
+                android:textColor="@color/black"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
                 android:hint="@string/password"

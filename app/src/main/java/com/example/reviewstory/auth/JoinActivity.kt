@@ -3,6 +3,8 @@ package com.example.reviewstory.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.widget.Toast
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
@@ -28,6 +30,21 @@ class JoinActivity : AppCompatActivity() {
 
             createEmail()
         }
+        et_passck.addTextChangedListener(object : TextWatcher {
+            // EditText에 문자 입력 전
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            // EditText에 변화가 있을 경우
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            // EditText 입력이 끝난 후
+            override fun afterTextChanged(p0: Editable?) {
+                if(pass_edit.getText().toString().equals(et_passck.getText().toString())){
+                    txt_check.setText("일치합니다.")
+                }
+                else
+                    txt_check.setText("일치하지 않습니다.")
+            }
+        })
 
     }
 
@@ -59,4 +76,5 @@ class JoinActivity : AppCompatActivity() {
                 }
             }
     }
+
 }

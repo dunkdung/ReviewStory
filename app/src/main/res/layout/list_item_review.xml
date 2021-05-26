@@ -27,81 +27,99 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/appCompatImageView"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:background="@drawable/custom_textview"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="24dp"
+                app:layout_constraintEnd_toStartOf="@+id/appCompatRatingBar"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/txt_gongpan_info"
                 android:layout_width="303dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
-                android:fontFamily="@font/font2"
+                android:layout_marginBottom="55dp"
+                android:fontFamily="@font/font3"
                 android:text="TextView"
-                android:textColor="@color/quantum_black_secondary_text"
-                android:textSize="17dp"
+                android:textColor="@color/quantum_grey300"
+                android:textSize="13dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_unit" />
+                app:layout_constraintTop_toBottomOf="@+id/appCompatRatingBar" />
+
 
             <TextView
                 android:id="@+id/txt_unit"
-                android:layout_width="178dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="112dp"
+                android:layout_width="183dp"
+                android:layout_height="31dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/font1"
                 android:text="TextView"
                 android:textColor="@color/black"
                 android:textSize="17dp"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatRatingBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/appCompatRatingBar"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="109dp"
-                android:layout_marginBottom="68dp"
-                android:numStars="5"
-                android:stepSize="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/text_review"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.247"
-                app:layout_constraintStart_toEndOf="@+id/txt_unit"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.039" />
 
             <TextView
                 android:id="@+id/rating_point"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="110dp"
                 android:text="별점"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatRatingBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/appCompatRatingBar" />
+                app:layout_constraintStart_toEndOf="@+id/appCompatRatingBar"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/text_review"
                 android:layout_width="371dp"
                 android:layout_height="0dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="5dp"
 
+                android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_textview"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatRatingBar" />
+                app:layout_constraintTop_toBottomOf="@+id/txt_gongpan_info" />
+
+            <androidx.appcompat.widget.AppCompatRatingBar
+                android:id="@+id/appCompatRatingBar"
+                style="?android:attr/ratingBarStyleSmall"
+                android:layout_width="81dp"
+                android:layout_height="16dp"
+                android:layout_marginTop="112dp"
+                android:layout_marginEnd="87dp"
+                android:layout_marginBottom="33dp"
+                android:numStars="5"
+                android:stepSize="0.5"
+                app:layout_constraintBottom_toTopOf="@+id/txt_gongpan_info"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/ed_writer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:text="작성자"
+                app:layout_constraintBottom_toTopOf="@+id/appCompatRatingBar"
+                app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
+                app:layout_constraintTop_toBottomOf="@+id/txt_unit" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
