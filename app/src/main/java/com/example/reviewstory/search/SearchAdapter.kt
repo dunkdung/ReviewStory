@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_review.view.*
@@ -39,12 +40,18 @@ class SearchAdapter(val items: ArrayList<REVIEW>, val fbFirestore: FirebaseFires
 //뷰홀더 클래스 선언
 class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
+        var fbAuth: FirebaseAuth? = null
+        fbAuth = FirebaseAuth.getInstance()
         stamp?.let {
             itemView.txt_gongpan_info.text = stamp.address.toString()
             itemView.txt_unit.text = stamp.s_name.toString()
             itemView.rating_point.text = stamp.score.toString()
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
             itemView.text_review.text = stamp.rv_txt.toString()
+            itemView.ed_writer.text = stamp.user_nick.toString()
+//            if(itemView.ed_writer.text == null){
+//                itemView.ed_writer.text = stamp.g_nick.toString()
+//            }
 //            itemView.appCompatImageView.setImageResource(stamp.rv_img.)
 
              Glide.with(itemView)
