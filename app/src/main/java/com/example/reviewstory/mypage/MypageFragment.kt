@@ -114,7 +114,7 @@ class MypageFragment : Fragment() {
                 var user = USER()
                 user.user_nick = it.data?.get("user_nick") as String?
 
-                et_name.text = user.user_nick
+                et_name.text = user.user_nick.toString()
 
             }
 
