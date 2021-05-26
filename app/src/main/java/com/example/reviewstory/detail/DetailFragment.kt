@@ -89,7 +89,7 @@ class DetailFragment : Fragment() {
                         txt_user.text = stamp.user_num
                         textView10.text = stamp.address.toString()
                         textView9.text = stamp.s_name.toString()
-                        stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
+                        //stamp.score?.toFloat()?.let { it1 -> ratingBar.setRating(it1) }
                         D_review.text = stamp.rv_txt.toString()
 
 
