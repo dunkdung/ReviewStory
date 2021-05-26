@@ -27,6 +27,7 @@ import kotlin.math.ceil
 
 class LocationWorker(appContext: Context, workerParams: WorkerParameters):
     Worker(appContext, workerParams) {
+
     var fbFirestore : FirebaseFirestore? = null
     var fbAuth : FirebaseAuth? = null
     // Use fields to define the data types to return.
@@ -37,6 +38,7 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
     val request: FindCurrentPlaceRequest = FindCurrentPlaceRequest.newInstance(placeFields)
 
     override fun doWork(): Result {
+        Log.d("place","백그라운드 실행중")
         val sharedPref = applicationContext.getSharedPreferences("test", MODE_PRIVATE)
         val editor =sharedPref.edit()
         fbFirestore = FirebaseFirestore.getInstance()

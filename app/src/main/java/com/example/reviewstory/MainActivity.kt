@@ -17,6 +17,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.jakewharton.threetenabp.AndroidThreeTen
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.concurrent.TimeUnit
 
@@ -31,9 +32,12 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        AndroidThreeTen.init(this);
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
+        getLocationPermission()
         val controller = findNavController(R.id.navigation_host)
 
         NavigationUI.setupWithNavController(
@@ -45,7 +49,7 @@ class MainActivity : AppCompatActivity() {
                 .build()
         WorkManager.getInstance(this).enqueue(saveRequest)
 
-        //getLocationPermission()
+
         if(false)
         {
             var userInfo = USER()
