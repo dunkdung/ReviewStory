@@ -80,6 +80,16 @@ class ReviewFragment : Fragment() {
                 storageRef?.putFile(uriPhoto!!)?.addOnSuccessListener {
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
                         imageuri = uri.toString()
+                        fbFirestore?.collection("user")
+                            ?.whereEqualTo("user_num", fbAuth!!.uid)
+                            ?.get()
+                            ?.addOnSuccessListener { reuslt ->
+                                for(document in reuslt){
+                                    review.user_nick = document.data["user_nick"] as String?
+                                    review.g_nick = fbAuth!!.currentUser.email
+                                    Log.d("이메일 확인", review.g_nick.toString())
+                                }
+                            }
                         fbFirestore?.collection("stamp")
                                 ?.whereEqualTo("s_num", snum)
                                 ?.get()
@@ -115,13 +125,23 @@ class ReviewFragment : Fragment() {
                                         //fbFirestore?.collection("stamp")?.document(stamp.s_num.toString())?.set(stamp)
                                     }
                                     Log.d("place", "리뷰추가 ")
+                                    Log.d("nick", review.user_nick.toString())
 
                                 }
                     }
                 }
             }
             else{
+                fbFirestore?.collection("user")
+                    ?.whereEqualTo("user_num", fbAuth!!.uid)
+                    ?.get()
+                    ?.addOnSuccessListener { reuslt ->
+                        for(document in reuslt){
+                            review.user_nick = document.data["user_nick"] as String?
+                            review.g_nick = fbAuth!!.currentUser.email
 
+                        }
+                    }
                     fbFirestore?.collection("stamp")
                             ?.whereEqualTo("s_num", snum)
                             ?.get()
@@ -155,7 +175,8 @@ class ReviewFragment : Fragment() {
                                             ?.set(review)
                                     Log.d("change1", review.rv_txt.toString())
                                     Log.d("change2", stamp.s_num.toString())
-
+                                    Log.d("nick", review.user_nick.toString())
+                                    Log.d("google_nick", review.g_nick.toString())
                                 }
 
                             }
