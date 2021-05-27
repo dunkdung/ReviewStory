@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -21,7 +22,10 @@ import kotlinx.android.synthetic.main.fragment_detail.view.*
 
 class DetailFragment : Fragment() {
 
-    var fbFirestore: FirebaseFirestore? = null
+
+
+
+    var fbFirestore: FirebaseFirestore = null
     var fbAuth: FirebaseAuth? = null
     var fbStorage: FirebaseStorage? = null
 
@@ -90,18 +94,15 @@ class DetailFragment : Fragment() {
                         stamp.rv_txt = document.data["rv_txt"] as String?
                         stamp.tl_num = document.data["tl_num"] as String?
                         stamp.d_id = document.data["d_id"] as String?
+                        stamp.score = document.data["score"] as String?
                         stampList.add(stamp)
-                        Log.d("place", stamp.rv_txt.toString())
-                        Log.d("place", d_id.toString())
-
+                        Log.d("place", "별점은?????" + stamp.score)
                         var a = IntRange(5, 9) // 0, 1, 2, 3 포함
                         var date1 = stamp.s_date?.slice(a)
-                        Log.d("place", date1.toString())
 
                         if (d_id == document.data["d_id"]) {
                             review = stamp
                             index = i
-                            Log.d("place", review.rv_txt.toString())
                             item.isActive = true
                             item.formattedDate = date1.toString()
                             item.title = document.data["s_name"] as String
@@ -117,10 +118,30 @@ class DetailFragment : Fragment() {
                         item.d_id = document.data["d_id"] as String?
                     }
                         items.add(item)
-                        tv_mainwriter.text = stamp.user_num
-                        tv_address.text = stamp.address.toString()
-                        tv_place.text = stamp.s_name.toString()
-                        tv_review.text = stamp.rv_txt.toString()
+                        var user_nick = "작성자"
+                        fbFirestore?.collection("user")
+                            ?.document(review?.user_num.toString())
+                            ?.get()
+                            ?.addOnSuccessListener {
+                                user_nick = it.data?.get("user_nick").toString()
+                                tv_mainwriter.text = user_nick +"님의 타임라인"
+                        }
+
+                        tv_address.text = review?.address.toString()
+                        tv_place.text = review?.s_name.toString()
+                        tv_review.text = review?.rv_txt.toString()
+                        Log.d("place",review?.score.toString())
+                        if (review?.score != null) {
+                            appCompatRatingBar.visibility = View.VISIBLE
+                            rating_point.visibility = View.VISIBLE
+                            appCompatRatingBar.rating = review?.score!!.toFloat()
+                            rating_point.text = review.score
+                        }
+                        else
+                        {
+                            appCompatRatingBar.visibility = View.INVISIBLE
+                            rating_point.visibility = View.INVISIBLE
+                        }
 
                         if (review != null) {
                             context?.let {
