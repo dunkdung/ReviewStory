@@ -26,7 +26,11 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
         email_login_button.setOnClickListener {
-            signinEmail()
+            if (email_edittext.getText().toString().equals("") || password_edittext.getText().toString() == null){
+                Toast.makeText(this, "이메일, 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }else{
+                signinEmail()
+            }
         }
         google_sign_in_button.setOnClickListener {
             //First step
@@ -53,6 +57,7 @@ class LoginActivity : AppCompatActivity() {
             //reload();
         }
     }
+
     fun signinAndSignup(){
         auth?.createUserWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
                 ?.addOnCompleteListener {
@@ -69,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
     }
+
     fun signinEmail(){
         auth?.signInWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
                 ?.addOnCompleteListener {
