@@ -40,7 +40,9 @@ class LoginActivity : AppCompatActivity() {
         google_sign_in_button.setOnClickListener {
             //First step
 
+
             googleLogin()
+
 
         }
         sign_in_button.setOnClickListener{

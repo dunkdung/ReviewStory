@@ -50,6 +50,14 @@ class MainActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueue(saveRequest)
 
 
+        var user = USER()
+        user.user_id = fbAuth?.currentUser?.email
+        user.user_num = fbAuth?.currentUser?.uid
+
+
+        fbFirestore?.collection("user")
+            ?.add(user)
+
         fbFirestore?.collection("user")
             ?.whereEqualTo("user_id", fbAuth?.currentUser?.email)
             ?.get()
@@ -67,6 +75,7 @@ class MainActivity : AppCompatActivity() {
                                 break
                             }
                             email = email + i.toString()
+
 
                         }
                         email = email?.substring(4)

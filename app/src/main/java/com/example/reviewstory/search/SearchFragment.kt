@@ -84,6 +84,7 @@ class SearchFragment : Fragment() {
 
                                     }
                                 }
+                            Log.d("마지막2", stamp.user_nick.toString())
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")
