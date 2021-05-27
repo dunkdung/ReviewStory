@@ -64,6 +64,7 @@ class LoginActivity : AppCompatActivity() {
             //reload();
         }
     }
+
     fun signinAndSignup(){
         auth?.createUserWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
                 ?.addOnCompleteListener {
@@ -80,6 +81,7 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
     }
+
     fun signinEmail(){
         auth?.signInWithEmailAndPassword(email_edittext.text.toString(),password_edittext.text.toString())
                 ?.addOnCompleteListener {
