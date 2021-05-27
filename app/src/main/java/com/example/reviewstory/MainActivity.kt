@@ -57,7 +57,13 @@ class MainActivity : AppCompatActivity() {
 
         fbFirestore?.collection("user")
             ?.document(fbAuth?.currentUser?.uid.toString())
-            ?.set(user)
+            ?.get()
+            ?.addOnSuccessListener {
+                user.user_nick = it.data?.get("user_nick") as String?
+
+                fbFirestore?.collection("user")?.document(fbAuth?.currentUser?.uid.toString())?.set(user)
+                Log.d("닉네임 확인", user.user_nick.toString())
+            }
 
         fbFirestore?.collection("user")
             ?.whereEqualTo("user_id", fbAuth?.currentUser?.email)
@@ -66,7 +72,7 @@ class MainActivity : AppCompatActivity() {
                 for (document in result) {
                     var userInfo = USER()
                     var email : String? = null
-                    Log.d("구글 로그인", "확인용")
+                    Log.d("구글 로그인", document.data["user_nick"].toString())
                     if (document.data["user_nick"] as String? == null) {
                         userInfo.user_num = fbAuth?.uid
                         userInfo.user_id = fbAuth?.currentUser?.email
