@@ -73,7 +73,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var day = stamp.s_date?.slice(IntRange(8,9))
             var time = stamp.s_date?.slice(IntRange(11,15))
                 //if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
-            itemView.txt_tldate.text = stamp.address.toString()
+            itemView.tv_review.text = stamp.address.toString()
             itemView.txt_start.text = stamp.s_name.toString()
             //itemView.txt_min_price.text = "메세지 수: "
             itemView.txt_avg_price.text = "$month"+"/ "+"$day" +" "+"$time"

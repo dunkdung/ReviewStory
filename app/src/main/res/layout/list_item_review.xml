@@ -37,7 +37,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/txt_tldate"
+                android:id="@+id/tv_review"
                 android:layout_width="303dp"
                 android:layout_height="0dp"
                 android:layout_marginStart="5dp"
@@ -92,7 +92,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_tldate" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_review" />
 
             <androidx.appcompat.widget.AppCompatRatingBar
                 android:id="@+id/appCompatRatingBar"
@@ -104,7 +104,7 @@
                 android:layout_marginBottom="33dp"
                 android:numStars="5"
                 android:stepSize="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/txt_tldate"
+                app:layout_constraintBottom_toTopOf="@+id/tv_review"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/appCompatImageView"
                 app:layout_constraintTop_toTopOf="parent" />

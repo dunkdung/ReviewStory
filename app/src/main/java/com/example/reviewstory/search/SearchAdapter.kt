@@ -37,7 +37,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
 
         stamp?.let {
-            itemView.txt_tldate.text = stamp.address.toString()
+            itemView.tv_review.text = stamp.address.toString()
             itemView.txt_start.text = stamp.s_name.toString()
             itemView.rating_point.text = stamp.score.toString()
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }

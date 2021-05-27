@@ -3,20 +3,14 @@ package com.example.reviewstory.mypage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavDirections
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.example.reviewstory.MyItem
 import com.example.reviewstory.R
-import com.example.reviewstory.REVIEW
 import com.example.reviewstory.TIMELINE
 import com.example.reviewstory.detail.MyAdapter2
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_detail.view.*
-import kotlinx.android.synthetic.main.list_item_review.view.*
 import kotlinx.android.synthetic.main.list_item_review.view.txt_start
-import kotlinx.android.synthetic.main.list_item_review.view.txt_tldate
+import kotlinx.android.synthetic.main.list_item_review.view.tv_review
 import kotlinx.android.synthetic.main.list_item_timeline.view.*
 
 class MypageAdapter(val items: ArrayList<TIMELINE>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder>() {
@@ -51,7 +45,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         }
         var items = ArrayList<MyItem>()
         stamp?.let {
-            itemView.txt_tldate.text = stamp.tl_date.toString()
+            itemView.tv_review.text = stamp.tl_date.toString()
             itemView.txt_start.text = stamp.start_date.toString()
             itemView.txt_end.text = stamp.end_date
             itemView.textView15.text = stamp.start_date.toString() + " ~ "+ stamp.end_date.toString()
