@@ -96,6 +96,7 @@ class JoinActivity : AppCompatActivity() {
                         }
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
+
                 } else {
                     id_check.setText("이메일 중복")
                     Toast.makeText(this, "기입 정보를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()
