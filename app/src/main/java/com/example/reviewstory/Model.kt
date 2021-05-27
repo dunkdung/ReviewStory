@@ -19,7 +19,7 @@ data class USER(
 
 
 data class FOLLOWLIST(
-    var fol_num : Int? = null,
+    var fol_num : String? = null,
     var user_id : String? = null,
     var user_num : String? = null,
     var follow_id : String? = null

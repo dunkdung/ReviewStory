@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
+import com.example.reviewstory.FOLLOWLIST
 import com.example.reviewstory.MyItem
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
@@ -57,6 +58,23 @@ class DetailFragment : Fragment() {
         Log.d("place", "d-id         " + d_id.toString())
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
+        btn_flw.setOnClickListener {
+            fbFirestore?.collectionGroup("review")
+                ?.whereEqualTo("tl_num", tl_num)
+                ?.get()
+                ?.addOnSuccessListener { result ->
+                    var follow = FOLLOWLIST()
+                    for (document in result) {
+                        follow.fol_num = document.data["user_num"] as String?
+                        follow.user_num = fbAuth?.currentUser?.uid
+                    }
+                    fbFirestore?.collection("followlist")
+                        ?.document(follow.fol_num.toString() + follow.user_num.toString())
+                        ?.set(follow)
+                    Log.d("팔로우1", follow.fol_num.toString())
+                    Log.d("팔로우2", follow.user_num.toString())
+                }
+        }
         fbFirestore?.collectionGroup("review")
             ?.whereEqualTo("tl_num", tl_num)
             ?.orderBy("s_date")
@@ -119,6 +137,8 @@ class DetailFragment : Fragment() {
                 }
                 view.sequneceLayout.setAdapter(MyAdapter(items))
             }
+
+
 
     }
 }

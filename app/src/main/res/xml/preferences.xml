@@ -25,7 +25,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="닉네임"
-            android:summary="닉네임을 설정하세요"/>
+            android:summary="닉네임을 설정하세요(초기화면과 다른 닉네임을 입력해야 적용됩니다)"/>
 
 
     </PreferenceCategory>
