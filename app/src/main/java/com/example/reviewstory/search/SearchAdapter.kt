@@ -1,7 +1,5 @@
 package com.example.reviewstory.search
 
-import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,10 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.android.synthetic.main.fragment_review.view.*
 import kotlinx.android.synthetic.main.list_item_review.view.*
 
 /* ResultFragment에서 검색 결과를 리사이클러뷰에 데이터를 보여주는 어댑터  */
@@ -42,8 +37,8 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: REVIEW?, fbFirestore: FirebaseFirestore) {
 
         stamp?.let {
-            itemView.txt_gongpan_info.text = stamp.address.toString()
-            itemView.txt_unit.text = stamp.s_name.toString()
+            itemView.txt_tldate.text = stamp.address.toString()
+            itemView.txt_start.text = stamp.s_name.toString()
             itemView.rating_point.text = stamp.score.toString()
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
             itemView.text_review.text = stamp.rv_txt.toString()

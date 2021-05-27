@@ -25,7 +25,7 @@
             android:layout_height="80dp">
 
             <TextView
-                android:id="@+id/txt_unit"
+                android:id="@+id/txt_start"
                 android:layout_width="0dp"
                 android:layout_height="23dp"
                 android:layout_marginStart="32dp"

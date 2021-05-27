@@ -1,107 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
+    <com.ramotion.foldingcell.FoldingCell
+        android:id="@+id/folding_cell"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:cardCornerRadius="16dp"
-        app:cardPreventCornerOverlap="true"
-        app:contentPadding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
+            android:id="@+id/cell_content_view"
             android:layout_width="match_parent"
-            android:layout_height="244dp">
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/appCompatImageView"
-                android:layout_width="200dp"
-                android:layout_height="100dp"
-                android:background="@drawable/custom_textview"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent"
+            android:background="@android:color/holo_blue_dark"
+            android:orientation="vertical"
+            android:visibility="invisible">
 
             <TextView
-                android:id="@+id/txt_gongpan_info"
-                android:layout_width="303dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="24dp"
-                android:fontFamily="@font/font2"
-                android:text="TextView"
-                android:textColor="@color/quantum_black_secondary_text"
-                android:textSize="17dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txt_unit" />
-
-            <TextView
-                android:id="@+id/txt_unit"
-                android:layout_width="178dp"
-                android:layout_height="23dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="112dp"
-                android:fontFamily="@font/font1"
-                android:text="TextView"
-                android:textColor="@color/black"
-                android:textSize="17dp"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatRatingBar"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.appcompat.widget.AppCompatRatingBar
-                android:id="@+id/appCompatRatingBar"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="109dp"
-                android:layout_marginBottom="68dp"
-                android:numStars="5"
-                android:stepSize="0.5"
-                app:layout_constraintBottom_toTopOf="@+id/text_review"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.247"
-                app:layout_constraintStart_toEndOf="@+id/txt_unit"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:text="TextView" />
 
-            <TextView
-                android:id="@+id/rating_point"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="별점"
-                app:layout_constraintBottom_toBottomOf="@+id/appCompatRatingBar"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/appCompatRatingBar" />
+            <com.transferwise.sequencelayout.SequenceLayout
+                android:id="@+id/sequneceLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text_review"
-                android:layout_width="371dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="8dp"
+                <com.transferwise.sequencelayout.SequenceStep
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:anchor="30 Nov"
+                    app:title="First step" />
 
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/custom_textview"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/appCompatRatingBar" />
+                <com.transferwise.sequencelayout.SequenceStep
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="Second step" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                <com.transferwise.sequencelayout.SequenceStep
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:active="true"
+                    app:anchor="Today"
+                    app:subtitle="Subtitle of this step."
+                    app:title="Third step"
+                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                <com.transferwise.sequencelayout.SequenceStep
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:title="Fourth step" />
+
+                <com.transferwise.sequencelayout.SequenceStep
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:anchor="2 Dec"
+                    app:title="Fifth step" />
+            </com.transferwise.sequencelayout.SequenceLayout>
+
+        </LinearLayout>
+
+        <FrameLayout
+            android:id="@+id/cell_title_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txt_tldate"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:layout_marginEnd="24dp"
+                    android:fontFamily="@font/font2"
+                    android:text="TextView"
+                    android:textColor="@color/quantum_black_secondary_text"
+                    android:textSize="17dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/textView9"
+                    app:layout_constraintTop_toTopOf="@+id/textView9" />
+
+                <TextView
+                    android:id="@+id/txt_start"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/font1"
+                    android:text="TextView"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    app:layout_constraintBottom_toTopOf="@+id/textView9"
+                    app:layout_constraintEnd_toStartOf="@+id/textView14"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/txt_end"
+                    android:layout_width="0dp"
+                    android:layout_height="23dp"
+                    android:layout_marginEnd="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:fontFamily="@font/font1"
+                    android:text="TextView"
+                    android:textColor="@color/black"
+                    android:textSize="17dp"
+                    app:layout_constraintBottom_toTopOf="@+id/txt_tldate"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView14"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:text="타임라인 작성일      "
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="46dp"
+                    android:layout_height="wrap_content"
+                    android:text="~"
+                    app:layout_constraintBottom_toBottomOf="@+id/txt_end"
+                    app:layout_constraintEnd_toStartOf="@+id/txt_end"
+                    app:layout_constraintStart_toEndOf="@+id/txt_start"
+                    app:layout_constraintTop_toTopOf="@+id/txt_start" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </FrameLayout>
+    </com.ramotion.foldingcell.FoldingCell>
+</FrameLayout>

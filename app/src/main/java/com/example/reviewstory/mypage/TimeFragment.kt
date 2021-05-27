@@ -50,7 +50,7 @@ class TimeFragment : Fragment() {
         fbFirestore = FirebaseFirestore.getInstance()
         fbAuth = FirebaseAuth.getInstance()
 
-        var timelist = ArrayList<REVIEW>()
+        var timelist = ArrayList<TIMELINE>()
 
 
         val safeArgs by navArgs<TimeFragmentArgs>()
@@ -68,33 +68,21 @@ class TimeFragment : Fragment() {
 
 
 
-            fbFirestore?.collectionGroup("review")
+            fbFirestore?.collection("timeline")
                 ?.whereEqualTo("user_num", fbAuth?.currentUser?.uid)
-                ?.whereGreaterThan("s_date", date)
-                ?.whereLessThan("s_date", date2)
+                ?.whereEqualTo("start_date", date)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
-                        var stamp = REVIEW()
-                        stamp.s_num = document.data["s_num"] as String?
-                        stamp.address = document.data["address"] as String?
-                        stamp.s_name = document.data["s_name"] as String?
-                        stamp.s_date = document.data["s_date"] as String?
-                        stamp.user_num = document.data["user_num"] as String?
-                        stamp.rv_img = document.data["rv_img"] as String?
-                        stamp.rv_txt = document.data["rv_txt"] as String?
+                        var stamp = TIMELINE()
+                        stamp.end_date = document.data["end_date"] as String?
+                        stamp.start_date = document.data["start_date"] as String?
+                        stamp.tl_date = document.data["tl_date"] as String?
                         stamp.tl_num = document.data["tl_num"] as String?
-                        stamp.d_id = document.data["d_id"] as String?
+                        stamp.user_num = document.data[""] as String?
                         timelist.add(stamp)
                         Log.d("check", date.toString())
                     }
-                    view.recycle_result.addItemDecoration(
-                        DividerItemDecoration(
-                            requireContext(),
-                            DividerItemDecoration.VERTICAL
-                        )
-                    )
-
                     view.recycle_result.adapter = MypageAdapter(timelist, fbFirestore!!)
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }

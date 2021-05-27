@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             userInfo.user_num = fbAuth?.uid
             userInfo.user_id = fbAuth?.currentUser?.email
 
+
             fbFirestore?.collection("user")?.document(userInfo.user_id.toString())?.set(userInfo)
         }
     }
