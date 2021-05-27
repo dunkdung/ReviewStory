@@ -25,7 +25,7 @@ class DetailFragment : Fragment() {
 
 
 
-    var fbFirestore: FirebaseFirestore = null
+    var fbFirestore: FirebaseFirestore? = null
     var fbAuth: FirebaseAuth? = null
     var fbStorage: FirebaseStorage? = null
 
