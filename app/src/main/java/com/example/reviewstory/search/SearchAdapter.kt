@@ -43,6 +43,7 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             stamp.score?.toFloat()?.let { it1 -> itemView.appCompatRatingBar.setRating(it1) }
             itemView.text_review.text = stamp.rv_txt.toString()
             itemView.ed_writer.text = stamp.user_nick.toString()
+            Log.d("마지막5", stamp.user_nick.toString())
 
 //            if(itemView.ed_writer.text == null){
 //                itemView.ed_writer.text = stamp.g_nick.toString()

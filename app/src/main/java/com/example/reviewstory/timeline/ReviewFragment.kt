@@ -86,7 +86,7 @@ class ReviewFragment : Fragment() {
                             ?.addOnSuccessListener { reuslt ->
                                 for(document in reuslt){
                                     review.user_nick = document.data["user_nick"] as String?
-                                    review.g_nick = fbAuth!!.currentUser.email
+                                    //review.g_nick = fbAuth!!.currentUser.email
                                     Log.d("이메일 확인", review.g_nick.toString())
                                 }
                             }
@@ -135,50 +135,49 @@ class ReviewFragment : Fragment() {
                     ?.addOnSuccessListener { reuslt ->
                         for(document in reuslt){
                             review.user_nick = document.data["user_nick"] as String?
-                            review.g_nick = fbAuth!!.currentUser.email
-
+                            //review.g_nick = fbAuth!!.currentUser.email
+                            Log.d("마지막1", review.user_nick.toString())
                         }
                     }
-                    fbFirestore?.collection("stamp")
-                            ?.whereEqualTo("s_num", snum)
-                            ?.get()
-                            ?.addOnSuccessListener { result ->
-                                for (document in result) {
-                                    var stamp = REVIEW()
-                                    stamp.s_num = snum
-                                    stamp.s_num = document.data["s_num"] as String?
-                                    stamp.address = document.data["address"] as String?
-                                    stamp.s_name = document.data["s_name"] as String?
-                                    stamp.s_date = document.data["s_date"] as String?
-                                    stamp.user_num = document.data["user_num"] as String?
-                                    stamp.rv_img = document.data["rv_img"] as String?
-                                    stamp.rv_txt = review.rv_txt
-                                    stamp.tl_num = document.data["tl_num"] as String?
-                                    stamp.d_id = document.id
-                                    review.s_num = stamp.s_num
-                                    review.s_name = stamp.s_name
-                                    review.s_date = stamp.s_date
-                                    review.user_num = stamp.user_num
-                                    review.rv_img = null
-                                    review.tl_num = tlnum
-                                    review.d_id = document.id
-                                    review.score = rating_num
-                                    review.address = stamp.address
-                                    fbFirestore?.collection("stamp")?.document(stamp.d_id.toString())?.set(stamp)
-                                    fbFirestore?.collection("timeline")
-                                            ?.document(tlnum)
-                                            ?.collection("review")
-                                            ?.document(document.id)
-                                            ?.set(review)
-                                    Log.d("change1", review.rv_txt.toString())
-                                    Log.d("change2", stamp.s_num.toString())
-                                    Log.d("nick", review.user_nick.toString())
-                                    Log.d("google_nick", review.g_nick.toString())
-                                }
+                Log.d("마지막2", review.user_nick.toString())
+                fbFirestore?.collection("stamp")
+                    ?.whereEqualTo("s_num", snum)
+                    ?.get()
+                    ?.addOnSuccessListener { result ->
+                        for (document in result) {
+                            var stamp = REVIEW()
+                            stamp.s_num = snum
+                            stamp.s_num = document.data["s_num"] as String?
+                            stamp.address = document.data["address"] as String?
+                            stamp.s_name = document.data["s_name"] as String?
+                            stamp.s_date = document.data["s_date"] as String?
+                            stamp.user_num = document.data["user_num"] as String?
+                            stamp.rv_img = document.data["rv_img"] as String?
+                            stamp.rv_txt = review.rv_txt
+                            stamp.tl_num = document.data["tl_num"] as String?
+                            stamp.d_id = document.id
+                            review.s_num = stamp.s_num
+                            review.s_name = stamp.s_name
+                            review.s_date = stamp.s_date
+                            review.user_num = stamp.user_num
+                            review.rv_img = null
+                            review.tl_num = tlnum
+                            review.d_id = document.id
+                            review.score = rating_num
+                            review.address = stamp.address
+                            fbFirestore?.collection("stamp")?.document(stamp.d_id.toString())?.set(stamp)
+                            fbFirestore?.collection("timeline")
+                                ?.document(tlnum)
+                                ?.collection("review")
+                                ?.document(document.id)
+                                ?.set(review)
+                            Log.d("change1", review.rv_txt.toString())
+                            Log.d("change2", stamp.s_num.toString())
+                            Log.d("마지막3", review.user_nick.toString())
+                        }
 
-                            }
-                }
-
+                    }
+            }
             val direction: NavDirections = ReviewFragmentDirections.actionReviewFragmentToStampsFragment(std, edd)
             Toast.makeText(context,"리뷰 작성 성공", Toast.LENGTH_LONG).show()
             findNavController().navigate(direction)

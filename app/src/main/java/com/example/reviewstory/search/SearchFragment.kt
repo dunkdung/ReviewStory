@@ -78,14 +78,13 @@ class SearchFragment : Fragment() {
                                 ?.get()
                                 ?.addOnSuccessListener { reuslt ->
                                     for(document2 in reuslt){
-                                        if(document.data["user_nick"] as String? == null){
-                                            stamp.user_nick = document.data["g_nick"] as String?
-                                        } else {
-                                            stamp.user_nick = document2.data["user_nick"] as String?
-                                        }
+
+                                        stamp.user_nick = document2.data["user_nick"] as String?
+                                        Log.d("마지막1", stamp.user_nick.toString())
 
                                     }
                                 }
+                            Log.d("마지막2", stamp.user_nick.toString())
                             stampList.add(stamp)
                         }
                         Log.d("place", "검색 갯수 ${stampList.size}")

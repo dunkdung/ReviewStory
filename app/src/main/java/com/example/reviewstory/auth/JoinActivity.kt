@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Patterns
 import android.widget.Toast
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
@@ -15,10 +16,12 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_join.*
+import java.util.regex.Pattern
 
 class JoinActivity : AppCompatActivity() {
     var auth: FirebaseAuth? = null
     var fbFirestore: FirebaseFirestore? = null
+    val emailValidation = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,6 +49,28 @@ class JoinActivity : AppCompatActivity() {
             }
         })
 
+        email_edit.addTextChangedListener(object  : TextWatcher{
+            // EditText에 문자 입력 전
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            // EditText에 변화가 있을 경우
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+            // EditText 입력이 끝난 후
+            override fun afterTextChanged(p0: Editable?) {
+                var email = email_edit.text.toString().trim()
+                val p = Pattern.matches(emailValidation, email)
+
+                if (p){ // 정상
+                    id_check.setText("올바른 형식입니다.")
+                    id_check.setTextColor(R.color.color_main.toInt())
+                }else{// 비정상
+                    id_check.setText("잘못된 형식입니다.")
+                    id_check.setTextColor(R.color.quantum_googred300.toInt())
+                }
+
+
+            }
+        })
     }
 
     private fun createEmail() {
@@ -72,9 +97,11 @@ class JoinActivity : AppCompatActivity() {
                     startActivity(Intent(this, LoginActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "기입 정보 이상, 중복 계정, 비밀번호 확인", Toast.LENGTH_SHORT).show()
+                    id_check.setText("이메일 중복")
+                    Toast.makeText(this, "기입 정보를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show()
                 }
             }
     }
+
 
 }
