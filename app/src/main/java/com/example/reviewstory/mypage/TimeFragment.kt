@@ -83,6 +83,7 @@ class TimeFragment : Fragment() {
                         timelist.add(stamp)
                         Log.d("check", date.toString())
                     }
+                    view.recycle_result.setHasFixedSize(true)
                     view.recycle_result.adapter = MypageAdapter(timelist, fbFirestore!!)
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }

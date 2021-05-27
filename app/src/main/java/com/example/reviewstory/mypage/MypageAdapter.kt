@@ -1,5 +1,6 @@
 package com.example.reviewstory.mypage
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,8 +68,10 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
                     item.d_id = document.data["d_id"] as String?
                     items.add(item)
             }
-                itemView.sequneceLayout2.setAdapter(MyAdapter2(items))
-
+                Log.d("place", items.toString())
+                if(items.toString() != "[]") {
+                    itemView.sequneceLayout2.setAdapter(MyAdapter2(items))
+                }
             }
         }
 
