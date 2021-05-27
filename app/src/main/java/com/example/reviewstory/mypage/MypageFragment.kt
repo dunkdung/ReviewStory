@@ -118,6 +118,7 @@ class MypageFragment : Fragment() {
                 Log.d("닉네임", user.user_nick.toString())
                 Log.d("닉네임2", this.auth?.uid.toString())
 
+
             }
 
 

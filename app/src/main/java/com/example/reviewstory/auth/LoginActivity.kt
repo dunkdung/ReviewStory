@@ -3,9 +3,11 @@ package com.example.reviewstory.auth
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.reviewstory.MainActivity
 import com.example.reviewstory.R
+import com.example.reviewstory.USER
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
@@ -14,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -21,16 +24,24 @@ import kotlinx.android.synthetic.main.activity_login.*
 class LoginActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
+    private lateinit var fbFirestore: FirebaseFirestore
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         auth = FirebaseAuth.getInstance()
+        fbFirestore = FirebaseFirestore.getInstance()
         email_login_button.setOnClickListener {
-            signinEmail()
+            if (email_edittext.getText().toString().equals("") || password_edittext.getText().toString() == null){
+                Toast.makeText(this, "이메일, 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show()
+            }else{
+                signinEmail()
+            }
         }
         google_sign_in_button.setOnClickListener {
             //First step
+
             googleLogin()
+
         }
         sign_in_button.setOnClickListener{
             moveJoinPage()
@@ -76,6 +87,7 @@ class LoginActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         //Login
                         moveMainPage(task.result?.user)
+
                     }else{
                         //Show the error message
                         Toast.makeText(this,task.exception?.message,Toast.LENGTH_LONG).show()
@@ -118,6 +130,7 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) {
                     task ->
                     if(task.isSuccessful){
+
                         //Login
                         moveMainPage(task.result?.user)
                     }else{
@@ -137,5 +150,6 @@ class LoginActivity : AppCompatActivity() {
     fun googleLogin(){
         var signInIntent = googleSignInClient?.signInIntent
         startActivityForResult(signInIntent,GOOGLE_LOGIN_CODE)
+
     }
 }

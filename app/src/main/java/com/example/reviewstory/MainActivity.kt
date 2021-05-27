@@ -50,15 +50,34 @@ class MainActivity : AppCompatActivity() {
         WorkManager.getInstance(this).enqueue(saveRequest)
 
 
-        if(false)
-        {
-            var userInfo = USER()
+        fbFirestore?.collection("user")
+            ?.whereEqualTo("user_id", fbAuth?.currentUser?.email)
+            ?.get()
+            ?.addOnSuccessListener { result ->
+                for (document in result) {
+                    var userInfo = USER()
+                    var email : String? = null
+                    Log.d("구글 로그인", "확인용")
+                    if (document.data["user_nick"] as String? == null) {
+                        userInfo.user_num = fbAuth?.uid
+                        userInfo.user_id = fbAuth?.currentUser?.email
+                        for(i in fbAuth?.currentUser?.email.toString()){
+                            if(i.toString() == "@")
+                            {
+                                break
+                            }
+                            email = email + i.toString()
 
-            userInfo.user_num = fbAuth?.uid
-            userInfo.user_id = fbAuth?.currentUser?.email
+                        }
+                        email = email?.substring(4)
+                        userInfo.user_nick = email
+                        fbFirestore?.collection("user")?.document(userInfo.user_num.toString())
+                            ?.set(userInfo)
+                        Log.d("구글 로그인2", userInfo.user_nick.toString())
+                    }
+                }
+            }
 
-            fbFirestore?.collection("user")?.document(userInfo.user_id.toString())?.set(userInfo)
-        }
     }
 
 
