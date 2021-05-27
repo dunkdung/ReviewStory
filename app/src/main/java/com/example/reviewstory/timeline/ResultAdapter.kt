@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.navigation.NavDirections
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
@@ -74,8 +73,8 @@ class ItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             var day = stamp.s_date?.slice(IntRange(8,9))
             var time = stamp.s_date?.slice(IntRange(11,15))
                 //if(stamp.write) itemView.setBackgroundColor(Color.GREEN)
-            itemView.txt_gongpan_info.text = stamp.address.toString()
-            itemView.txt_unit.text = stamp.s_name.toString()
+            itemView.tv_review.text = stamp.address.toString()
+            itemView.txt_start.text = stamp.s_name.toString()
             //itemView.txt_min_price.text = "메세지 수: "
             itemView.txt_avg_price.text = "$month"+"/ "+"$day" +" "+"$time"
 

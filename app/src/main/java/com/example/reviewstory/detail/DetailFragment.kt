@@ -17,10 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
-import org.threeten.bp.LocalDate
-import org.threeten.bp.LocalDateTime
-import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
 
 
 class DetailFragment : Fragment() {
@@ -121,10 +117,10 @@ class DetailFragment : Fragment() {
                         item.d_id = document.data["d_id"] as String?
                     }
                         items.add(item)
-                        textView10.text = stamp.user_num
-                        textView11.text = stamp.address.toString()
-                        textView12.text = stamp.s_name.toString()
-                        textView13.text = stamp.rv_txt.toString()
+                        tv_mainwriter.text = stamp.user_num
+                        tv_address.text = stamp.address.toString()
+                        tv_place.text = stamp.s_name.toString()
+                        tv_review.text = stamp.rv_txt.toString()
 
                         if (review != null) {
                             context?.let {

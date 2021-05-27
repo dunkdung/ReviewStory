@@ -1,131 +1,230 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".detail.DetailFragment">
+    android:layout_margin="16dp"
+    app:cardCornerRadius="20dp"
+    app:cardElevation="8dp"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".detail.DetailFragment">
 
-    <ScrollView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+        <ScrollView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:layout_marginBottom="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="1.0">
 
-            <com.transferwise.sequencelayout.SequenceLayout
-                android:id="@+id/sequneceLayout"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-                <com.transferwise.sequencelayout.SequenceStep
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:anchor="30 Nov"
-                    app:title="First step" />
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
 
-                <com.transferwise.sequencelayout.SequenceStep
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tv_mainwriter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/font1"
+                        android:text="작성자 x 님의 타임라인"
+                        android:textColor="@color/color_main"
+                        android:layout_margin="3dp"
+                        android:textSize="20dp" />
+
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/color_main" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:title="Second step" />
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
 
-                <com.transferwise.sequencelayout.SequenceStep
+                    <com.transferwise.sequencelayout.SequenceLayout
+                        android:id="@+id/sequneceLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:layout_gravity="right">
+
+                        <com.transferwise.sequencelayout.SequenceStep
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:anchor="30 Nov"
+                            app:title="First step" />
+
+                        <com.transferwise.sequencelayout.SequenceStep
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:title="Second step" />
+
+                        <com.transferwise.sequencelayout.SequenceStep
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:active="true"
+                            app:anchor="Today"
+                            app:subtitle="Subtitle of this step."
+                            app:title="Third step"
+                            app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
+
+                        <com.transferwise.sequencelayout.SequenceStep
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:title="Fourth step" />
+
+                        <com.transferwise.sequencelayout.SequenceStep
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:anchor="2 Dec"
+                            app:title="Fifth step" />
+                    </com.transferwise.sequencelayout.SequenceLayout>
+                </androidx.cardview.widget.CardView>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:background="@color/color_main" />
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:active="true"
-                    app:anchor="Today"
-                    app:subtitle="Subtitle of this step."
-                    app:title="Third step"
-                    app:titleTextAppearance="@style/TextAppearance.AppCompat.Title" />
+                    android:layout_margin="16dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
 
-                <com.transferwise.sequencelayout.SequenceStep
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:title="Fourth step" />
 
-                <com.transferwise.sequencelayout.SequenceStep
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:anchor="2 Dec"
-                    app:title="Fifth step" />
-            </com.transferwise.sequencelayout.SequenceLayout>
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                        <androidx.appcompat.widget.AppCompatImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginEnd="24dp"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/textView10"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:src="@tools:sample/avatars" />
 
-                <TextView
-                    android:id="@+id/textView10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView6" />
+                        <TextView
+                            android:id="@+id/tv_review"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginStart="5dp"
+                            android:layout_marginEnd="24dp"
+                            android:fontFamily="@font/font3"
+                            android:text="TextView"
+                            android:textColor="@color/quantum_grey300"
+                            android:textSize="13dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent" />
 
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
+                        <TextView
+                            android:id="@+id/tv_place"
+                            android:layout_width="183dp"
+                            android:layout_height="31dp"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="20dp"
+                            android:layout_marginBottom="20dp"
+                            android:fontFamily="@font/font1"
+                            android:text="TextView"
+                            android:textColor="@color/black"
+                            android:textSize="17dp"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_review"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/appCompatRatingBar" />
 
-                <TextView
-                    android:id="@+id/textView12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                        <TextView
+                            android:id="@+id/rating_point"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="36dp"
+                            android:text="별점"
+                            app:layout_constraintStart_toEndOf="@+id/appCompatRatingBar"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
-                <TextView
-                    android:id="@+id/textView13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TextView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                        <androidx.appcompat.widget.AppCompatRatingBar
+                            android:id="@+id/appCompatRatingBar"
+                            style="?android:attr/ratingBarStyleSmall"
+                            android:layout_width="81dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="28dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="33dp"
+                            android:numStars="5"
+                            android:stepSize="0.5"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_review"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                            app:layout_constraintVertical_bias="0.25" />
 
-                <Button
-                    android:id="@+id/btn_flw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="35dp"
-                    android:layout_marginTop="138dp"
-                    android:layout_marginBottom="20dp"
-                    android:text="Button"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/textView10"
-                    app:layout_constraintTop_toTopOf="parent" />
+                        <TextView
+                            android:id="@+id/tv_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:text="TextView"
+                            app:layout_constraintBottom_toTopOf="@+id/tv_review"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/tv_place" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </LinearLayout>
-    </ScrollView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/text_review"
+                    android:layout_width="371dp"
+                    android:layout_height="0dp"
+
+                    android:layout_marginTop="176dp" />
+
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
