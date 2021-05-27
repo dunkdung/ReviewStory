@@ -102,7 +102,6 @@ class LocationWorker(appContext: Context, workerParams: WorkerParameters):
                     stampinfo.s_num = fbAuth?.currentUser?.uid + "$num"
                     editor.putInt("s_num", num + 1)
                     editor.apply()
-                    fbAuth?.currentUser?.email?.let { fbFirestore?.collection("user")?.document(it)?.collection("stamp")?.add(stampinfo) }
                     fbFirestore?.collection("stamp")?.add(stampinfo)
                     Log.d(
                         "place",

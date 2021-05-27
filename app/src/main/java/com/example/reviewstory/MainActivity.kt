@@ -56,7 +56,8 @@ class MainActivity : AppCompatActivity() {
 
 
         fbFirestore?.collection("user")
-            ?.add(user)
+            ?.document(fbAuth?.currentUser?.uid.toString())
+            ?.set(user)
 
         fbFirestore?.collection("user")
             ?.whereEqualTo("user_id", fbAuth?.currentUser?.email)
