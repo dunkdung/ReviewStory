@@ -99,6 +99,8 @@ class SearchFragment : Fragment() {
                         view.recycle_search.layoutManager = LinearLayoutManager(requireContext())
                     }
             }
+
+
             override fun onError(p0: Status) {
             }
         })

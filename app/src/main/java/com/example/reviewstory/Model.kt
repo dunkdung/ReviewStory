@@ -13,7 +13,8 @@ data class USER(
     var user_pn : String? = null,
     var user_pic : String? = null,
     var user_email : String? = null,
-    var user_nick : String? = null){
+    var user_nick : String? = null,
+    var user_private : Boolean? = false){
 
 }
 

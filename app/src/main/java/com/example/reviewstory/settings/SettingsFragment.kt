@@ -39,8 +39,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
         var user = USER()
         Log.d("제발요1", editName.toString())
 
+
         sps.registerOnSharedPreferenceChangeListener { sharedPreferences, s ->
             var editName2 = sps.getString("edit_text_preference_1", "")
+
+            var show = sps.getBoolean("private",false)
             if (editName2 != null) {
                 fbFirestore?.collection("user")
                     ?.document(fbAuth?.uid.toString())
@@ -55,6 +58,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
                         fbFirestore?.collection("user")
                             ?.document(fbAuth?.uid.toString())?.set(user)
                         Log.d("제발요2", editName2)
+                        Log.d("비공개", show.toString())
+                    }
+            }
+
+            if(show == true){
+                fbFirestore?.collection("user")
+                    ?.document(fbAuth?.uid.toString())
+                    ?.get()
+                    ?.addOnSuccessListener {
+                        user.user_id = it.data?.get("user_id") as String?
+                        user.user_bd = it.data?.get("user_bd") as String?
+                        user.user_fw = it.data?.get("user_fw") as String?
+                        user.user_pn = it.data?.get("user_pn") as String?
+                        user.user_num = it.data?.get("user_num") as String?
+                        user.user_nick = it.data?.get("user_nick") as String?
+                        user.user_private = true
+                        fbFirestore?.collection("user")
+                            ?.document(fbAuth?.uid.toString())?.set(user)
+                        Log.d("공개", user.user_private.toString())
                     }
             }
         }
