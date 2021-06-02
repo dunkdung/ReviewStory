@@ -15,6 +15,7 @@ import com.example.reviewstory.R
 import com.example.reviewstory.REVIEW
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_detail.*
 import kotlinx.android.synthetic.main.fragment_detail.view.*
@@ -180,16 +181,21 @@ class DetailFragment : Fragment() {
                             var tsDoc = fbFirestore?.document(document.id)
                             fbFirestore?.runTransaction { transaction ->
                                 var uid = FirebaseAuth.getInstance().currentUser?.uid
-                                var contentDTO = transaction.get(tsDoc!!).toObject(REVIEW::class.java)
+                                var contentDTO = transaction.get(tsDoc!!).toObject<REVIEW>()
 
                                 if(contentDTO!!.like.containsKey(uid)){
-                                    contentDTO?.like_count = contentDTO?.like_count - 1
+                                    contentDTO?.like_count = contentDTO?.like_count?.minus(1)
                                     contentDTO?.like.remove(uid)
                                 } else {
-                                    contentDTO?.like_count = contentDTO?.like_count + 1
-                                    contentDTO?.like[uid!!] = true
+                                    contentDTO?.like_count = contentDTO?.like_count?.plus(1)
+                                    contentDTO.like[uid!!] = true
                                 }
                                 transaction.set(tsDoc, contentDTO)
+                                if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
+                                    img_favorite.setImageResource(R.drawable.ic_gps)
+                                } else{
+                                    img_favorite.setImageResource(R.drawable.ic_favorite_border)
+                                }
                             }
                             if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
                                 img_favorite.setImageResource(R.drawable.ic_gps)
