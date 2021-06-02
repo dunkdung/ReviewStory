@@ -87,7 +87,6 @@ class ReviewFragment : Fragment() {
                                 for(document in reuslt){
                                     review.user_nick = document.data["user_nick"] as String?
                                     //review.g_nick = fbAuth!!.currentUser.email
-                                    Log.d("이메일 확인", review.g_nick.toString())
                                 }
                             }
                         fbFirestore?.collection("stamp")
