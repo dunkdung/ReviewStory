@@ -176,6 +176,22 @@ class DetailFragment : Fragment() {
                                     .into(imageView6)
                             }
                         }
+                        img_favorite.setOnClickListener{
+                            var tsDoc = fbFirestore?.document(document.id)
+                            fbFirestore?.runTransaction { transaction ->
+                                var uid = FirebaseAuth.getInstance().currentUser?.uid
+                                var contentDTO = transaction.get(tsDoc!!).toObject(REVIEW::class.java)
+
+                                if(contentDTO!!.like.containsKey(uid)){
+                                    contentDTO?.like_count = contentDTO?.like_count - 1
+                                    contentDTO?.like.remove(uid)
+                                } else {
+                                    contentDTO?.like_count = contentDTO?.like_count + 1
+                                    contentDTO?.like[uid!!] = true
+                                }
+                                transaction.set(tsDoc, contentDTO)
+                            }
+                        }
                 }
                 view.sequneceLayout.setAdapter(MyAdapter(items))
             }
@@ -183,4 +199,8 @@ class DetailFragment : Fragment() {
 
 
     }
+
+
 }
+
+

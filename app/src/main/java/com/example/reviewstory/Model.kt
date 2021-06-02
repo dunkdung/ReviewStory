@@ -14,8 +14,10 @@ data class USER(
     var user_pic : String? = null,
     var user_email : String? = null,
     var user_nick : String? = null,
-    var user_private : Boolean? = false){
-
+    var follow_count : Number? = 0,
+    var follow_list : List<String>? =null,
+    var user_private : Boolean? = false
+) {
 }
 
 
@@ -52,7 +54,9 @@ data class REVIEW(
     var rv_txt : String? = null,
     var rv_img : String? = null,
     var user_nick : String? = null,
-    var g_nick : String? = null
+    var follow_count : Number? = 0,
+    var like_count : Int = 0,
+    var like: Map<String, Boolean> = HashMap()
 ){
 
 }
