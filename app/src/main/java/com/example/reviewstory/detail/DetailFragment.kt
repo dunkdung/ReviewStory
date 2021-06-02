@@ -177,20 +177,34 @@ class DetailFragment : Fragment() {
                                     .into(imageView6)
                             }
                         }
+                        img_favorite.setOnClickListener{
+                            var tsDoc = fbFirestore?.collection("timeline")
+                                ?.document(review?.tl_num as String)
+                                ?.collection("review")
+                                ?.document(review?.d_id as String)
+                            fbFirestore?.runTransaction { transaction ->
+                                var uid = FirebaseAuth.getInstance().currentUser?.uid
+                                var contentDTO = transaction.get(tsDoc!!).toObject<REVIEW>()
 
-                }
-                img_favorite.setOnClickListener{
-                    var tsDoc = fbFirestore?.collection("review")?.document(d_id.toString())
-                    fbFirestore?.runTransaction { transaction ->
-                        var uid = FirebaseAuth.getInstance().currentUser?.uid
-                        var contentDTO = transaction.get(tsDoc!!).toObject<REVIEW>()
-
-                        if(contentDTO!!.like.containsKey(uid)){
-                            contentDTO?.like_count = contentDTO?.like_count?.minus(1)
-                            contentDTO?.like.remove(uid)
-                        } else {
-                            contentDTO?.like_count = contentDTO?.like_count?.plus(1)
-                            contentDTO.like[uid!!] = true
+                                if(contentDTO!!.like.containsKey(uid)){
+                                    contentDTO?.like_count = contentDTO?.like_count?.minus(1)
+                                    contentDTO?.like.remove(uid)
+                                } else {
+                                    contentDTO?.like_count = contentDTO?.like_count?.plus(1)
+                                    contentDTO.like[uid!!] = true
+                                }
+                                transaction.set(tsDoc, contentDTO)
+                                if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
+                                    img_favorite.setImageResource(R.drawable.ic_gps)
+                                } else{
+                                    img_favorite.setImageResource(R.drawable.ic_favorite_border)
+                                }
+                            }
+                            if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
+                                img_favorite.setImageResource(R.drawable.ic_gps)
+                            } else{
+                                img_favorite.setImageResource(R.drawable.ic_favorite_border)
+                            }
                         }
                         transaction.set(tsDoc, contentDTO)
 
