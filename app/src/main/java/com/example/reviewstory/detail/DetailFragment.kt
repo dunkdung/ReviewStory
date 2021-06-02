@@ -191,6 +191,11 @@ class DetailFragment : Fragment() {
                                 }
                                 transaction.set(tsDoc, contentDTO)
                             }
+                            if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
+                                img_favorite.setImageResource(R.drawable.ic_gps)
+                            } else{
+                                img_favorite.setImageResource(R.drawable.ic_favorite_border)
+                            }
                         }
                 }
                 view.sequneceLayout.setAdapter(MyAdapter(items))
