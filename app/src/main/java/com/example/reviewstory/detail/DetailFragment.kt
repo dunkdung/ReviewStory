@@ -194,16 +194,11 @@ class DetailFragment : Fragment() {
                                     contentDTO.like[uid!!] = true
                                 }
                                 transaction.set(tsDoc, contentDTO)
-                                if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
-                                    img_favorite.setImageResource(R.drawable.ic_gps)
-                                } else{
-                                    img_favorite.setImageResource(R.drawable.ic_favorite_border)
-                                }
-                            }
-                            if(review!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
-                                img_favorite.setImageResource(R.drawable.ic_gps)
-                            } else{
-                                img_favorite.setImageResource(R.drawable.ic_favorite_border)
+//                                if(contentDTO!!.like.containsKey(FirebaseAuth.getInstance().currentUser?.uid)){
+//                                    view.img_favorite.setImageResource(R.drawable.ic_gps)
+//                                } else{
+//                                    view.img_favorite.setImageResource(R.drawable.ic_favorite_border)
+//                                }
                             }
                         }
                 }

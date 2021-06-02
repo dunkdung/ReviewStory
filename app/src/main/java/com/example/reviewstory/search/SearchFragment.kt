@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
                             stamp.tl_num = document.data["tl_num"] as String?
                             stamp.d_id = document.data["d_id"] as String?
                             stamp.score = document.data["score"] as String?
-                            stamp.like_count = Integer.parseInt(document.data["like_count"].toString())
+                            //stamp.like_count = Integer.parseInt(document.data["like_count"].toString())
 
 
                             fbFirestore?.collection("user")

@@ -15,7 +15,7 @@ data class USER(
     var user_email : String? = null,
     var user_nick : String? = null,
     var follow_count : Int? = 0,
-    var follow_list : Map<String, Boolean> = HashMap(),
+    var follow_list : MutableMap<String, Boolean> = HashMap(),
     var user_private : Boolean? = false
 ){
 
