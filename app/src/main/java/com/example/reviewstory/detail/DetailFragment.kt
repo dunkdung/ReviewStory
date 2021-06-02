@@ -58,6 +58,7 @@ class DetailFragment : Fragment() {
         Log.d("place", "d-id         " + d_id.toString())
         Log.d("place", "tlnum         " + tl_num.toString())
         var i = 0
+
         btn_flw.setOnClickListener {
             fbFirestore?.collectionGroup("review")
                 ?.whereEqualTo("tl_num", tl_num)
@@ -67,14 +68,38 @@ class DetailFragment : Fragment() {
                     for (document in result) {
                         follow.fol_num = document.data["user_num"] as String?
                         follow.user_num = fbAuth?.currentUser?.uid
+                        fbFirestore?.collection("user")
+                            ?.document(follow.fol_num.toString())
+                            ?.get()
+                            ?.addOnSuccessListener {
+                                follow.follow_id = it.data?.get("user_nick") as String?
+
+                                fbFirestore?.collection("followlist")
+                                    ?.document(follow.fol_num.toString() + follow.user_num.toString())
+                                    ?.set(follow)
+
+                                Log.d("팔로우4", follow.follow_id.toString())
+                            }
+                        fbFirestore?.collection("user")
+                            ?.document(follow.user_num.toString())
+                            ?.get()
+                            ?.addOnSuccessListener {
+                                follow.user_id = it.data?.get("user_nick") as String?
+                                fbFirestore?.collection("followlist")
+                                    ?.document(follow.fol_num.toString() + follow.user_num.toString())
+                                    ?.set(follow)
+                                Log.d("팔로우3", follow.user_id.toString())
+                            }
                     }
                     fbFirestore?.collection("followlist")
                         ?.document(follow.fol_num.toString() + follow.user_num.toString())
                         ?.set(follow)
                     Log.d("팔로우1", follow.fol_num.toString())
                     Log.d("팔로우2", follow.user_num.toString())
+
                 }
         }
+
         fbFirestore?.collectionGroup("review")
             ?.whereEqualTo("tl_num", tl_num)
             ?.orderBy("s_date")
