@@ -52,7 +52,8 @@ data class REVIEW(
     var rv_txt : String? = null,
     var rv_img : String? = null,
     var user_nick : String? = null,
-    var g_nick : String? = null
+    var g_nick : String? = null,
+    var like: List<String>? =null
 ){
 
 }

@@ -63,6 +63,9 @@ class MypageFragment : Fragment() {
                 MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
             findNavController().navigate(direction)
         }
+        btn_flwlist.setOnClickListener {
+
+        }
 
         var currentCaldenar =
             Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
