@@ -71,7 +71,7 @@ class SearchFragment : Fragment() {
                             stamp.tl_num = document.data["tl_num"] as String?
                             stamp.d_id = document.data["d_id"] as String?
                             stamp.score = document.data["score"] as String?
-                            stamp.like_count = Integer.parseInt(document.data["like_count"].toString())
+                            //stamp.like_count = Integer.parseInt(document.data["like_count"].toString())
 
 
                             fbFirestore?.collection("user")
@@ -79,9 +79,9 @@ class SearchFragment : Fragment() {
                                 ?.get()
                                 ?.addOnSuccessListener { reuslt ->
                                     for(document2 in reuslt){
-                                        stamp.follow_count = Integer.parseInt(document2.data["follow_count"].toString())
+                                       // stamp.follow_count = Integer.parseInt(document2.data["follow_count"].toString())
                                         stamp.user_nick = document2.data["user_nick"] as String?
-                                        stamp.like_count = document2.data["like_count"] as Int?
+                                       // stamp.like_count = document2.data["like_count"] as Int?
                                         Log.d("마지막1", stamp.user_nick.toString())
 
                                     }
