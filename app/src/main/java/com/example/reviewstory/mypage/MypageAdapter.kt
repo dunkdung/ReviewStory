@@ -4,6 +4,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reviewstory.FOLLOWLIST
 import com.example.reviewstory.MyItem
@@ -55,12 +59,14 @@ class FollowAdapter(val items: ArrayList<FOLLOWLIST>, val fbFirestore: FirebaseF
 }
 class ItemViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bindItems(stamp: FOLLOWLIST, fbFirestore: FirebaseFirestore) {
-
+        var date = "2021-04-30"
         var items = ArrayList<FOLLOWLIST>()
         stamp?.let {
             itemView.txt_start.text = stamp.follow_id
         }
         itemView.setOnClickListener {
+            val direction: NavDirections = FollowFragmentDirections.actionFollowFragmentToTimeFragment(date,stamp.fol_num.toString())
+            Navigation.findNavController(itemView).navigate(direction)
         }
     }
 }

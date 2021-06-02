@@ -55,26 +55,20 @@ class TimeFragment : Fragment() {
 
         val safeArgs by navArgs<TimeFragmentArgs>()
 
-        var date: String? = null
-
-        date = safeArgs.date
-
+        var date = safeArgs.date
+        var uid = safeArgs.uid
         Log.d("check2", date.toString())
+        Log.d("check2", uid)
 
         var date2: String? = null
-
-        if(date != null) {
-            date2 = (LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).plusDays(1)).toString()
-
-
-
+        if (date == "2021-04-30"){
             fbFirestore?.collection("timeline")
-                ?.whereEqualTo("user_num", fbAuth?.currentUser?.uid)
-                ?.whereEqualTo("start_date", date)
+                ?.whereEqualTo("user_num", uid)
                 ?.get()
                 ?.addOnSuccessListener { result ->
                     for (document in result) {
                         var stamp = TIMELINE()
+                        Log.d("check2", document.id)
                         stamp.end_date = document.data["end_date"] as String?
                         stamp.start_date = document.data["start_date"] as String?
                         stamp.tl_date = document.data["tl_date"] as String?
@@ -83,11 +77,31 @@ class TimeFragment : Fragment() {
                         timelist.add(stamp)
                         Log.d("check", date.toString())
                     }
-                    view.recycle_result.setHasFixedSize(true)
                     view.recycle_result.adapter = MypageAdapter(timelist, fbFirestore!!)
                     view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
                 }
         }
-
+        else
+        {
+        fbFirestore?.collection("timeline")
+            ?.whereEqualTo("user_num", fbAuth!!.uid.toString())
+            ?.whereEqualTo("start_date", date)
+            ?.get()
+            ?.addOnSuccessListener { result ->
+                for (document in result) {
+                    var stamp = TIMELINE()
+                    Log.d("check2", document.id)
+                    stamp.end_date = document.data["end_date"] as String?
+                    stamp.start_date = document.data["start_date"] as String?
+                    stamp.tl_date = document.data["tl_date"] as String?
+                    stamp.tl_num = document.data["tl_num"] as String?
+                    stamp.user_num = document.data[""] as String?
+                    timelist.add(stamp)
+                    Log.d("check", date.toString())
+                }
+                view.recycle_result.adapter = MypageAdapter(timelist, fbFirestore!!)
+                view.recycle_result.layoutManager = LinearLayoutManager(requireContext())
+            }
+    }
     }
 }
