@@ -178,7 +178,10 @@ class DetailFragment : Fragment() {
                             }
                         }
                         img_favorite.setOnClickListener{
-                            var tsDoc = fbFirestore?.document(document.id)
+                            var tsDoc = fbFirestore?.collection("timeline")
+                                ?.document(review?.tl_num as String)
+                                ?.collection("review")
+                                ?.document(review?.d_id as String)
                             fbFirestore?.runTransaction { transaction ->
                                 var uid = FirebaseAuth.getInstance().currentUser?.uid
                                 var contentDTO = transaction.get(tsDoc!!).toObject<REVIEW>()
