@@ -16,8 +16,8 @@ data class USER(
     var user_nick : String? = null,
     var follow_count : Number? = 0,
     var follow_list : List<String>? =null,
-    var user_private : Boolean? = false
-) {
+    var user_private : Boolean? = false){
+
 }
 
 

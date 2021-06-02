@@ -4,7 +4,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import com.example.reviewstory.FOLLOWLIST
 import com.example.reviewstory.MyItem
 import com.example.reviewstory.R
 import com.example.reviewstory.TIMELINE
@@ -32,6 +37,38 @@ class MypageAdapter(val items: ArrayList<TIMELINE>, val fbFirestore: FirebaseFir
 
     //어댑터에서 관리할 아이템 갯수를 반환
     override fun getItemCount() = items.size
+}
+class FollowAdapter(val items: ArrayList<FOLLOWLIST>, val fbFirestore: FirebaseFirestore) : RecyclerView.Adapter<ItemViewHolder2>() {
+
+    /* 뷰홀더를 생성하여 반환 */
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder2 {
+        //list_item_fresh 뷰 inflate
+        val rootView =
+            LayoutInflater.from(parent.context).inflate(R.layout.list_item_detail, parent, false)
+        return ItemViewHolder2(rootView)
+    }
+
+    //뷰홀더에 데이터 바인딩(bindItems() 함수를 호출)
+    override fun onBindViewHolder(holder: ItemViewHolder2, position: Int) {
+        holder.bindItems(items[position],fbFirestore)
+
+    }
+
+    //어댑터에서 관리할 아이템 갯수를 반환
+    override fun getItemCount() = items.size
+}
+class ItemViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    fun bindItems(stamp: FOLLOWLIST, fbFirestore: FirebaseFirestore) {
+        var date = "2021-04-30"
+        var items = ArrayList<FOLLOWLIST>()
+        stamp?.let {
+            itemView.txt_start.text = stamp.follow_id
+        }
+        itemView.setOnClickListener {
+            val direction: NavDirections = FollowFragmentDirections.actionFollowFragmentToTimeFragment(date,stamp.fol_num.toString())
+            Navigation.findNavController(itemView).navigate(direction)
+        }
+    }
 }
 
 //뷰홀더 클래스 선언

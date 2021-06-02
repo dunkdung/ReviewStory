@@ -31,6 +31,9 @@
         <action
             android:id="@+id/action_mypageFragment2_to_loginActivity"
             app:destination="@id/loginActivity" />
+        <action
+            android:id="@+id/action_mypageFragment2_to_followFragment"
+            app:destination="@id/followFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -124,5 +127,16 @@
         <action
             android:id="@+id/action_timeFragment_to_detailFragment"
             app:destination="@id/detailFragment" />
+        <argument android:name="uid"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/followFragment"
+        android:name="com.example.reviewstory.mypage.FollowFragment"
+        android:label="fragment_follow"
+        tools:layout="@layout/fragment_follow" >
+        <action
+            android:id="@+id/action_followFragment_to_timeFragment"
+            app:destination="@id/timeFragment" />
     </fragment>
 </navigation>

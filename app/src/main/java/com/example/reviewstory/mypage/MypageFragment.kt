@@ -63,6 +63,11 @@ class MypageFragment : Fragment() {
                 MypageFragmentDirections.actionMypageFragment2ToLoginActivity()
             findNavController().navigate(direction)
         }
+        btn_flwlist.setOnClickListener {
+            val direction: NavDirections =
+                MypageFragmentDirections.actionMypageFragment2ToFollowFragment()
+            findNavController().navigate(direction)
+        }
 
         var currentCaldenar =
             Calendar.getInstance().apply { time = Date(System.currentTimeMillis()) }
@@ -87,7 +92,7 @@ class MypageFragment : Fragment() {
         btn_search.setOnClickListener {
             if (date != null) {
                 val direction: NavDirections =
-                    MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString())
+                    MypageFragmentDirections.actionMypageFragment2ToTimeFragment(date.toString(), fbAuth?.uid.toString())
                 findNavController().navigate(direction)
                 Log.d("date2", date.toString())
             } else {
