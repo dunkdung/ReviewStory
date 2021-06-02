@@ -52,14 +52,14 @@
                         android:textColor="@color/color_main"
                         android:textSize="20dp" />
 
-                    <Button
-                        android:id="@+id/btn_flw"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Button"
-                        android:visibility="invisible" />
-
                 </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/btn_flw"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="팔로우"
+                    android:visibility="visible" />
 
                 <View
                     android:layout_width="match_parent"
