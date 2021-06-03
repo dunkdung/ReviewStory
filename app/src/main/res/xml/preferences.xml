@@ -18,6 +18,7 @@
             android:key="private"
             android:title="공개/비공개설정"
             android:defaultValue="false"
+            android:summary="자신이 작성한 타임라인 및 리뷰 공개 설정"
             />
 
         <EditTextPreference
@@ -25,7 +26,7 @@
             android:selectAllOnFocus="true"
             android:singleLine="true"
             android:title="닉네임"
-            android:summary="닉네임을 설정하세요(초기화면과 다른 닉네임을 입력해야 적용됩니다)"/>
+            android:summary="닉네임을 설정하세요 \n(초기화면과 다른 닉네임을 입력해야 적용됩니다)"/>
 
 
     </PreferenceCategory>
