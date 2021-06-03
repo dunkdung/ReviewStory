@@ -94,10 +94,10 @@ class DetailFragment : Fragment() {
                     Log.d("팔로우2", follow.user_num.toString())
 
                     var tsDoc = fbFirestore?.collection("user")
-                        ?.document(fbAuth?.currentUser?.uid.toString())
+                        ?.document(follow.fol_num.toString())
 
                     fbFirestore?.runTransaction { transaction ->
-                        var uid = FirebaseAuth.getInstance().currentUser?.uid
+                        var uid = follow.user_num
                         var contentDTO = transaction.get(tsDoc!!).toObject<USER>()
 
                         if (contentDTO!!.follow_list.containsKey(uid)) {
@@ -114,6 +114,8 @@ class DetailFragment : Fragment() {
 //                                    view.img_favorite.setImageResource(R.drawable.ic_favorite_border)
 //                                }
                     }
+
+
 
                 }
         }
